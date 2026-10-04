@@ -1,0 +1,2 @@
+# Fine-tuned EfficientNet-B0; architecture/hyperparameters not finalized.
+model: efficientnet_b0

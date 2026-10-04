@@ -1,0 +1,201 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=21mm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{amssymb}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+\usepackage{multicol}
+\usepackage{needspace}
+\definecolor{accent}{HTML}{17365D}
+\hypersetup{colorlinks=true,urlcolor=accent,linkcolor=accent}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{4pt}
+\setlist[itemize]{leftmargin=1.55em,itemsep=2pt,topsep=3pt,parsep=0pt}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small EN3150 \textbar\ Assignment 03}
+\fancyhead[R]{\small Project checklist}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.3pt}
+\newcommand{\task}[1]{\item[$\square$] #1}
+\newcommand{\phase}[1]{\Needspace{8\baselineskip}\section*{\color{accent}#1}}
+\begin{document}
+\begin{center}
+{\LARGE\bfseries EN3150 Assignment 03}\par
+{\Large Resource-Constrained CNN: Task Checklist}\par
+\vspace{3pt}
+{\small Shared checklist for the group; no member assignments.}\par
+\end{center}
+\vspace{-6pt}
+\hrule
+\vspace{6pt}
+\textbf{Scope.} Build two custom CNNs and fine-tune two pretrained lightweight models on one low-resolution dataset. Compare accuracy, memory and computational cost. The assignment brief is the source of requirements; workflow choices below make the experiments reproducible.
+
+\phase{1. Project decisions and setup}
+\begin{itemize}
+\task{Confirm the dataset (EuroSAT RGB is a candidate), framework, class order, and input resolution (at most $64\times64$). Do not use CIFAR-10.}
+\task{Create a Git repository with a README, dependency file, configuration, and runnable instructions. Commit throughout the project.}
+\task{Set a random seed and shared rules for data splits, metrics, checkpoint names, and result files.}
+\task{Decide what is measured as model size and computational cost; record hardware/software used for timings.}
+\end{itemize}
+
+\phase{2. Dataset and data pipeline}
+\begin{itemize}
+\task{Download the selected dataset from its official source. For EuroSAT, inspect \url{https://github.com/phelber/eurosat} and use the RGB image release.}
+\task{Verify image format and count, labels, class distribution, and sample images; document exclusions or corrupt files.}
+\task{Resize or confirm all images are at most $64\times64$ pixels.}
+\task{Create and save a reproducible 70\% train / 15\% validation / 15\% test split; stratify where practical. Check for overlap.}
+\task{Implement a shared data loader and consistent preprocessing. Apply augmentation only to training data, if used.}
+\task{Record dataset details in the sheet referenced by the assignment brief.}
+\end{itemize}
+
+\phase{3. Read and position relevant work}
+\begin{itemize}
+\task{Read Helber et al., \emph{EuroSAT: A Novel Dataset and Deep Learning Benchmark for Land Use and Land Cover Classification} (dataset and baseline methods).}
+\task{Read Krizhevsky et al., \emph{ImageNet Classification with Deep Convolutional Neural Networks} (standard convolutions and max-pooling); do not present it as the same-sized architecture as Model A.}
+\task{Read Howard et al., \emph{MobileNets: Efficient Convolutional Neural Networks for Mobile Vision Applications} (depthwise-separable convolution and efficiency); Model B is a custom model, not a reproduction of MobileNet.}
+\task{If using global average pooling, read Lin et al., \emph{Network In Network}. Optionally consult Chollet, \emph{Xception}, for depthwise-separable convolution.}
+\task{Record proper citations in the report and distinguish published results from your own results.}
+\end{itemize}
+
+\phase{4. Design the two custom architectures}
+\begin{itemize}
+\task{Implement Model A with standard 2D convolutions interleaved with max-pooling.}
+\task{Implement Model B by using depthwise-separable convolutions; ensure \textbf{no more than 100,000 trainable parameters}.}
+\task{Document every layer: input/output shape, kernel, channels, activation, pooling, and classifier units.}
+\task{Calculate trainable parameters layer by layer for both models and verify against framework summaries.}
+\task{Justify activations for low-resource hardware. Estimate MACs/FLOPs using one stated convention, if feasible.}
+\end{itemize}
+
+\phase{5. Shared training and evaluation code}
+\begin{itemize}
+\task{Build a configurable training script with saved seed/configuration, checkpoints, per-epoch times, and training/validation histories.}
+\task{Build one test evaluator for accuracy, confusion matrix, precision, and recall. State whether metrics are per-class, macro, or both.}
+\task{Write metrics to JSON/CSV and save plots with labeled axes; do not manually transcribe results.}
+\task{Keep the test set out of optimizer tuning, checkpoint selection, and model selection.}
+\end{itemize}
+
+\phase{6. Train and compare custom models}
+\begin{itemize}
+\task{Choose a primary optimizer and learning rate; explain the choice.}
+\task{Compare the primary optimizer with plain SGD and SGD with momentum under documented settings. Explain momentum's effect on convergence/performance.}
+\task{Train \textbf{both Model A and Model B for at least 20 epochs}. Save training and validation loss curves.}
+\task{Evaluate both on the held-out test set: accuracy, confusion matrix, precision, and recall.}
+\task{Create the required A-versus-B table: parameter count, estimated disk size (KB), time per epoch, and test accuracy.}
+\task{Discuss the observed trade-offs of standard versus depthwise-separable convolution.}
+\end{itemize}
+
+\phase{7. Fine-tune two lightweight pretrained networks}
+\begin{itemize}
+\task{Select two eligible pretrained architectures (e.g., MobileNetV2 and EfficientNet-B0) and adapt their classifier heads.}
+\task{Fine-tune both on the same saved train/validation/test split. Document preprocessing and fine-tuning settings.}
+\task{Evaluate both using the shared test evaluator. Report test metrics, total parameter counts, and model sizes (MB).}
+\end{itemize}
+
+\phase{8. Final analysis and report}
+\begin{itemize}
+\task{Compare Model B with both pretrained networks on accuracy, memory footprint, and computational cost; define all measurement methods and units.}
+\task{Discuss advantages, limitations, and observed accuracy--memory--compute trade-offs. Do not claim a model is faster without a measured or justified cost comparison.}
+\task{Write methods, dataset, architectures, parameter calculations, optimizer analysis, results, limitations, and conclusions. Include citations, figures, and comparison tables.}
+\task{Check every report figure and number against saved results. Include all group members' names and index numbers and a GitHub/SVN profile link.}
+\end{itemize}
+
+\phase{9. Verification and submission}
+\begin{itemize}
+\task{Run the submitted code from a clean environment using the README; check that saved split and metrics can be reproduced.}
+\task{Proofread the PDF report, including legends, units, equations, citations, and interpretation of results.}
+\task{Submit the report PDF and runnable, documented code \textbf{separately} to Moodle. Use the required base name \texttt{Yourgroupno\_A03\_EN3150}. One submission per group.}
+\end{itemize}
+
+\phase{Optional only after required work}
+\begin{itemize}
+\task{Knowledge distillation, INT8 quantization, architecture search, or device benchmarks. These are \textbf{not required}.}
+\end{itemize}
+
+\clearpage
+\phase{Suggested project structure}
+\textbf{Independent runs, shared infrastructure.} Each model has its own implementation and configuration. The data loader, training loop, evaluator, and split manifests are shared.
+\begingroup\small
+\begin{multicols}{2}
+\begin{verbatim}
+EN3150_A03/
+  README.md
+  pyproject.toml
+  .gitignore
+  configs/
+    base.yaml
+    models/
+      model_a.yaml
+      model_b.yaml
+      mobilenet_v2.yaml
+      efficientnet_b0.yaml
+    optimizers/
+      adam.yaml
+      sgd.yaml
+      sgd_momentum.yaml
+  data/
+    README.md
+    raw/                 [ignored]
+    splits/
+      train.csv
+      val.csv
+      test.csv
+  src/en3150_a03/
+    __init__.py
+    data.py
+    models/
+      __init__.py
+      model_a.py
+      model_b.py
+      mobilenet_v2.py
+      efficientnet_b0.py
+    train.py
+    evaluate.py
+    metrics.py
+    measure.py
+    config.py
+\end{verbatim}
+\columnbreak
+\begin{verbatim}
+EN3150_A03/ (continued)
+  scripts/
+    prepare_data.py
+    train_model.py
+    evaluate_model.py
+    compare_models.py
+    make_figures.py
+  tests/
+    test_splits.py
+    test_model_shapes.py
+    test_model_b_params.py
+    test_metrics.py
+  results/
+    model_a/
+      adam/
+      sgd/
+      sgd_momentum/
+    model_b/
+      adam/
+      sgd/
+      sgd_momentum/
+    mobilenet_v2/
+    efficientnet_b0/
+    comparisons/
+  report/
+    report.tex
+    references.bib
+    figures/
+    tables/
+  docs/
+    task_checklist.tex
+    task_checklist.pdf
+    experiment_notes.md
+\end{verbatim}
+\end{multicols}
+\endgroup
+\textbf{Rule:} Train each model separately and save its checkpoints, histories, timings, and metrics in its own results folder. All four models read the same split files and use the same evaluator. Track source code and small split manifests; do not commit raw images or large checkpoints.
+\end{document}

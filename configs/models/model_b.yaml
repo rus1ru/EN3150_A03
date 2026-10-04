@@ -1,0 +1,2 @@
+# Custom depthwise-separable CNN with <=100,000 parameters; architecture/hyperparameters not finalized.
+model: model_b

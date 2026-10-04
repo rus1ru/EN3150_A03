@@ -1,0 +1,2 @@
+# Standard CNN with convolution and max-pooling; architecture/hyperparameters not finalized.
+model: model_a

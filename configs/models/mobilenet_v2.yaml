@@ -1,0 +1,2 @@
+# Fine-tuned MobileNetV2; architecture/hyperparameters not finalized.
+model: mobilenet_v2

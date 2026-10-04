@@ -1,0 +1,12 @@
+# Proposed defaults; confirm as a group before running experiments.
+seed: 42
+image_size: 64
+batch_size: 64
+minimum_custom_epochs: 20
+split:
+  train: 0.70
+  val: 0.15
+  test: 0.15
+data_root: data/raw
+split_dir: data/splits
+results_dir: results

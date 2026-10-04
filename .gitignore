@@ -1,0 +1,31 @@
+# Local environment and Python cache
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+build/
+dist/
+
+# Raw data and model artifacts
+data/raw/
+*.pt
+*.pth
+*.ckpt
+*.safetensors
+*.onnx
+results/**/checkpoints/
+
+# TeX build byproducts (keep source and PDFs)
+*.aux
+*.log
+*.out
+*.synctex.gz
+*.fls
+*.fdb_latexmk
+
+# Editor and OS
+.DS_Store
+.vscode/
+.idea/

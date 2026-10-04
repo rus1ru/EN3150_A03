@@ -1,0 +1,1 @@
+"""Model definitions; implementation pending."""
