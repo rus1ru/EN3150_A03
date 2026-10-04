@@ -10,6 +10,10 @@ dist/
 
 # Raw data and model artifacts
 data/raw/
+# Local first-pass split made before switching to PyTorch. The committed
+# canonical split is data/splits_torch_v1/; keep the old local files out of Git.
+data/splits/*.csv
+data/splits/*.json
 *.pt
 *.pth
 *.ckpt
