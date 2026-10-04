@@ -7,6 +7,6 @@ split:
   train: 0.70
   val: 0.15
   test: 0.15
-data_root: data/raw
-split_dir: data/splits
+data_root: data/raw/EuroSAT_RGB
+split_dir: data/splits_torch_v1
 results_dir: results
