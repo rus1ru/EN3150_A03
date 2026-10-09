@@ -1,2 +1,10 @@
-# Fine-tuned EfficientNet-B0; architecture/hyperparameters not finalized.
+# Fine-tune all EfficientNet-B0 weights on the published EuroSAT RGB split.
 model: efficientnet_b0
+num_classes: 10
+input_size: 64
+pretrained: true
+normalization: imagenet
+optimizer: adam
+learning_rate: 0.0001  # Starting value; tune using validation only.
+epochs: 10            # Starting value, not a measured optimum.
+batch_size: 32

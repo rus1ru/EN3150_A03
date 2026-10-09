@@ -1,0 +1,228 @@
+{
+  "model": "efficientnet_b0",
+  "pretrained": true,
+  "image_size": 64,
+  "split_dir": "/home/rus1ru/Documents/Academics/PR_assignment_group/EN3150_A03/data/splits_torch_v1",
+  "seed": 42,
+  "epochs": 10,
+  "batch_size": 32,
+  "lr": 0.0001,
+  "device": "cuda",
+  "torch_version": "2.4.1+cu121",
+  "trainable_parameters": 4020358,
+  "history": [
+    {
+      "epoch": 1,
+      "train_loss": 0.67704869631737,
+      "val_loss": 0.2973566800282325,
+      "val_accuracy": 0.9545679012345679,
+      "seconds": 16.610214389998873
+    },
+    {
+      "epoch": 2,
+      "train_loss": 0.24919466925518854,
+      "val_loss": 0.17325383837208336,
+      "val_accuracy": 0.9661728395061728,
+      "seconds": 16.291060572999413
+    },
+    {
+      "epoch": 3,
+      "train_loss": 0.1904432036290093,
+      "val_loss": 0.5238998925575503,
+      "val_accuracy": 0.9676543209876544,
+      "seconds": 16.337624372999926
+    },
+    {
+      "epoch": 4,
+      "train_loss": 0.14495458630973068,
+      "val_loss": 1.230552174805859,
+      "val_accuracy": 0.9738271604938271,
+      "seconds": 16.317160815000534
+    },
+    {
+      "epoch": 5,
+      "train_loss": 0.12880681845403852,
+      "val_loss": 0.13286968427031864,
+      "val_accuracy": 0.9723456790123457,
+      "seconds": 16.393658011998923
+    },
+    {
+      "epoch": 6,
+      "train_loss": 0.0990022221144545,
+      "val_loss": 0.08176138924319803,
+      "val_accuracy": 0.9723456790123457,
+      "seconds": 16.570731468000304
+    },
+    {
+      "epoch": 7,
+      "train_loss": 0.08941212011037995,
+      "val_loss": 0.07261845000916058,
+      "val_accuracy": 0.9772839506172839,
+      "seconds": 16.754969792000338
+    },
+    {
+      "epoch": 8,
+      "train_loss": 0.07642061666482025,
+      "val_loss": 0.07217480520223393,
+      "val_accuracy": 0.9765432098765432,
+      "seconds": 17.133554349000406
+    },
+    {
+      "epoch": 9,
+      "train_loss": 0.07548280159356417,
+      "val_loss": 0.06798027019947767,
+      "val_accuracy": 0.9780246913580247,
+      "seconds": 18.646992339001372
+    },
+    {
+      "epoch": 10,
+      "train_loss": 0.06313055490375195,
+      "val_loss": 0.06779776682410343,
+      "val_accuracy": 0.9777777777777777,
+      "seconds": 16.805245821000426
+    }
+  ],
+  "best_val_accuracy": 0.9780246913580247,
+  "smoke_test": false,
+  "test": {
+    "loss": 0.07656851000577947,
+    "accuracy": 0.9785185185185186,
+    "macro_precision": 0.9785968197330212,
+    "macro_recall": 0.9775555555555556,
+    "macro_f1": 0.9779980470170223,
+    "confusion_matrix": [
+      [
+        435,
+        1,
+        0,
+        0,
+        0,
+        3,
+        10,
+        0,
+        1,
+        0
+      ],
+      [
+        0,
+        448,
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        447,
+        0,
+        0,
+        1,
+        2,
+        0,
+        0,
+        0
+      ],
+      [
+        2,
+        0,
+        1,
+        365,
+        2,
+        0,
+        0,
+        0,
+        5,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        1,
+        367,
+        0,
+        0,
+        7,
+        0,
+        0
+      ],
+      [
+        4,
+        0,
+        6,
+        0,
+        0,
+        288,
+        0,
+        0,
+        0,
+        2
+      ],
+      [
+        0,
+        0,
+        12,
+        0,
+        0,
+        3,
+        360,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        3,
+        0,
+        0,
+        447,
+        0,
+        0
+      ],
+      [
+        1,
+        0,
+        1,
+        3,
+        1,
+        1,
+        0,
+        0,
+        368,
+        0
+      ],
+      [
+        7,
+        1,
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        2,
+        438
+      ]
+    ],
+    "class_order": [
+      "AnnualCrop",
+      "Forest",
+      "HerbaceousVegetation",
+      "Highway",
+      "Industrial",
+      "Pasture",
+      "PermanentCrop",
+      "Residential",
+      "River",
+      "SeaLake"
+    ]
+  }
+}

@@ -43,6 +43,31 @@ Each teammate downloads their own images, verifies the committed split, and trai
 - `report/`: final report source and generated figures/tables.
 - `docs/`: task checklist and experiment notes.
 
+## EfficientNet-B0 (independent runnable component)
+
+The EfficientNet-B0 implementation is in `src/en3150_a03/models/efficientnet_b0.py`.
+It replaces the classifier with 10 outputs, fine-tunes all weights, keeps images at
+64×64, and applies ImageNet normalization for pretrained weights. Training uses
+only the committed split IDs; the best checkpoint is selected by validation accuracy.
+The test split is evaluated once after training, not used to choose hyperparameters.
+
+```bash
+# From the project root, install CUDA PyTorch into the existing .venv (NVIDIA GPU).
+uv pip install --python .venv/bin/python --index-url https://download.pytorch.org/whl/cu121 "torch==2.4.1+cu121" "torchvision==0.19.1+cu121"
+.venv/bin/python -c "import torch; print(torch.__version__, torch.cuda.is_available())"
+# The first run downloads torchvision's ImageNet B0 weights.
+.venv/bin/python scripts/train_efficientnet_b0.py --epochs 10 --batch-size 32
+# Quick pipeline check without a weight download or meaningful benchmark metrics:
+.venv/bin/python scripts/train_efficientnet_b0.py --scratch --epochs 1 --batch-size 2 --max-batches 1 --output /tmp/en3150-efficientnet-smoke
+PYTHONPATH=src .venv/bin/python -m unittest tests/test_efficientnet_b0.py -v
+```
+
+The default output is `results/efficientnet_b0/adam/{best.pt,metrics.json}`.
+Use a new `--output` path per experiment to avoid replacing a checkpoint.
+The values in `configs/models/efficientnet_b0.yaml` are starting choices, not
+validated performance claims. The training script selects CUDA automatically when available; otherwise it uses CPU.
+The shared `scripts/train_model.py` and other model implementations are still placeholders.
+
 ## Workflow to implement
 
 1. Dataset and shared PyTorch split are in place; agree on model-specific preprocessing, optimizer hyperparameters, and experiment settings.
