@@ -90,6 +90,15 @@ class SplitContractTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             verify_splits(self.images, split_dir)
 
+    def test_manifest_line_endings_are_portable(self):
+        split_dir = self.base / "splits"
+        prepare_splits(self.images, split_dir)
+        for name in ("train.csv", "val.csv", "test.csv", "class_to_idx.json", "metadata.json"):
+            manifest = split_dir / name
+            manifest.write_bytes(manifest.read_bytes().replace(b"\n", b"\r\n"))
+        self.assertEqual(verify_splits(self.images, split_dir)["total"], 40)
+        self.assertEqual(prepare_splits(self.images, split_dir)["train"], 28)
+
     def test_dataset_rejects_unsafe_path(self):
         split_dir = self.base / "splits"
         prepare_splits(self.images, split_dir)

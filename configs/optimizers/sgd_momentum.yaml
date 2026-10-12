@@ -1,3 +1,4 @@
-# Learning rate and momentum must be chosen and documented before training.
+# Momentum SGD baseline; momentum smooths noisy mini-batch gradients.
 optimizer: sgd_momentum
-learning_rate: null
+learning_rate: 0.01
+momentum: 0.9
