@@ -1,0 +1,2 @@
+accuracy,macro_precision,macro_recall,macro_f1,total_parameters,saved_model_size_mb,best_epoch,best_stage
+0.9765432098765432,0.9764044917654265,0.9746,0.9753934353626488,2236682,9.180043,19,finetune
