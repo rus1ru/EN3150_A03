@@ -1,0 +1,57 @@
+{
+  "data_root": "C:\\Users\\thami\\EN3150_A03\\EN3150_A03\\data\\raw\\EuroSAT_RGB",
+  "split_dir": "C:\\Users\\thami\\EN3150_A03\\EN3150_A03\\data\\splits_torch_v1",
+  "output_dir": "results\\mobilenet_v2\\run_01",
+  "epochs": 20,
+  "warmup_epochs": 3,
+  "head_lr": 0.001,
+  "finetune_lr": 0.0001,
+  "batch_size": 32,
+  "num_workers": 0,
+  "seed": 42,
+  "device": "auto",
+  "evaluate_only": false,
+  "checkpoint": null,
+  "torch": "2.14.1+cpu",
+  "torchvision": "0.29.1+cpu",
+  "device_used": "cpu",
+  "hardware": "CPU",
+  "image_size": [
+    64,
+    64
+  ],
+  "class_to_idx": {
+    "AnnualCrop": 0,
+    "Forest": 1,
+    "HerbaceousVegetation": 2,
+    "Highway": 3,
+    "Industrial": 4,
+    "Pasture": 5,
+    "PermanentCrop": 6,
+    "Residential": 7,
+    "River": 8,
+    "SeaLake": 9
+  },
+  "pretrained_weights": "MobileNet_V2_Weights.IMAGENET1K_V2",
+  "selection": "minimum validation loss across all epochs; test only after selection",
+  "augmentation": "independent horizontal and vertical flips, probability 0.5",
+  "normalization": {
+    "mean": [
+      0.485,
+      0.456,
+      0.406
+    ],
+    "std": [
+      0.229,
+      0.224,
+      0.225
+    ]
+  },
+  "manifest_sha256": {
+    "train.csv": "8f5ae8a0f005ea8ebdf5f1e58ad68958d64298e22c65f9b7c7f8d132f70ad8d5",
+    "val.csv": "89cc8a34de0b677311e11d361c6d1404c6a31d849a49186ac4c65774d18e8c4b",
+    "test.csv": "3342e7a21356fdad0287193535c1dfa6334dd306606cebebbd268f7ff385c98a",
+    "class_to_idx.json": "f5f85be6ee3c28e1c91d7b1701500f213c4ed2fbc28cb7346efcd9ec1492c6dc",
+    "metadata.json": "7c57c8e7176db4470ba6202f2ed9e411d8dad1f8abc26d2fa712f3c037d02b62"
+  }
+}
