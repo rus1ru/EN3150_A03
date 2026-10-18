@@ -1,0 +1,62 @@
+[
+  {
+    "model": "ModelA",
+    "optimizer": "adam",
+    "accuracy": 0.7580246913580246,
+    "macro_precision": 0.7532238599906201,
+    "macro_recall": 0.7490888888888889,
+    "parameters": 25994,
+    "fp32_weights_kib": 101.5390625,
+    "macs": 11209024,
+    "mean_epoch_seconds": 93.59654893499683,
+    "source": "results/model_a/modelA_20261011"
+  },
+  {
+    "model": "ModelA",
+    "optimizer": "sgd",
+    "accuracy": 0.3837037037037037,
+    "macro_precision": 0.4214076985461054,
+    "macro_recall": 0.3886,
+    "parameters": 25994,
+    "fp32_weights_kib": 101.5390625,
+    "macs": 11209024,
+    "mean_epoch_seconds": 58.31539868499967,
+    "source": "results/model_a/modelA_20261011"
+  },
+  {
+    "model": "ModelA",
+    "optimizer": "sgd_momentum",
+    "accuracy": 0.8167901234567901,
+    "macro_precision": 0.8105788008441122,
+    "macro_recall": 0.8088666666666666,
+    "parameters": 25994,
+    "fp32_weights_kib": 101.5390625,
+    "macs": 11209024,
+    "mean_epoch_seconds": 31.10778053998365,
+    "source": "results/model_a/modelA_20261011"
+  },
+  {
+    "model": "ModelB",
+    "optimizer": "adamw",
+    "accuracy": 0.9812345679012345,
+    "macro_precision": 0.9812051836105511,
+    "macro_recall": 0.9799111111111112,
+    "parameters": 96538,
+    "fp32_weights_kib": 377.1015625,
+    "macs": 21358976,
+    "mean_epoch_seconds": 25.10899883458334,
+    "source": "results/model_b/modelB_v2_adamw_01"
+  },
+  {
+    "model": "MobileNetV2",
+    "optimizer": "adam_two_stage",
+    "accuracy": 0.9765432098765432,
+    "macro_precision": 0.9764044917654265,
+    "macro_recall": 0.9746,
+    "parameters": 2236682,
+    "fp32_weights_kib": 8737.0390625,
+    "macs": 24461312,
+    "mean_epoch_seconds": null,
+    "source": "results/mobilenet_v2/run_01"
+  }
+]

@@ -1,10 +1,8 @@
-"""Generate a Model B v2 report from saved metrics, without modifying any run."""
+"""Create or refresh the final Model B report from saved metrics."""
 import argparse
-import csv
 import json
+import os
 from pathlib import Path
-
-ROOT = Path(__file__).resolve().parents[1]
 
 
 def main():
@@ -26,15 +24,10 @@ def main():
         "Checkpoint selection uses minimum validation loss. Normalization uses training images only. "
         f"Training augmentation enabled: {config['augmentation']}. When enabled, it uses flips, quarter-turns, reflected crops and mild color jitter. "
         "Label smoothing applies to training; validation/test metrics use ordinary targets.", "",
-        "## Saved result comparison", "",
+        "## Saved final result", "",
         "| Model/recipe | Parameters | FP32 weights (KiB) | MACs | Test accuracy |",
         "| --- | ---: | ---: | ---: | ---: |"]
     rows = []
-    baseline = ROOT/"results/model_b/modelB_gpu_01/comparison.json"
-    if baseline.exists():
-        for row in json.loads(baseline.read_text()):
-            rows.append(dict(model="Model B v1 / "+row["optimizer"], parameters=row["trainable_parameters"],
-                weights_kib=row["estimated_float32_size_kb"], macs=row["macs"], accuracy=row["accuracy"]))
     rows.append(dict(model="Model B v2 / "+config["optimizer"], parameters=profile["total_parameters"],
         weights_kib=profile["estimated_float32_size_kb"], macs=profile["macs"], accuracy=result["accuracy"] if result else None))
     for row in rows:
@@ -43,13 +36,13 @@ def main():
     if result:
         lines += ["", f"Macro precision: {result['macro_precision']:.4f}; macro recall: {result['macro_recall']:.4f}."]
     lines += ["", "## Interpretation", "",
-        "Version 2 reinvests the parameter budget in deeper/wider features, batch normalization, linear projections "
+        "The final architecture uses expanded features, batch normalization, linear projections "
         "and residual connections. SE gates model channel importance; global average pooling produces the classifier input. "
-        "The architecture and training recipe both change, so a gain cannot be attributed to attention alone. "
+        "An accuracy comparison against Model A changes both architecture and recipe, so a gain cannot be attributed to attention alone. "
         "Use the no-attention ablation with the same training recipe to test that component.", "",
         profile["mac_convention"], "",
-        "The original v1 is a matched-width Model A comparison; v2 targets accuracy under the 100k limit. "
-        "V2 uses more memory/compute than v1 and Model A. FP32 weights exclude activations and optimizer state. "
+        "This model targets accuracy under the 100k limit and uses more memory/compute than Model A. "
+        "FP32 weights exclude activations and optimizer state. "
         "Timing across different computers does not establish speedup. The frozen split is image-level, "
         "not geographically independent. One seed does not establish statistical superiority.", "",
         "## Sources", "",
@@ -60,11 +53,14 @@ def main():
         "- Network In Network/global average pooling: https://arxiv.org/abs/1312.4400",
         "- Batch Normalization: https://arxiv.org/abs/1502.03167",
         "- AdamW: https://arxiv.org/abs/1711.05101"]
-    args.output_dir.mkdir(parents=True, exist_ok=False)
-    (args.output_dir/"experiment_report.md").write_text("\n".join(lines)+"\n")
-    (args.output_dir/"comparison.json").write_text(json.dumps(rows, indent=2)+"\n")
-    with (args.output_dir/"comparison.csv").open("w",newline="") as stream:
-        writer=csv.DictWriter(stream,fieldnames=list(rows[0])); writer.writeheader(); writer.writerows(rows)
+    lines += ["", "## Run artifacts", ""]
+    for name in ("loss_curves.png", "confusion_matrix.png", "per_class_metrics.csv", "test_metrics.json", "training_history.csv", "experiment_config.json", "architecture_profile.json"):
+        if (args.run_dir/name).exists():
+            lines.append(f"- [{name}]({Path(os.path.relpath(args.run_dir/name, args.output_dir)).as_posix()})")
+    args.output_dir.mkdir(parents=True, exist_ok=True)
+    temporary = args.output_dir/"experiment_report.md.tmp"
+    temporary.write_text("\n".join(lines)+"\n")
+    temporary.replace(args.output_dir/"experiment_report.md")
     print(args.output_dir/"experiment_report.md")
 
 if __name__=="__main__": main()
