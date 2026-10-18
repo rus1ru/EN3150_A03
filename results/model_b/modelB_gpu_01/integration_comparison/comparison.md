@@ -16,6 +16,6 @@ Batch-one Conv2d and Linear only; one multiply-accumulate = one MAC (approximate
 
 Epoch times come from different devices and runs: they cannot establish architecture speedups. Model A/B use ToTensor without augmentation; MobileNetV2 uses pretrained weights, flips and ImageNet normalization with a different batch size. Accuracy therefore compares complete training recipes, while A/B provides the controlled convolution comparison. FP32 weights exclude runtime activations and optimizer memory.
 
-EfficientNet-B0 is still a placeholder in this checkout and has no results to include. The group must complete its second pretrained network before claiming the final comparison is complete.
+This historical comparison was generated before the EfficientNet-B0 result was integrated. For all four models, see the [updated comparison](../../../comparisons/all_models_20261018/comparison.md); this saved snapshot is retained as originally generated.
 
 Model A's existing results identify the dataset fingerprint and class order but do not save split manifest hashes. Its exact image split provenance cannot be independently proven from that run metadata.

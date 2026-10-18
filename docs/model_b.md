@@ -1,12 +1,12 @@
 # Model B contribution: depthwise-separable CNN
 
-Author: [KavijaK](https://github.com/KavijaK). This contribution owns only Model B files. It reads the shared data loader and Model A's optimizer/evaluation helpers without editing them. Teammate implementations, existing results, README, and canonical split manifests remain unchanged.
+Model B implementation and training results by [KavijaK](https://github.com/KavijaK). Model B reads the shared data loader and Model A's optimizer/evaluation helpers without editing them. Its original pull request left teammate implementations, results, README, and canonical split manifests unchanged; later integration updated project documentation and the combined comparison.
 
 ## What is implemented and what still needs to run
 
-The local implementation includes the network, checked parameter/MAC accounting, Adam/SGD/momentum comparison runner, epoch-boundary resume checkpoints, loss/accuracy curves, test confusion matrices, per-class precision/recall, machine-readable metrics, and generated experiment reports. `notebooks/train_model_b_colab.ipynb` runs this code on Colab GPU. No full EuroSAT Model B training has been performed as part of code preparation. Tests on tiny synthetic data validate execution; their scores are not assignment results.
+The implementation includes the network, checked parameter/MAC accounting, Adam/SGD/momentum comparison runner, epoch-boundary resume checkpoints, loss/accuracy curves, test confusion matrices, per-class precision/recall, machine-readable metrics, and generated experiment reports. `notebooks/train_model_b_colab.ipynb` runs this code on Colab GPU. Model B was trained for 20 epochs per optimizer on a Tesla T4 using the frozen EuroSAT RGB split. The [saved experiment report](../results/model_b/modelB_gpu_01/experiment_report.md) records test accuracy of 59.14% (Adam), 18.99% (plain SGD), and 74.20% (SGD with momentum). The declared primary optimizer is Adam; the momentum result is an observed comparison, not grounds to retune on the test set. Tests on tiny synthetic data validate execution but are not assignment scores.
 
-The existing checkout already contains Model A's three optimizer experiments and MobileNetV2 results. EfficientNet-B0 remains a placeholder and must be completed by the responsible teammate. Model B training, the final combined discussion, and the final group report remain outstanding until actual GPU results are available.
+Model A, MobileNetV2, and EfficientNet-B0 also have saved results. The [four-model comparison](../results/comparisons/all_models_20261018/comparison.md) combines their reported metrics with Model B without retraining them. The final group PDF report and its required submission details remain unfinished.
 
 ## Architecture: isolate the cost of convolution factorization
 
@@ -55,7 +55,7 @@ Momentum maintains a decaying accumulation of gradients, which can accelerate pe
 
 Open `notebooks/train_model_b_colab.ipynb` through Colab's **Upload notebook** option, choose a GPU runtime, then run cells in order. The delivered `EN3150_A03_ModelB_Code.zip` is an archive of the local committed branch, with the team's code dependencies and frozen manifests included. Upload that ZIP when the notebook prompts. No GitHub credentials are needed. This is useful while the feature branch is only local.
 
-The notebook mounts Drive for per-epoch checkpoints and small result files, downloads images to local Colab disk, verifies the frozen split without regenerating it, runs all three optimizers for 20 epochs, generates the A/B/MobileNet integration comparison, and downloads a small results ZIP. Checkpoints remain on Drive and are excluded from the integration ZIP.
+The notebook mounts Drive for per-epoch checkpoints and small result files, downloads images to local Colab disk, verifies the frozen split without regenerating it, runs all three optimizers for 20 epochs, generates an A/B/MobileNet integration comparison from the models present in its uploaded code archive, and downloads a small results ZIP. The saved notebook-era comparison predates EfficientNet-B0 integration; use the separate command above for all four models. Checkpoints remain on Drive and are excluded from the integration ZIP.
 
 After a disconnect, select the same GPU hardware and package versions, reopen the notebook, upload the same code ZIP, choose the same `RUN_ID`, and rerun setup/data cells. The training cell automatically passes `--resume` when its experiment config exists. A partially processed epoch is redone from its last completed boundary. Interrupted setup with incomplete extracted images should be repaired by deleting only the incomplete local `data/raw/EuroSAT_RGB` directory and rerunning data setup; the ZIP is checksummed before extraction.
 
@@ -71,15 +71,15 @@ python scripts/run_model_b_experiments.py --run-id modelB_gpu_01 --device cuda -
 python scripts/run_model_b_experiments.py --run-id modelB_gpu_01 --device cuda --epochs 20 --batch-size 64 --resume
 # One optimizer only (still >=20 epochs; saves a different, explicit run):
 python scripts/train_model_b.py --run-id modelB_adam_01 --device cuda
-# Read teammate metrics and write a new, separate comparison:
-python scripts/compare_model_b.py --model-b-run results/model_b/modelB_gpu_01 --output-dir results/model_b/modelB_gpu_01/integration_comparison
+# Read all four models' saved metrics and write a new, separate comparison:
+python scripts/compare_model_b.py --model-b-run results/model_b/modelB_gpu_01 --efficientnet-run results/efficientnet_b0/adam/run_20261009_193426 --output-dir results/comparisons/new_run
 ```
 
 Choose `--device cpu` for CPU execution. Paths may be overridden through CLI flags. Existing run IDs cannot be overwritten silently. The data setup helper verifies official archive MD5 and the frozen image/split fingerprint; it never calls `prepare_splits`, which would compare historical PyTorch-version metadata when reconstructing manifests.
 
 Each run writes `experiment_config.json` (source hashes, data provenance, environment), `architecture_profiles.json`, `comparison.{json,csv}`, `experiment_report.md`, and an optimizer subdirectory for each requested optimizer. Optimizer folders contain `best_model.pt`, `last_model.pt`, `model_weights.pt`, per-epoch history, curves, training summary, test metrics, confusion CSV/PNG and per-class scores CSV. All model weight files are already covered by the repository's ignore rules. Exported paths in new reports are relative so they remain usable outside Colab.
 
-The integration helper reads Model A and MobileNetV2 results without changing them. Timings from different machines must not be presented as an architecture speedup. MobileNet's ImageNet initialization/normalization, augmentation and batch size differ, so compare full training recipes when discussing accuracy. Model A's historical metadata records the dataset fingerprint but not manifest hashes; note that provenance limitation instead of inventing missing evidence.
+The integration helper reads Model A, MobileNetV2, and (when supplied) EfficientNet-B0 results without changing them. To include the saved EfficientNet-B0 run, pass `--efficientnet-run results/efficientnet_b0/adam/run_20261009_193426` or use that default path from this checkout; choose a fresh `--output-dir` each time. Timings from different machines must not be presented as an architecture speedup. The pretrained models use ImageNet initialization/normalization and augmentation, so compare full training recipes when discussing accuracy. Model A's historical metadata records the dataset fingerprint but not manifest hashes. EfficientNet-B0 records class order and split path, but not the dataset fingerprint or manifest hashes; its exact data provenance cannot be independently established from saved run metadata alone.
 
 ## Verification
 
@@ -96,8 +96,8 @@ Model B tests cover the exact parameter/MAC calculations, grouped-convolution se
 - Helber et al. (2019), [EuroSAT project and paper references](https://github.com/phelber/EuroSAT), and [official RGB archive](https://zenodo.org/records/7711810): dataset provenance. Published benchmark accuracy is not a result of this implementation.
 - [PyTorch Conv2d reference](https://docs.pytorch.org/docs/stable/generated/torch.nn.Conv2d.html): grouped/depthwise convolution semantics.
 
-The final group report still needs the actual Model B GPU results and interpretation, second pretrained model results, group names/index numbers, and required submission formatting. No teammate-owned report source is edited by this contribution.
+The final group PDF report still needs interpretation across all four models, group names/index numbers, citations, and required submission formatting. Model B GPU and EfficientNet-B0 results are saved in this repository.
 
 ## Local validation record
 
-On 2026-10-18, all 27 repository tests passed on this Mac. The public Model B CLI also completed 20 epochs for each of Adam, plain SGD and momentum SGD on an isolated two-class synthetic dataset, outside the repository's results tree. Recovery equivalence was checked on CPU. Notebook structure and Python cell syntax were validated. No EuroSAT GPU training, Colab execution, deployment latency or accuracy result is claimed by these checks.
+On 2026-10-18, Model B was trained on EuroSAT RGB for 20 epochs per optimizer on a Tesla T4 with CUDA PyTorch 2.11.0+cu130; configuration, dataset/manifest hashes, histories, and test metrics are saved under `results/model_b/modelB_gpu_01/`. The 27 repository tests passed in the PR review environment; tiny synthetic-data tests and CPU resume checks validate implementation behavior, not EuroSAT performance. Saved results do not measure deployment latency or statistical variation across seeds.

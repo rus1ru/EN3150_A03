@@ -2,7 +2,7 @@
 
 A shared project for comparing two custom CNNs (standard and depthwise-separable) with two fine-tuned lightweight pretrained networks on low-resolution imagery.
 
-**Status:** EuroSAT RGB preparation, frozen PyTorch split, shared `DataLoader`s, Model A, MobileNetV2, and EfficientNet-B0 training/evaluation and results are implemented. Model B remains to be completed.
+**Status:** The frozen EuroSAT RGB split and all four model experiments are implemented. Model B has 20-epoch Adam, SGD, and SGD-with-momentum results. The final group PDF report remains to be written.
 
 ## Assignment requirements
 
@@ -104,18 +104,30 @@ The default output is `results/efficientnet_b0/adam/{best.pt,metrics.json}`.
 Use a new `--output` path per experiment to avoid replacing a checkpoint.
 The values in `configs/models/efficientnet_b0.yaml` are starting choices, not
 validated performance claims. The training script selects CUDA automatically when available; otherwise it uses CPU.
-Model B remains to be implemented.
+Model B is implemented and trained; see [`docs/model_b.md`](docs/model_b.md) and the [four-model comparison](results/comparisons/all_models_20261018/comparison.md).
+
+## Saved four-model results
+
+The linked [comparison table](results/comparisons/all_models_20261018/comparison.md) reads recorded test metrics and profiles at 64×64 resolution; it does not rerun training. Representative results are:
+
+| Model and run | Test accuracy | Trainable parameters | Conv/linear MACs per image |
+| --- | ---: | ---: | ---: |
+| [Model A, Adam](results/model_a/modelA_20261011/adam/test_metrics.json) | 75.80% | 25,994 | 11,209,024 |
+| [Model B, Adam](results/model_b/modelB_gpu_01/adam/test_metrics.json) | 59.14% | 5,589 | 1,579,328 |
+| [MobileNetV2, pretrained](results/mobilenet_v2/run_01/test_metrics.json) | 97.65% | 2,236,682 | 24,461,312 |
+| [EfficientNet-B0, pretrained](results/efficientnet_b0/adam/run_20261009_193426/metrics.json) | 97.85% | 4,020,358 | 31,979,392 |
+
+Model B was also trained with plain SGD (18.99%) and SGD with momentum (74.20%). These are single-run scores; do not select a preferred optimizer from held-out test accuracy. The A/B architecture comparison holds widths and preprocessing constant, but pretrained networks use different training recipes. Epoch times were measured on different machines, so they do **not** establish relative hardware speed. Model A and EfficientNet-B0 saved metadata do not include manifest hashes; see the [comparison caveats](results/comparisons/all_models_20261018/comparison.md).
 
 ## Remaining workflow
 
 1. Dataset and shared PyTorch split are in place; Model A settings are documented above. Agree on remaining model-specific preprocessing and experiment settings.
 2. `scripts/prepare_data.py` creates/verifies `data/splits_torch_v1/{train,val,test}.csv`. Do not replace the published split; make a new version if it must change.
-3. Model A is implemented; implement Model B and verify input/output shapes and parameter counts.
-4. Shared training/evaluation code is implemented for Model A. Select checkpoints using validation data only.
-5. Run the Model A comparison above. Save later model runs in their own results folders with configuration, checkpoint, epoch times, training/validation history, and test metrics.
-6. Generate tables and plots from saved metrics, then write and verify the report.
+3. The Model A and Model B architectures, parameter counts and 20-epoch optimizer runs are saved in their respective `results/` folders. MobileNetV2 and EfficientNet-B0 are also trained.
+4. Review the [four-model comparison](results/comparisons/all_models_20261018/comparison.md); model accuracies reflect different training recipes and hardware timings are not directly comparable.
+5. Write, compile, and verify the final PDF report in `report/`, with citations and the group's required submission details.
 
-**Dataset preparation, PyTorch DataLoaders, Model A, MobileNetV2, and EfficientNet-B0 experiments work.** Model B and the final cross-model report remain in progress.
+**Code and saved model results are present; the final group PDF remains unfinished.**
 
 ## Collaboration and reproducibility
 

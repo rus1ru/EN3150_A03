@@ -65,6 +65,11 @@ class ModelBIntegrationTests(unittest.TestCase):
             rows = compare.comparison(b, a, mobile, root / "combined")
             self.assertEqual(len(rows), 5)
             self.assertEqual(next(r for r in rows if r["model"] == "ModelB")["macs"], 1_579_328)
+            full = compare.comparison(b, a, mobile, root / "with_efficientnet",
+                ROOT / "results/efficientnet_b0/adam/run_20261009_193426")
+            efficientnet = next(r for r in full if r["model"] == "EfficientNet-B0")
+            self.assertEqual(len(full), 6)
+            self.assertGreater(efficientnet["accuracy"], 0.97)
             self.assertEqual(before, {p: p.read_bytes() for p in tracked})
             config["manifest_sha256"] = {"bad": "split"}
             (b / "experiment_config.json").write_text(json.dumps(config))
