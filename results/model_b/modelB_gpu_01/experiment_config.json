@@ -1,0 +1,69 @@
+{
+  "model": "ModelB",
+  "architecture": "matched_depthwise_v1",
+  "seed": 42,
+  "epochs_per_optimizer": 20,
+  "batch_size": 64,
+  "num_workers": 0,
+  "optimizer_settings": {
+    "adam": {
+      "learning_rate": 0.001,
+      "momentum": null
+    },
+    "sgd": {
+      "learning_rate": 0.01,
+      "momentum": null
+    },
+    "sgd_momentum": {
+      "learning_rate": 0.01,
+      "momentum": 0.9
+    }
+  },
+  "preprocessing": "ToTensor RGB [0,1]; no augmentation or normalization",
+  "image_size": [
+    64,
+    64
+  ],
+  "class_to_idx": {
+    "AnnualCrop": 0,
+    "Forest": 1,
+    "HerbaceousVegetation": 2,
+    "Highway": 3,
+    "Industrial": 4,
+    "Pasture": 5,
+    "PermanentCrop": 6,
+    "Residential": 7,
+    "River": 8,
+    "SeaLake": 9
+  },
+  "dataset_sha256": "548a976e7d3f714d69f2a93f1abaf6261494537faa33af10f762ad7614644dd1",
+  "manifest_sha256": {
+    "class_to_idx.json": "f5f85be6ee3c28e1c91d7b1701500f213c4ed2fbc28cb7346efcd9ec1492c6dc",
+    "test.csv": "3342e7a21356fdad0287193535c1dfa6334dd306606cebebbd268f7ff385c98a",
+    "train.csv": "8f5ae8a0f005ea8ebdf5f1e58ad68958d64298e22c65f9b7c7f8d132f70ad8d5",
+    "val.csv": "89cc8a34de0b677311e11d361c6d1404c6a31d849a49186ac4c65774d18e8c4b"
+  },
+  "checkpoint_selection": "minimum validation cross-entropy; earliest epoch breaks ties",
+  "code_sha256": {
+    "src/en3150_a03/models/model_b.py": "2ef4f2810d399fc4701fda9dc19f215436fcc0169ca860a85f404d3c15b12213",
+    "src/en3150_a03/model_b_train.py": "fa720275ff96e184a738e28c90ca7c03149bbab8cc03e8e9ccdb1f9af514974f",
+    "src/en3150_a03/model_b_experiment.py": "29c53944b6a9771cb63463e4938a5c9641725f69074f53834963b5f39e44c20d",
+    "src/en3150_a03/model_b_measure.py": "0ba1f7f4c6485ecb83282867d14e54a41ffb3b6c4bf5f2827f8970ce4dabe4bb",
+    "src/en3150_a03/model_a_train.py": "92796be1914c61141d5693d644d1ff1a542d313dc5370bcac7d79ba57eaa6dfd",
+    "src/en3150_a03/model_a_evaluate.py": "0a6de137a6f2a9a6a0369874095a88322119255d6b24b330915fea29da5f86f2",
+    "src/en3150_a03/model_a_metrics.py": "1fff3bb33a85647f9e475eb82c721ea418c992407c044e1067911c22ff5c00f8",
+    "src/en3150_a03/data.py": "de20d2aac212daecb2d137329969fdf7a612ae7a8794a9251c403ff888a01c17"
+  },
+  "environment": {
+    "platform": "Linux-6.6.122+-x86_64-with-glibc2.39",
+    "processor": "x86_64",
+    "python": "3.13.15",
+    "torch": "2.11.0+cu130",
+    "torchvision": "0.26.0+cu130",
+    "device": "cuda",
+    "gpu": "Tesla T4",
+    "cpu_threads": 1,
+    "git_commit": null,
+    "working_tree_dirty": null
+  }
+}
