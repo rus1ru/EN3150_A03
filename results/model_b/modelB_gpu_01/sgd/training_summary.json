@@ -1,0 +1,13 @@
+{
+  "optimizer": "sgd",
+  "learning_rate": 0.01,
+  "momentum": null,
+  "epochs": 20,
+  "best_epoch": 20,
+  "best_val_loss": 2.2705064669950508,
+  "mean_epoch_seconds": 11.581619519649962,
+  "checkpoint": "best_model.pt",
+  "history_csv": "training_history.csv",
+  "loss_curve": "loss_curves.png",
+  "timing_definition": "Training plus validation; synchronized device; excludes checkpoint/plot writes"
+}
