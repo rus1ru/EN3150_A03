@@ -22,6 +22,11 @@ IMAGE_SUFFIXES = {".jpg", ".jpeg", ".png"}
 SPLIT_NAMES = ("train", "val", "test")
 
 
+def _canonical_manifest_bytes(content: bytes) -> bytes:
+    """Normalize Git's Windows CRLF checkouts before comparing manifest checksums."""
+    return content.replace(b"\r\n", b"\n")
+
+
 def _safe_relative_path(raw: str) -> PurePosixPath:
     path = PurePosixPath(raw)
     if not raw or path.is_absolute() or "\\" in raw or ":" in raw or any(
@@ -110,7 +115,9 @@ def prepare_splits(image_root: Path, output_dir: Path, seed: int = 42) -> dict[s
     existing = [name for name in manifests if (output_dir / name).exists()]
     if existing:
         if len(existing) == len(manifests) and all(
-            (output_dir / name).read_bytes() == content for name, content in manifests.items()
+            _canonical_manifest_bytes((output_dir / name).read_bytes())
+            == _canonical_manifest_bytes(content)
+            for name, content in manifests.items()
         ):
             return metadata["counts"]
         raise FileExistsError(f"Split directory differs from requested seed/data: {output_dir}. "
@@ -152,7 +159,8 @@ def verify_splits(image_root: Path, split_dir: Path) -> dict:
     counts = {}
     for split in SPLIT_NAMES:
         manifest = split_dir / f"{split}.csv"
-        if hashlib.sha256(manifest.read_bytes()).hexdigest() != metadata["manifest_sha256"][manifest.name]:
+        content = _canonical_manifest_bytes(manifest.read_bytes())
+        if hashlib.sha256(content).hexdigest() != metadata["manifest_sha256"][manifest.name]:
             raise ValueError(f"Changed manifest: {manifest.name}")
         rows = _load_rows(image_root, manifest, class_to_idx)
         paths = {row["path"] for row in rows}

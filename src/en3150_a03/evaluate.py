@@ -1,1 +1,0 @@
-"""Shared evaluator. Implementation pending."""
