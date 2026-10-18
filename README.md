@@ -2,7 +2,7 @@
 
 A shared project for comparing two custom CNNs (standard and depthwise-separable) with two fine-tuned lightweight pretrained networks on low-resolution imagery.
 
-**Status:** The frozen EuroSAT RGB split and all four model experiments are implemented. Model B has 20-epoch Adam, SGD, and SGD-with-momentum results. The final group PDF report remains to be written.
+**Status:** The frozen EuroSAT RGB split and all four model experiments are implemented. The final Model B v2 has 60-epoch AdamW, SGD, and SGD-with-momentum results. The final group PDF report remains to be written.
 
 ## Assignment requirements
 
@@ -104,27 +104,27 @@ The default output is `results/efficientnet_b0/adam/{best.pt,metrics.json}`.
 Use a new `--output` path per experiment to avoid replacing a checkpoint.
 The values in `configs/models/efficientnet_b0.yaml` are starting choices, not
 validated performance claims. The training script selects CUDA automatically when available; otherwise it uses CPU.
-Model B is implemented and trained; see [`docs/model_b.md`](docs/model_b.md) and the [four-model comparison](results/comparisons/all_models_20261018/comparison.md).
+Model B v2 is implemented and trained; see [`docs/model_b_v2.md`](docs/model_b_v2.md) and the [updated comparison](results/comparisons/all_models_v2_20261018/comparison.md).
 
 ## Saved four-model results
 
-The linked [comparison table](results/comparisons/all_models_20261018/comparison.md) reads recorded test metrics and profiles at 64×64 resolution; it does not rerun training. Representative results are:
+The [updated comparison](results/comparisons/all_models_v2_20261018/comparison.md) reads the saved test metrics for the final Model B v2 (60 epochs per optimizer) and the other three models. It does not rerun training.
 
 | Model and run | Test accuracy | Trainable parameters | Conv/linear MACs per image |
 | --- | ---: | ---: | ---: |
-| [Model A, Adam](results/model_a/modelA_20261011/adam/test_metrics.json) | 75.80% | 25,994 | 11,209,024 |
-| [Model B, Adam](results/model_b/modelB_gpu_01/adam/test_metrics.json) | 59.14% | 5,589 | 1,579,328 |
+| [Model A, SGD with momentum](results/model_a/modelA_20261011/sgd_momentum/test_metrics.json) | 81.68% | 25,994 | 11,209,024 |
+| [Model B v2, AdamW](results/model_b/modelB_v2_adamw_01/test_metrics.json) | 98.12% | 96,538 | 21,358,976 |
 | [MobileNetV2, pretrained](results/mobilenet_v2/run_01/test_metrics.json) | 97.65% | 2,236,682 | 24,461,312 |
 | [EfficientNet-B0, pretrained](results/efficientnet_b0/adam/run_20261009_193426/metrics.json) | 97.85% | 4,020,358 | 31,979,392 |
 
-Model B was also trained with plain SGD (18.99%) and SGD with momentum (74.20%). These are single-run scores; do not select a preferred optimizer from held-out test accuracy. The A/B architecture comparison holds widths and preprocessing constant, but pretrained networks use different training recipes. Epoch times were measured on different machines, so they do **not** establish relative hardware speed. Model A and EfficientNet-B0 saved metadata do not include manifest hashes; see the [comparison caveats](results/comparisons/all_models_20261018/comparison.md).
+Final Model B v2 also scored 96.00% with plain SGD and 97.85% with SGD plus momentum. Unlike the superseded 5,589-parameter Model B v1, v2 uses a larger architecture, SE attention, augmentation, and a 60-epoch schedule: the Model A/B result does **not** isolate the effect of depthwise convolution. These are single-seed results; do not select a preferred optimizer by held-out test accuracy. Hardware timings are not comparable across machines. Model A and EfficientNet-B0 saved metadata do not include manifest hashes; see the [comparison caveats](results/comparisons/all_models_v2_20261018/comparison.md).
 
 ## Remaining workflow
 
 1. Dataset and shared PyTorch split are in place; Model A settings are documented above. Agree on remaining model-specific preprocessing and experiment settings.
 2. `scripts/prepare_data.py` creates/verifies `data/splits_torch_v1/{train,val,test}.csv`. Do not replace the published split; make a new version if it must change.
-3. The Model A and Model B architectures, parameter counts and 20-epoch optimizer runs are saved in their respective `results/` folders. MobileNetV2 and EfficientNet-B0 are also trained.
-4. Review the [four-model comparison](results/comparisons/all_models_20261018/comparison.md); model accuracies reflect different training recipes and hardware timings are not directly comparable.
+3. The Model A 20-epoch runs and final Model B v2 60-epoch runs are saved in their respective `results/` folders. MobileNetV2 and EfficientNet-B0 are also trained.
+4. Review the [updated four-model comparison](results/comparisons/all_models_v2_20261018/comparison.md); model accuracies reflect different training recipes and hardware timings are not directly comparable.
 5. Write, compile, and verify the final PDF report in `report/`, with citations and the group's required submission details.
 
 **Code and saved model results are present; the final group PDF remains unfinished.**

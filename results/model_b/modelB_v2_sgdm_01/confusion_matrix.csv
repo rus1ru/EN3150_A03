@@ -1,0 +1,11 @@
+actual / predicted,AnnualCrop,Forest,HerbaceousVegetation,Highway,Industrial,Pasture,PermanentCrop,Residential,River,SeaLake
+AnnualCrop,439,0,1,1,0,3,3,0,0,3
+Forest,1,443,1,0,0,5,0,0,0,0
+HerbaceousVegetation,0,0,440,0,0,4,6,0,0,0
+Highway,0,0,1,367,2,0,0,0,5,0
+Industrial,0,0,0,1,368,0,2,4,0,0
+Pasture,1,1,5,0,0,291,2,0,0,0
+PermanentCrop,8,0,9,1,1,0,355,0,1,0
+Residential,0,0,1,0,2,0,0,447,0,0
+River,2,0,2,3,0,0,0,0,366,2
+SeaLake,0,1,0,0,0,0,0,0,2,447

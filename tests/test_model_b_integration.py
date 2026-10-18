@@ -1,5 +1,5 @@
 """Entry-point guards, cross-version data setup and teammate result integration."""
-import copy
+import shutil
 import json
 import subprocess
 import sys
@@ -19,8 +19,8 @@ spec.loader.exec_module(compare)
 
 class ModelBIntegrationTests(unittest.TestCase):
     def test_cli_rejects_short_runs_before_touching_data(self):
-        for flag in (["--epochs", "19"], ["--run-id", ".."], ["--optimizers", "adam", "adam"]):
-            result = subprocess.run([sys.executable, str(ROOT / "scripts/run_model_b_experiments.py"), *flag],
+        for flag in (["--run-id", "guard", "--epochs", "19"], ["--run-id", ".."], ["--run-id", "guard", "--optimizer", "invalid"]):
+            result = subprocess.run([sys.executable, str(ROOT / "scripts/train_model_b_v2.py"), *flag],
                                     capture_output=True, text=True)
             self.assertNotEqual(result.returncode, 0)
             self.assertNotIn("Traceback", result.stderr)
@@ -47,30 +47,26 @@ class ModelBIntegrationTests(unittest.TestCase):
             self.assertEqual(before, {p.name: p.read_bytes() for p in splits.iterdir()})
 
     def test_comparison_reads_teammate_artifacts_without_modifying_them(self):
-        # Synthetic Model B metrics exercise integration; never saved as experiment results.
+        # Read the completed final run; all comparison output stays in a temporary directory.
         a = ROOT / "results/model_a/modelA_20261011"
         mobile = ROOT / "results/mobilenet_v2/run_01"
         tracked = [p for folder in (a, mobile) for p in folder.rglob("*") if p.is_file()]
         before = {p: p.read_bytes() for p in tracked}
-        metadata = json.loads((ROOT / "data/splits_torch_v1/metadata.json").read_text())
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             b = root / "b"
-            b.mkdir()
-            config = dict(dataset_sha256=metadata["dataset_sha256"], manifest_sha256=metadata["manifest_sha256"])
-            (b / "experiment_config.json").write_text(json.dumps(config))
-            result = copy.deepcopy(json.loads((a / "comparison.json").read_text())[0])
-            result["trainable_parameters"] = 5589
-            (b / "comparison.json").write_text(json.dumps([result]))
+            shutil.copytree(ROOT / "results/model_b/modelB_v2_adamw_01", b)
+            config = json.loads((b / "experiment_config.json").read_text())
             rows = compare.comparison(b, a, mobile, root / "combined")
             self.assertEqual(len(rows), 5)
-            self.assertEqual(next(r for r in rows if r["model"] == "ModelB")["macs"], 1_579_328)
+            self.assertEqual(next(r for r in rows if r["model"] == "ModelB")["macs"], 21_358_976)
             full = compare.comparison(b, a, mobile, root / "with_efficientnet",
                 ROOT / "results/efficientnet_b0/adam/run_20261009_193426")
             efficientnet = next(r for r in full if r["model"] == "EfficientNet-B0")
             self.assertEqual(len(full), 6)
             self.assertGreater(efficientnet["accuracy"], 0.97)
             self.assertEqual(before, {p: p.read_bytes() for p in tracked})
+            self.assertIn("missing sgd, sgd_momentum", (root / "combined/comparison.md").read_text())
             config["manifest_sha256"] = {"bad": "split"}
             (b / "experiment_config.json").write_text(json.dumps(config))
             with self.assertRaises(ValueError):
