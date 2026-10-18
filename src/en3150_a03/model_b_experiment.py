@@ -131,8 +131,8 @@ def write_report(output, config, results, profiles):
 
 def environment(device):
     try:
-        commit = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip()
-        dirty = bool(subprocess.check_output(["git", "status", "--porcelain"], cwd=ROOT, text=True).strip())
+        commit = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True, stderr=subprocess.DEVNULL).strip()
+        dirty = bool(subprocess.check_output(["git", "status", "--porcelain"], cwd=ROOT, text=True, stderr=subprocess.DEVNULL).strip())
     except (OSError, subprocess.CalledProcessError):
         commit, dirty = None, None
     return dict(platform=platform.platform(), processor=platform.processor(), python=platform.python_version(),
