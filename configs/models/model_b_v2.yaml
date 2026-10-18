@@ -1,0 +1,37 @@
+# Descriptive architecture/training specification; CLI options are the run interface.
+model: ModelBV2
+input_shape: [3, 64, 64]
+train_from_scratch: true
+trainable_parameters: 96538
+parameter_cap: 100000
+stem: {rgb_pointwise_channels: 24, depthwise_kernel: 3, depthwise_stride: 2}
+# [input channels, output channels, depthwise stride, squeeze/excitation]
+inverted_residual_blocks:
+  - [24, 24, 1, false]
+  - [24, 32, 1, false]
+  - [32, 32, 1, false]
+  - [32, 48, 2, false]
+  - [48, 48, 1, true]
+  - [48, 80, 2, false]
+  - [80, 80, 1, true]
+expansion_ratio: 2
+spatial_kernel: 3
+batch_normalization: true
+activation: relu6
+bottleneck_projection: linear
+attention: {reduction: 8, minimum_hidden_channels: 8, gate: hard_sigmoid}
+head: {pointwise_channels: 192, pooling: global_average, dropout: 0.1, classes: 10}
+normalization: per_channel_mean_std_computed_from_train_manifest_only
+augmentation: [horizontal_flip, vertical_flip, quarter_turn, reflected_crop_64_padding_4, mild_color_jitter]
+primary_optimizer: {name: adamw, lr: 0.003, weight_decay: 0.0001}
+comparison_optimizers:
+  adam: {lr: 0.003}
+  sgd: {lr: 0.05, momentum: 0}
+  sgd_momentum: {lr: 0.05, momentum: 0.9}
+no_weight_decay_for: [batchnorm_parameters, biases]
+label_smoothing: 0.05
+batch_size: 128
+epochs: 60
+schedule: {warmup_epochs: 5, decay: cosine, minimum_lr: 0.00001}
+selection: minimum_validation_plain_cross_entropy
+test_evaluation: explicit_final_step_only
