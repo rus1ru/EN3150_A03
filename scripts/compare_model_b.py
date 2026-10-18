@@ -72,7 +72,7 @@ def comparison(model_b_run, model_a_run, mobilenet_run, output):
     if not rows:
         raise ValueError('No results supplied')
     b_opts = {r['optimizer'] for r in rows if r['model']=='ModelB'}
-    missing = sorted({'sgd','sgd_momentum'} - b_opts)
+    missing = sorted({'adamw','sgd','sgd_momentum'} - b_opts)
     lines = ['# Final Model B integration comparison', '',
         'Read from saved runs. Checkpoints were selected using validation loss; this table does not select an optimizer by test performance.', '',
         '| Model | Optimizer | Test accuracy | Macro precision | Macro recall | Parameters | FP32 weights (KiB) | Conv/Linear MACs | Mean epoch (s) |',
@@ -82,6 +82,8 @@ def comparison(model_b_run, model_a_run, mobilenet_run, output):
         lines.append(f"| {row['model']} | {row['optimizer']} | {row['accuracy']:.4f} | {row['macro_precision']:.4f} | {row['macro_recall']:.4f} | {row['parameters']:,} | {row['fp32_weights_kib']:.2f} | {row['macs']:,} | {seconds} |")
     if missing:
         lines += ['', '**Final Model B optimizer comparison is incomplete:** missing '+', '.join(missing)+'. Train those optimizers on the same final architecture and recipe.']
+    else:
+        lines += ['', '**Final Model B optimizer comparison is complete:** the primary AdamW run and both SGD baselines are included.']
     lines += ['', 'Operation counts cover batch-one Conv2d and Linear layers at 64×64, including SE convolutions. One MAC is approximately two FLOPs. Bias adds, activations, pooling, batch normalization, residual additions, SE gate multiplication, memory traffic and framework overhead are excluded. These counts are not latency.', '',
         'Model A uses unaugmented ToTensor inputs. Final Model B uses train-only normalization, augmentation, a primary AdamW optimizer, a longer schedule and a larger custom architecture; MobileNetV2 uses pretrained weights and ImageNet preprocessing. Accuracy compares complete recipes, not an isolated convolution change. FP32 weights exclude runtime activations and optimizer state. Epoch times from different devices/runs cannot establish architecture speedups.', '',
         "Model A's saved metadata identifies the dataset and class order but lacks split manifest hashes, so that run's exact image split cannot be independently proven. Model B and MobileNetV2 manifest hashes match the canonical split.", '',

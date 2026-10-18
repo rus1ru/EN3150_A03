@@ -48,6 +48,30 @@
     "source": "results/model_b/modelB_v2_adamw_01"
   },
   {
+    "model": "ModelB",
+    "optimizer": "sgd",
+    "accuracy": 0.96,
+    "macro_precision": 0.9597853093007499,
+    "macro_recall": 0.9582888888888889,
+    "parameters": 96538,
+    "fp32_weights_kib": 377.1015625,
+    "macs": 21358976,
+    "mean_epoch_seconds": 24.72828584911654,
+    "source": "results/model_b/modelB_v2_sgd_01"
+  },
+  {
+    "model": "ModelB",
+    "optimizer": "sgd_momentum",
+    "accuracy": 0.9785185185185186,
+    "macro_precision": 0.9779677653495664,
+    "macro_recall": 0.9777111111111111,
+    "parameters": 96538,
+    "fp32_weights_kib": 377.1015625,
+    "macs": 21358976,
+    "mean_epoch_seconds": 23.893772614799992,
+    "source": "results/model_b/modelB_v2_sgdm_01"
+  },
+  {
     "model": "MobileNetV2",
     "optimizer": "adam_two_stage",
     "accuracy": 0.9765432098765432,

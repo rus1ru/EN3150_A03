@@ -6,22 +6,38 @@ Contribution: KavijaK. This is the final Model B implementation. The `v2` filena
 
 1. Upload `notebooks/train_model_b_v2_colab.ipynb` to Colab and choose a T4 GPU runtime.
 2. Run setup and upload `EN3150_A03_ModelB_v2_Code.zip` when prompted. Mount Drive when asked.
-3. Configure a new run from the remaining-optimizer instructions below, then train for **60 epochs**. The default AdamW recipe is already complete. Training checkpoints are saved every epoch to `MyDrive/EN3150_A03/model_b/<RUN_ID>/`.
+3. All required Model B experiments are complete. To reproduce an experiment, choose its optimizer below and a new run ID, then train for **60 epochs**. Training checkpoints are saved every epoch to `MyDrive/EN3150_A03/model_b/<RUN_ID>/`.
 4. Review validation. When the recipe is fixed, set `EVALUATE_FINAL_TEST = True` and run the final-test cell.
 5. Run the report/export cell. Extract the downloaded integration ZIP into the repository, review and commit only the new run directory. Keep checkpoint files on Drive.
 
 For interruptions: use the same ZIP and settings, set `RESUME = True`, and rerun setup/training. Resume preserves completed epochs and checks the source, data, split and runtime versions. Start a fresh runtime and new run ID when changing code. For out-of-memory errors, start a new run with batch size 64. The archive excludes the raw dataset and trained checkpoints; setup downloads and verifies the official data.
 
-## Verified result
+## Verified final results
 
-The user completed 60 epochs with AdamW on a Colab Tesla T4. The selected checkpoint is epoch 59 (validation accuracy **97.58%**, validation loss **0.10745**). Final test accuracy is **98.1235%** (3,974/4,050 images), macro precision **98.1205%**, and macro recall **97.9911%**. Mean training-plus-validation time was **25.11 seconds per epoch** on that run.
+All three optimizer experiments completed **60 epochs** on a Colab Tesla T4, using the same final architecture, 70/15/15 split, seed 42, batch size 128, augmentation, normalization and epoch budget. AdamW was the predeclared primary optimizer. Checkpoints were selected independently by minimum validation cross-entropy, then evaluated on the 4,050-image test split.
 
-The original exported metrics, history, curves, confusion matrix, configuration and architecture profile are saved under [`results/model_b/modelB_v2_adamw_01`](../results/model_b/modelB_v2_adamw_01/). Source hashes and split hashes match; accuracy/precision/recall were independently checked against the saved confusion matrix. The checkpoint itself remains in Google Drive, as intended by the export workflow.
+| Optimizer | Peak LR | Selected epoch | Validation accuracy | Test accuracy | Macro precision | Macro recall | Mean epoch (s) |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| AdamW (primary) | 0.003 | 59 | 97.58% | 98.12% | 98.12% | 97.99% | 25.11 |
+| SGD | 0.05 | 57 | 95.36% | 96.00% | 95.98% | 95.83% | 24.73 |
+| SGD + momentum | 0.05 | 59 | 97.83% | 97.85% | 97.80% | 97.77% | 23.89 |
 
-- [Final experiment report](../results/model_b/modelB_v2_adamw_01/report/experiment_report.md)
-- [Read-only comparison with teammates' results](../results/model_b/final_comparison/comparison.md)
+The original exported metrics, histories, curves, confusion matrices, settings and architecture profiles are preserved. Source hashes and split hashes match the repository. Accuracy, macro precision and macro recall were independently recomputed from each saved confusion matrix. The downloaded primary archive is **AdamW**, not ordinary Adam.
 
-The primary AdamW experiment is complete. **Required remaining Model B work: train and evaluate plain SGD and momentum SGD on this same final architecture.** Do not rerun the completed AdamW experiment just to reproduce the already saved scores.
+- [AdamW (primary): complete run and report](../results/model_b/modelB_v2_adamw_01/report/experiment_report.md)
+- [SGD: complete run and report](../results/model_b/modelB_v2_sgd_01/report/experiment_report.md)
+- [SGD + momentum: complete run and report](../results/model_b/modelB_v2_sgdm_01/report/experiment_report.md)
+- [Final comparison with teammates' saved results](../results/model_b/final_comparison/comparison.md)
+
+**Model B is complete from this contribution's side:** architecture, primary optimizer, SGD and momentum comparison, histories/curves, test metrics, per-class scores, confusion matrices, parameter/memory/compute accounting, reproducible code and reports are included. No additional mandatory Model B training is outstanding. Checkpoints/weights remain in Google Drive and are intentionally excluded from Git; retain them for submission or independent checkpoint evaluation.
+
+## Optimizer interpretation
+
+At the shared 0.05 peak learning rate, momentum SGD improved test accuracy from 96.00% to 97.85%: **1.85 percentage points**, or 75 additional correct predictions. It first reached 95% validation accuracy at epoch **17**, compared with **38** for plain SGD (AdamW: epoch **20**). This first-crossing statistic describes convergence on these curves; it is not a guarantee of sustained accuracy or a multi-seed estimate.
+
+AdamW recorded 3,974/4,050 correct predictions, plain SGD 3,888/4,050, and momentum SGD 3,963/4,050. AdamW's test advantage over momentum SGD is only **0.27 percentage points** (11 images). Momentum SGD had slightly higher validation accuracy at its selected checkpoint (97.83% versus 97.58%), while their selected validation losses were very close (0.10759 versus 0.10745). Keep AdamW as the predeclared primary recipe; do not claim statistical superiority from this single seed or select a winner by test accuracy.
+
+All runs share the same architecture and data recipe; optimizer behavior differs, including AdamW's decoupled weight decay versus SGD's coupled decay and different peak learning rates. These are documented settings, not equally tuned optimizer optima. Epoch times are recorded on T4 but are not deployment/inference benchmarks.
 
 ## Architecture
 
@@ -57,36 +73,31 @@ Batch size one, RGB 64×64, one MAC is approximately two FLOPs. Counts include a
 
 The immutable 70/15/15 split is reused. The image-level split does not establish geographical independence. Model A and final Model B differ in architecture and training recipe. Their accuracy difference cannot be attributed to attention or depthwise convolution alone.
 
-## Remaining optimizer comparison
+## Reproduce the completed optimizer comparison
 
-The assignment checklist requires a chosen primary optimizer compared with plain SGD and SGD with momentum. AdamW is the documented primary optimizer. Run SGD and momentum SGD with new run IDs, keeping the final architecture, split, seed, batch size, augmentation and 60-epoch budget fixed. Both default to peak learning rate 0.05; momentum SGD uses momentum 0.9. Disclose these settings versus AdamW's 0.003; these are documented recipes, not equally tuned optimizer optima. A separate Adam run is optional.
-
-In the Colab settings cell, use `RUN_ID = "modelB_v2_sgd_01"` and `OPTIMIZER = "sgd"`, then repeat with `RUN_ID = "modelB_v2_sgdm_01"` and `OPTIMIZER = "sgd_momentum"`. Keep `RESUME = False` for each new run. After each completes, run the final-test and export cells. These produce the two remaining result ZIPs. Use a fresh runtime and the final code archive if uploading the cleaned code; do not mix source versions in an existing runtime.
-
-Example from the repository root:
+AdamW uses peak learning rate 0.003. Plain SGD and momentum SGD use 0.05; momentum is 0.9 for the latter. Keep the 60-epoch budget and other saved settings. Use **new run IDs** when repeating an experiment; the three committed result directories are completed records.
 
 ```sh
-python scripts/train_model_b_v2.py --run-id modelB_v2_sgd_01 --optimizer sgd --device cuda
-python scripts/train_model_b_v2.py --run-id modelB_v2_sgdm_01 --optimizer sgd_momentum --device cuda
-python scripts/train_model_b_v2.py --run-id modelB_v2_no_se_01 --no-attention --device cuda
+python scripts/train_model_b_v2.py --run-id modelB_adamw_repeat --optimizer adamw --device cuda
+python scripts/train_model_b_v2.py --run-id modelB_sgd_repeat --optimizer sgd --device cuda
+python scripts/train_model_b_v2.py --run-id modelB_sgdm_repeat --optimizer sgd_momentum --device cuda
 ```
 
-The no-attention run is optional research, not an outstanding assignment requirement. It keeps widths, depth and training unchanged but has fewer parameters; it tests the attention module's contribution, not a parameter-matched substitute. Use validation to choose configurations. If making a stronger comparative claim, repeat the fixed selected recipe with seeds 42, 43 and 44 and report mean/spread; do not select a seed by test accuracy.
+After each repeated run, review validation before using `--evaluate-only` for final test evaluation. The notebook mounts Drive and exports the small integration files. In a fresh runtime, use the same source archive for checkpoint recovery; do not mix source versions mid-run. The YAML is a descriptive specification; CLI options control execution.
 
-Final evaluation and report generation:
+To refresh a run's derived report without changing its metrics:
 
 ```sh
-python scripts/train_model_b_v2.py --run-id modelB_v2_adamw_01 --evaluate-only --device cuda
 python scripts/report_model_b_v2.py --run-dir results/model_b/modelB_v2_adamw_01 --output-dir results/model_b/modelB_v2_adamw_01/report
 ```
 
-The report command refreshes only its derived Markdown report. After importing the SGD and momentum-SGD ZIPs, regenerate the comparison into a new directory with all three `--model-b-run` paths:
+To rebuild the comparison in a new output directory:
 
 ```sh
-python scripts/compare_model_b.py --model-b-run results/model_b/modelB_v2_adamw_01 results/model_b/modelB_v2_sgd_01 results/model_b/modelB_v2_sgdm_01 --output-dir results/model_b/complete_optimizer_comparison
+python scripts/compare_model_b.py --model-b-run results/model_b/modelB_v2_adamw_01 results/model_b/modelB_v2_sgd_01 results/model_b/modelB_v2_sgdm_01 --output-dir results/model_b/comparison_rebuilt
 ```
 
-Colab supplies Drive paths automatically. Direct commands default to the repository's `results/model_b/` directory. The YAML configuration is a descriptive specification; CLI arguments control execution.
+Additional Adam, attention-ablation or multi-seed experiments are optional. An attention ablation is needed only to make a specific causal claim about that module, and repeat seeds are needed for stronger statistical claims. They are not missing from the required Model B optimizer comparison.
 
 ## Paper foundations
 

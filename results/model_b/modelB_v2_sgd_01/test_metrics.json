@@ -1,0 +1,214 @@
+{
+  "accuracy": 0.96,
+  "macro_precision": 0.9597853093007499,
+  "macro_recall": 0.9582888888888889,
+  "per_class": {
+    "AnnualCrop": {
+      "precision": 0.9454148471615721,
+      "recall": 0.9622222222222222,
+      "support": 450
+    },
+    "Forest": {
+      "precision": 0.9866071428571429,
+      "recall": 0.9822222222222222,
+      "support": 450
+    },
+    "HerbaceousVegetation": {
+      "precision": 0.9184549356223176,
+      "recall": 0.9511111111111111,
+      "support": 450
+    },
+    "Highway": {
+      "precision": 0.9568733153638814,
+      "recall": 0.9466666666666667,
+      "support": 375
+    },
+    "Industrial": {
+      "precision": 0.9604221635883905,
+      "recall": 0.9706666666666667,
+      "support": 375
+    },
+    "Pasture": {
+      "precision": 0.9593220338983051,
+      "recall": 0.9433333333333334,
+      "support": 300
+    },
+    "PermanentCrop": {
+      "precision": 0.9419889502762431,
+      "recall": 0.9093333333333333,
+      "support": 375
+    },
+    "Residential": {
+      "precision": 0.9866369710467706,
+      "recall": 0.9844444444444445,
+      "support": 450
+    },
+    "River": {
+      "precision": 0.9619565217391305,
+      "recall": 0.944,
+      "support": 375
+    },
+    "SeaLake": {
+      "precision": 0.9801762114537445,
+      "recall": 0.9888888888888889,
+      "support": 450
+    }
+  },
+  "confusion_matrix": [
+    [
+      433,
+      2,
+      2,
+      1,
+      0,
+      4,
+      2,
+      0,
+      1,
+      5
+    ],
+    [
+      0,
+      442,
+      2,
+      0,
+      0,
+      5,
+      0,
+      0,
+      0,
+      1
+    ],
+    [
+      2,
+      2,
+      428,
+      1,
+      1,
+      2,
+      10,
+      2,
+      1,
+      1
+    ],
+    [
+      1,
+      0,
+      1,
+      355,
+      5,
+      0,
+      7,
+      0,
+      6,
+      0
+    ],
+    [
+      0,
+      0,
+      2,
+      4,
+      364,
+      0,
+      1,
+      4,
+      0,
+      0
+    ],
+    [
+      5,
+      2,
+      8,
+      0,
+      0,
+      283,
+      1,
+      0,
+      1,
+      0
+    ],
+    [
+      10,
+      0,
+      21,
+      0,
+      2,
+      0,
+      341,
+      0,
+      1,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      1,
+      6,
+      0,
+      0,
+      443,
+      0,
+      0
+    ],
+    [
+      6,
+      0,
+      2,
+      9,
+      1,
+      1,
+      0,
+      0,
+      354,
+      2
+    ],
+    [
+      1,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      4,
+      445
+    ]
+  ],
+  "class_names": [
+    "AnnualCrop",
+    "Forest",
+    "HerbaceousVegetation",
+    "Highway",
+    "Industrial",
+    "Pasture",
+    "PermanentCrop",
+    "Residential",
+    "River",
+    "SeaLake"
+  ],
+  "trainable_parameters": 96538,
+  "estimated_float32_size_kb": 377.1015625,
+  "model": "ModelBV2",
+  "optimizer": "sgd",
+  "best_epoch": 57,
+  "best_validation_loss": 0.16752038896083832,
+  "best_validation_accuracy": 0.9535802602767944,
+  "total_parameters": 96538,
+  "macs": 21358976,
+  "mac_convention": "Batch-one Conv2d and Linear only; one multiply-accumulate = one MAC (approximately two FLOPs). Bias adds, activations, pooling, memory traffic and framework overhead excluded. This is operation count, not latency. Also excludes BN, residual additions and SE elementwise gates. Includes SE Conv2d MACs.",
+  "mean_epoch_seconds": 24.72828584911654,
+  "dataset_sha256": "548a976e7d3f714d69f2a93f1abaf6261494537faa33af10f762ad7614644dd1",
+  "manifest_sha256": {
+    "class_to_idx.json": "f5f85be6ee3c28e1c91d7b1701500f213c4ed2fbc28cb7346efcd9ec1492c6dc",
+    "test.csv": "3342e7a21356fdad0287193535c1dfa6334dd306606cebebbd268f7ff385c98a",
+    "train.csv": "8f5ae8a0f005ea8ebdf5f1e58ad68958d64298e22c65f9b7c7f8d132f70ad8d5",
+    "val.csv": "89cc8a34de0b677311e11d361c6d1404c6a31d849a49186ac4c65774d18e8c4b"
+  },
+  "saved_model_size_bytes": 449739,
+  "accuracy_wilson_95": [
+    0.9535161069468359,
+    0.9656120922807512
+  ]
+}
