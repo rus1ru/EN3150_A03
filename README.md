@@ -30,21 +30,22 @@ PYTHONPATH=src .venv/bin/python -m unittest discover -s tests -p test_splits.py 
 
 Each teammate downloads their own images, verifies the committed split, and trains on the **same file IDs**. Never regenerate a split per model. PRs changing these manifests need explicit group review.
 
-## Model A: compact standard CNN
+## Model A: resource-conscious standard CNN
 
-`src/en3150_a03/models/model_a.py` implements three repeated standard-convolution blocks for 64×64 RGB input. Each block uses a 3×3 `Conv2d` with stride 1 and padding 1, ReLU, then 2×2 max pooling with stride 2. Channel/spatial sizes are `3×64×64 → 16×32×32 → 32×16×16 → 64×8×8`. Adaptive average pooling reduces the final map to 64 values, followed by fully connected layers `64 → 32 → 10` (10 EuroSAT classes).
+`src/en3150_a03/models/model_a.py` implements four standard-convolution blocks for 64×64 RGB input. Each block uses a 3×3 `Conv2d` with stride 1 and padding 1, ReLU, then 2×2 max pooling with stride 2. Channel/spatial sizes are `3×64×64 → 32×32×32 → 64×16×16 → 96×8×8 → 112×4×4`. Adaptive average pooling reduces the final map to 112 values, followed by fully connected layers `112 → 192 → 10` (10 EuroSAT classes). The wider network is around 200,000 parameters, while pooling each block and global average pooling constrain feature-map and classifier costs.
 
 | Layer | Parameter calculation | Trainable parameters |
 | --- | --- | ---: |
-| Conv2d, 3→16, 3×3 + bias | 16 × (3 × 3 × 3 + 1) | 448 |
-| Conv2d, 16→32, 3×3 + bias | 32 × (16 × 3 × 3 + 1) | 4,640 |
+| Conv2d, 3→32, 3×3 + bias | 32 × (3 × 3 × 3 + 1) | 896 |
 | Conv2d, 32→64, 3×3 + bias | 64 × (32 × 3 × 3 + 1) | 18,496 |
+| Conv2d, 64→96, 3×3 + bias | 96 × (64 × 3 × 3 + 1) | 55,392 |
+| Conv2d, 96→112, 3×3 + bias | 112 × (96 × 3 × 3 + 1) | 96,880 |
 | Global average pool | No learned parameters | 0 |
-| Linear, 64→32 + bias | 64 × 32 + 32 | 2,080 |
-| Linear, 32→10 + bias | 32 × 10 + 10 | 330 |
-| **Total** |  | **25,994** |
+| Linear, 112→192 + bias | 112 × 192 + 192 | 21,696 |
+| Linear, 192→10 + bias | 192 × 10 + 10 | 1,930 |
+| **Total** |  | **195,290** |
 
-At four bytes per FP32 weight, the estimated weights-only footprint is `25,994 × 4 / 1,024 = 101.54 KiB` (103.98 decimal kB). The actual saved `.pt` size, including checkpoint metadata, is recorded separately. ReLU is used because it is a simple max-with-zero operation supported efficiently by common CPU, DSP, and quantized inference kernels; unlike sigmoid/tanh, it does not require an exponential and is less prone to saturating small gradients. In-place ReLUs can reuse activation storage. Max pooling and global average pooling reduce later activation and dense-layer cost.
+At four bytes per FP32 weight, the estimated weights-only footprint is `195,290 × 4 / 1,024 = 762.85 KiB` (781.16 decimal kB). The actual saved `.pt` size, including checkpoint metadata, is recorded separately. ReLU is used because it is a simple max-with-zero operation supported efficiently by common CPU, DSP, and quantized inference kernels; unlike sigmoid/tanh, it does not require an exponential and is less prone to saturating small gradients. In-place ReLUs can reuse activation storage. Pooling after every convolution halves the spatial dimensions before the next wider layer; adaptive global average pooling keeps the classifier small rather than flattening the full 112×4×4 activation map.
 
 ## Train and compare Model A optimizers
 
@@ -56,15 +57,23 @@ python scripts/run_model_a_experiments.py --epochs 20 --batch-size 64
 
 The runner requires at least 20 epochs; use a larger value for longer runs. It selects the checkpoint with the lowest validation loss and evaluates that checkpoint on the held-out test set exactly once per optimizer. The same canonical split, batch size, seed, model initialization seed, and loss are used for each comparison. No test data is used for checkpoint selection.
 
+Model A training and evaluation default to the first CUDA GPU (`cuda:0`), and fail rather than silently falling back to CPU. Before running, check that this Python environment has a CUDA-enabled PyTorch build:
+
+```powershell
+py -c "import torch; print(torch.__version__, torch.version.cuda, torch.cuda.is_available()); print(torch.cuda.get_device_name(0) if torch.cuda.is_available() else 'No CUDA GPU visible')"
+```
+
+`torch.version.cuda` must not be `None`, and `torch.cuda.is_available()` must be `True`. Install a CUDA-enabled PyTorch build into the same Python environment used to launch the experiment; choose the Windows/Pip/Python/CUDA command from [PyTorch's installation selector](https://pytorch.org/get-started/locally/). If multiple CUDA GPUs are visible, choose one with `--device cuda:1` (or another available index). Use `--device cpu` only to explicitly run on the CPU.
+
 | Optimizer | Learning rate | Momentum | Role and rationale |
 | --- | ---: | ---: | --- |
-| Adam | 0.001 | — | Primary: per-parameter adaptive steps are a robust starting point for training a compact CNN without a learning-rate schedule. |
+| Adam | 0.001 | — | Primary: per-parameter adaptive steps are a robust starting point for this resource-constrained CNN without a learning-rate schedule. |
 | SGD | 0.01 | — | Plain-SGD reference; uses the same fixed learning rate throughout. |
 | SGD | 0.01 | 0.9 | Momentum reference; accumulates a smoothed gradient direction, which can accelerate progress in consistently descending directions and damp batch-to-batch oscillation. Excessive momentum can overshoot and make validation performance less stable; compare the recorded curves and test metrics rather than assuming it wins. |
 
 All runs use cross-entropy loss, no weight decay, and no scheduler. The selected checkpoint rule, optimizer settings, and split are saved with each result.
 
-The run creates `results/model_a/<run-id>/experiment_report.md`, a single shareable report with the architecture/parameter calculations and hardware/optimizer justifications, the measured comparison table, per-optimizer confusion matrices and class scores, plus links to the loss curves. The same directory contains experiment settings/environment and, for each optimizer, `best_model.pt`, `training_history.csv`, `loss_curves.png`, `training_summary.json`, and `test_metrics.json`, plus machine-readable `comparison.csv` and `comparison.json`. Test metrics include accuracy, macro and per-class precision/recall, confusion matrix, trainable parameter count, estimated FP32 weight size, actual checkpoint size, best validation epoch, and mean training-plus-validation seconds per epoch. Device defaults to CUDA when available and otherwise CPU. Set `--device cpu`/`--device cuda`, or use `--num-workers` to configure the input pipeline. Keep the test split for final reporting only.
+The run creates `results/model_a/<run-id>/experiment_report.md`, a single shareable report with the architecture/parameter calculations and hardware/optimizer justifications, the measured comparison table, per-optimizer confusion matrices and class scores, plus links to the loss curves. The same directory contains experiment settings/environment and, for each optimizer, `best_model.pt`, `training_history.csv`, `loss_curves.png`, `training_summary.json`, and `test_metrics.json`, plus machine-readable `comparison.csv` and `comparison.json`. Test metrics include accuracy, macro and per-class precision/recall, confusion matrix, trainable parameter count, estimated FP32 weight size, actual checkpoint size, best validation epoch, and mean training-plus-validation seconds per epoch. Training and evaluation default to `cuda:0` and stop with an explicit error if CUDA is unavailable; use `--device cpu` to opt into CPU execution. A CUDA-enabled PyTorch build and working NVIDIA driver are required. Use `--device cuda:1` to select another visible GPU, or use `--num-workers` to configure the input pipeline. Keep the test split for final reporting only. Use a new run ID after architecture changes; existing result folders are historical and are not overwritten.
 
 To train just one optimizer, use `scripts/train_model_a.py --optimizer adam --output-dir results/model_a/adam_single --epochs 20`. To evaluate an existing checkpoint independently, use `scripts/evaluate_model_a.py --checkpoint <path-to-best_model.pt>`.
 

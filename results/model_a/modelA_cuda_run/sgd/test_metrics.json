@@ -1,0 +1,203 @@
+{
+  "accuracy": 0.4691358024691358,
+  "macro_precision": 0.4850918015806629,
+  "macro_recall": 0.4600000000000001,
+  "per_class": {
+    "AnnualCrop": {
+      "precision": 0.356353591160221,
+      "recall": 0.86,
+      "support": 450
+    },
+    "Forest": {
+      "precision": 0.6365105008077544,
+      "recall": 0.8755555555555555,
+      "support": 450
+    },
+    "HerbaceousVegetation": {
+      "precision": 0.6307692307692307,
+      "recall": 0.36444444444444446,
+      "support": 450
+    },
+    "Highway": {
+      "precision": 0.3333333333333333,
+      "recall": 0.06133333333333333,
+      "support": 375
+    },
+    "Industrial": {
+      "precision": 0.5245664739884393,
+      "recall": 0.968,
+      "support": 375
+    },
+    "Pasture": {
+      "precision": 0.31868131868131866,
+      "recall": 0.38666666666666666,
+      "support": 300
+    },
+    "PermanentCrop": {
+      "precision": 0.18181818181818182,
+      "recall": 0.016,
+      "support": 375
+    },
+    "Residential": {
+      "precision": 0.5464285714285714,
+      "recall": 0.34,
+      "support": 450
+    },
+    "River": {
+      "precision": 0.32245681381957775,
+      "recall": 0.448,
+      "support": 375
+    },
+    "SeaLake": {
+      "precision": 1.0,
+      "recall": 0.28,
+      "support": 450
+    }
+  },
+  "confusion_matrix": [
+    [
+      387,
+      6,
+      3,
+      5,
+      5,
+      9,
+      0,
+      6,
+      29,
+      0
+    ],
+    [
+      0,
+      394,
+      3,
+      0,
+      0,
+      50,
+      0,
+      0,
+      3,
+      0
+    ],
+    [
+      164,
+      2,
+      164,
+      8,
+      32,
+      18,
+      5,
+      33,
+      24,
+      0
+    ],
+    [
+      147,
+      1,
+      5,
+      23,
+      56,
+      17,
+      2,
+      25,
+      99,
+      0
+    ],
+    [
+      8,
+      0,
+      0,
+      0,
+      363,
+      0,
+      3,
+      1,
+      0,
+      0
+    ],
+    [
+      23,
+      19,
+      16,
+      5,
+      0,
+      116,
+      0,
+      6,
+      115,
+      0
+    ],
+    [
+      256,
+      0,
+      29,
+      10,
+      21,
+      3,
+      6,
+      20,
+      30,
+      0
+    ],
+    [
+      44,
+      0,
+      23,
+      2,
+      192,
+      1,
+      17,
+      153,
+      18,
+      0
+    ],
+    [
+      57,
+      21,
+      4,
+      15,
+      20,
+      84,
+      0,
+      6,
+      168,
+      0
+    ],
+    [
+      0,
+      176,
+      13,
+      1,
+      3,
+      66,
+      0,
+      30,
+      35,
+      126
+    ]
+  ],
+  "class_names": [
+    "AnnualCrop",
+    "Forest",
+    "HerbaceousVegetation",
+    "Highway",
+    "Industrial",
+    "Pasture",
+    "PermanentCrop",
+    "Residential",
+    "River",
+    "SeaLake"
+  ],
+  "trainable_parameters": 195290,
+  "estimated_float32_size_kb": 762.8515625,
+  "optimizer": "sgd",
+  "learning_rate": 0.01,
+  "momentum": null,
+  "best_epoch": 19,
+  "best_validation_loss": 1.406624906386858,
+  "mean_epoch_seconds": 55.31653796500759,
+  "checkpoint_file_size_kb": 767.033203125,
+  "checkpoint": "D:\\Important Files\\University\\Files\\Sem 5\\EN3150 - Pattern Recognition\\EN3150 - Assignments\\EN3150_A03\\results\\model_a\\modelA_cuda_run\\sgd\\best_model.pt",
+  "training_history_csv": "D:\\Important Files\\University\\Files\\Sem 5\\EN3150 - Pattern Recognition\\EN3150 - Assignments\\EN3150_A03\\results\\model_a\\modelA_cuda_run\\sgd\\training_history.csv",
+  "loss_curve": "D:\\Important Files\\University\\Files\\Sem 5\\EN3150 - Pattern Recognition\\EN3150 - Assignments\\EN3150_A03\\results\\model_a\\modelA_cuda_run\\sgd\\loss_curves.png"
+}

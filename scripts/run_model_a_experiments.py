@@ -17,6 +17,7 @@ import torch
 from torchvision.transforms import ToTensor
 
 from en3150_a03.data import get_dataloaders
+from en3150_a03.model_a_device import resolve_device
 from en3150_a03.model_a_evaluate import evaluate_model, load_checkpoint, save_evaluation
 from en3150_a03.models.model_a import ModelA, count_trainable_parameters
 from en3150_a03.model_a_train import make_optimizer, train_model
@@ -28,7 +29,7 @@ OPTIMIZERS = {
 }
 
 OPTIMIZER_RATIONALES = {
-    "adam": "Primary optimizer: adaptive per-parameter updates are a practical baseline for this compact CNN without a learning-rate schedule.",
+    "adam": "Primary optimizer: adaptive per-parameter updates are a practical baseline for this resource-constrained CNN without a learning-rate schedule.",
     "sgd": "Plain-SGD reference using the same fixed learning rate throughout training.",
     "sgd_momentum": (
         "Momentum (0.9) accumulates a smoothed gradient direction. It can accelerate "
@@ -60,17 +61,19 @@ def write_experiment_report(run_dir: Path, run_config: dict, results: list[dict]
         "Input is a 3×64×64 RGB image. Each standard convolution uses a 3×3 kernel, "
         "stride 1, padding 1, and a bias; each is followed by ReLU and 2×2 max pooling "
         "with stride 2. The channel/spatial progression is "
-        "`3×64×64 → 16×32×32 → 32×16×16 → 64×8×8`. Adaptive average pooling "
-        "produces 64 features, followed by fully connected layers `64 → 32 → 10`.",
+        "`3×64×64 → 32×32×32 → 64×16×16 → 96×8×8 → 112×4×4`. Adaptive average "
+        "pooling produces 112 features, followed by fully connected layers "
+        "`112 → 192 → 10`.",
         "",
         "| Layer | Parameter calculation | Parameters |",
         "| --- | --- | ---: |",
-        "| Conv2d 3→16 | 16 × (3 × 3 × 3 + 1) | 448 |",
-        "| Conv2d 16→32 | 32 × (16 × 3 × 3 + 1) | 4,640 |",
+        "| Conv2d 3→32 | 32 × (3 × 3 × 3 + 1) | 896 |",
         "| Conv2d 32→64 | 64 × (32 × 3 × 3 + 1) | 18,496 |",
+        "| Conv2d 64→96 | 96 × (64 × 3 × 3 + 1) | 55,392 |",
+        "| Conv2d 96→112 | 112 × (96 × 3 × 3 + 1) | 96,880 |",
         "| Adaptive average pooling | No learned weights | 0 |",
-        "| Linear 64→32 | 64 × 32 + 32 | 2,080 |",
-        "| Linear 32→10 | 32 × 10 + 10 | 330 |",
+        "| Linear 112→192 | 112 × 192 + 192 | 21,696 |",
+        "| Linear 192→10 | 192 × 10 + 10 | 1,930 |",
         f"| **Total** |  | **{results[0]['trainable_parameters']:,}** |",
         "",
         "At FP32, the weights-only estimate is "
@@ -83,8 +86,9 @@ def write_experiment_report(run_dir: Path, run_config: dict, results: list[dict]
         "ReLU computes max(0, x), avoiding the exponential used by sigmoid/tanh and "
         "being less prone to saturating gradients. It is supported efficiently by "
         "common CPUs, DSPs, and quantized inference kernels. In-place ReLU can reuse "
-        "activation storage. Max pooling and global average pooling reduce the spatial "
-        "activation footprint and the classifier input size.",
+        "activation storage. Pooling after every convolution halves width and height "
+        "before the next block, limiting the activation memory used by the wider layers; "
+        "global average pooling also avoids a large flatten-and-dense layer.",
         "",
         "## Optimizer comparison and held-out test results",
         "",
@@ -152,7 +156,11 @@ def main() -> None:
     parser.add_argument("--batch-size", type=int, default=64)
     parser.add_argument("--num-workers", type=int, default=0)
     parser.add_argument("--seed", type=int, default=42)
-    parser.add_argument("--device", default="auto", help="auto, cpu, cuda, or another torch device")
+    parser.add_argument(
+        "--device",
+        default="cuda:0",
+        help="device for training and evaluation (default: cuda:0; use cpu to opt out)",
+    )
     args = parser.parse_args()
     if args.epochs < 20:
         parser.error("--epochs must be at least 20")
@@ -164,13 +172,10 @@ def main() -> None:
     run_dir = args.results_dir / args.run_id
     if run_dir.exists():
         parser.error(f"Run directory already exists; choose another --run-id: {run_dir}")
-    device = torch.device(
-        "cuda" if args.device == "auto" and torch.cuda.is_available()
-        else "cpu" if args.device == "auto"
-        else args.device
-    )
-    if device.type == "cuda" and not torch.cuda.is_available():
-        parser.error("CUDA was requested but is not available")
+    try:
+        device = resolve_device(args.device)
+    except (RuntimeError, ValueError) as exc:
+        parser.error(str(exc))
 
     loaders = get_dataloaders(
         args.data_root,

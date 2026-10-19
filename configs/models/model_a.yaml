@@ -1,13 +1,14 @@
-# Model A: standard Conv2d + ReLU + MaxPool2d blocks for EuroSAT RGB 64x64.
+# Model A: approximately 200k parameters, standard Conv2d + ReLU + MaxPool2d.
 model: model_a
 input_channels: 3
 input_size: 64
 convolution_blocks:
-  - {out_channels: 16, kernel_size: 3, padding: 1, pool_size: 2}
   - {out_channels: 32, kernel_size: 3, padding: 1, pool_size: 2}
   - {out_channels: 64, kernel_size: 3, padding: 1, pool_size: 2}
+  - {out_channels: 96, kernel_size: 3, padding: 1, pool_size: 2}
+  - {out_channels: 112, kernel_size: 3, padding: 1, pool_size: 2}
 global_pool: adaptive_average_1x1
-fully_connected_units: [32, 10]
+fully_connected_units: [192, 10]
 activation: relu
-trainable_parameters: 25994
-estimated_float32_weights_kib: 101.54
+trainable_parameters: 195290
+estimated_float32_weights_kib: 762.85

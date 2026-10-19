@@ -15,7 +15,7 @@ from en3150_a03.model_a_train import make_optimizer, train_model
 class ModelTrainingTests(unittest.TestCase):
     def test_training_saves_checkpoint_curve_history_and_evaluable_weights(self):
         torch.manual_seed(1)
-        samples = torch.rand(4, 3, 8, 8)
+        samples = torch.rand(4, 3, 16, 16)
         labels = torch.tensor([0, 1, 0, 1])
         loader = DataLoader(TensorDataset(samples, labels), batch_size=2)
         model = ModelA(num_classes=2)
@@ -35,7 +35,7 @@ class ModelTrainingTests(unittest.TestCase):
 
             self.assertEqual(summary["best_epoch"], 1)
             self.assertEqual(sum(map(sum, metrics["confusion_matrix"])), 4)
-            self.assertEqual(metrics["trainable_parameters"], 25_730)
+            self.assertEqual(metrics["trainable_parameters"], 193_746)
             self.assertTrue((output_dir / "training_history.csv").is_file())
             self.assertTrue((output_dir / "loss_curves.png").is_file())
 

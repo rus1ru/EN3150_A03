@@ -19,8 +19,9 @@ class ModelATests(unittest.TestCase):
 
     def test_architecture_parameter_count_and_float32_size(self):
         model = ModelA(num_classes=10)
-        self.assertEqual(count_trainable_parameters(model), 25_994)
-        self.assertAlmostEqual(estimate_float32_size_kb(model), 101.5390625)
+        self.assertEqual(count_trainable_parameters(model), 195_290)
+        self.assertAlmostEqual(estimate_float32_size_kb(model), 762.8515625)
+        self.assertTrue(180_000 <= count_trainable_parameters(model) <= 220_000)
 
 
 if __name__ == "__main__":

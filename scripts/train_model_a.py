@@ -13,6 +13,7 @@ import torch
 from torchvision.transforms import ToTensor
 
 from en3150_a03.data import get_dataloaders
+from en3150_a03.model_a_device import resolve_device
 from en3150_a03.models.model_a import ModelA
 from en3150_a03.model_a_train import make_optimizer, train_model
 
@@ -28,7 +29,11 @@ def main() -> None:
     parser.add_argument("--batch-size", type=int, default=64)
     parser.add_argument("--num-workers", type=int, default=0)
     parser.add_argument("--seed", type=int, default=42)
-    parser.add_argument("--device", default="auto")
+    parser.add_argument(
+        "--device",
+        default="cuda:0",
+        help="device for training (default: cuda:0; use cpu to opt out)",
+    )
     args = parser.parse_args()
     if args.epochs < 20:
         parser.error("--epochs must be at least 20")
@@ -42,13 +47,10 @@ def main() -> None:
     )
     if learning_rate <= 0:
         parser.error("--learning-rate must be positive")
-    device = torch.device(
-        "cuda" if args.device == "auto" and torch.cuda.is_available()
-        else "cpu" if args.device == "auto"
-        else args.device
-    )
-    if device.type == "cuda" and not torch.cuda.is_available():
-        parser.error("CUDA was requested but is not available")
+    try:
+        device = resolve_device(args.device)
+    except (RuntimeError, ValueError) as exc:
+        parser.error(str(exc))
 
     torch.manual_seed(args.seed)
     loaders = get_dataloaders(

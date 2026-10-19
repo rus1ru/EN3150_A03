@@ -1,4 +1,4 @@
-"""Compact standard-convolution CNN for 64x64 RGB EuroSAT images."""
+"""Resource-conscious standard-convolution CNN for 64x64 RGB EuroSAT images."""
 
 from __future__ import annotations
 
@@ -7,7 +7,7 @@ from torch import nn
 
 
 class ModelA(nn.Module):
-    """Three 3x3 convolution/max-pool blocks with a small classification head."""
+    """Four 3x3 convolution/max-pool blocks with a compact classification head."""
 
     def __init__(self, num_classes: int = 10) -> None:
         super().__init__()
@@ -15,22 +15,25 @@ class ModelA(nn.Module):
             raise ValueError("num_classes must be at least 2")
 
         self.features = nn.Sequential(
-            nn.Conv2d(3, 16, kernel_size=3, padding=1),
-            nn.ReLU(inplace=True),
-            nn.MaxPool2d(kernel_size=2, stride=2),
-            nn.Conv2d(16, 32, kernel_size=3, padding=1),
+            nn.Conv2d(3, 32, kernel_size=3, padding=1),
             nn.ReLU(inplace=True),
             nn.MaxPool2d(kernel_size=2, stride=2),
             nn.Conv2d(32, 64, kernel_size=3, padding=1),
+            nn.ReLU(inplace=True),
+            nn.MaxPool2d(kernel_size=2, stride=2),
+            nn.Conv2d(64, 96, kernel_size=3, padding=1),
+            nn.ReLU(inplace=True),
+            nn.MaxPool2d(kernel_size=2, stride=2),
+            nn.Conv2d(96, 112, kernel_size=3, padding=1),
             nn.ReLU(inplace=True),
             nn.MaxPool2d(kernel_size=2, stride=2),
             nn.AdaptiveAvgPool2d((1, 1)),
         )
         self.classifier = nn.Sequential(
             nn.Flatten(),
-            nn.Linear(64, 32),
+            nn.Linear(112, 192),
             nn.ReLU(inplace=True),
-            nn.Linear(32, num_classes),
+            nn.Linear(192, num_classes),
         )
 
     def forward(self, images: torch.Tensor) -> torch.Tensor:
