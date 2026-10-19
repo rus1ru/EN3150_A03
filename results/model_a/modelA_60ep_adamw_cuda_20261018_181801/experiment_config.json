@@ -1,0 +1,44 @@
+{
+  "model": "ModelA",
+  "seed": 42,
+  "epochs_per_optimizer": 60,
+  "batch_size": 64,
+  "num_workers": 0,
+  "device": "cuda",
+  "hardware": {
+    "platform": "Linux-7.0.0-38-generic-x86_64-with-glibc2.39",
+    "processor": "x86_64",
+    "cuda_device": "NVIDIA GeForce RTX 4050 Laptop GPU"
+  },
+  "python_version": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+  "pytorch_version": "2.4.1+cu121",
+  "dataset_sha256": "548a976e7d3f714d69f2a93f1abaf6261494537faa33af10f762ad7614644dd1",
+  "class_names": [
+    "AnnualCrop",
+    "Forest",
+    "HerbaceousVegetation",
+    "Highway",
+    "Industrial",
+    "Pasture",
+    "PermanentCrop",
+    "Residential",
+    "River",
+    "SeaLake"
+  ],
+  "optimizer_settings": {
+    "adamw": {
+      "learning_rate": 0.001,
+      "momentum": null,
+      "weight_decay": 0.0001
+    },
+    "sgd": {
+      "learning_rate": 0.01,
+      "momentum": null
+    },
+    "sgd_momentum": {
+      "learning_rate": 0.01,
+      "momentum": 0.9
+    }
+  },
+  "checkpoint_selection": "minimum validation cross-entropy loss"
+}

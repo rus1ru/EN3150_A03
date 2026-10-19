@@ -1,4 +1,4 @@
-"""Train and compare Model A with Adam, SGD and SGD with momentum."""
+"""Train and compare Model A with AdamW, SGD and SGD with momentum."""
 
 from __future__ import annotations
 
@@ -22,13 +22,14 @@ from en3150_a03.models.model_a import ModelA, count_trainable_parameters
 from en3150_a03.model_a_train import make_optimizer, train_model
 
 OPTIMIZERS = {
-    "adam": {"learning_rate": 0.001, "momentum": None},
+    "adamw": {"learning_rate": 0.001, "momentum": None, "weight_decay": 0.0001},
     "sgd": {"learning_rate": 0.01, "momentum": None},
     "sgd_momentum": {"learning_rate": 0.01, "momentum": 0.9},
 }
 
 OPTIMIZER_RATIONALES = {
-    "adam": "Primary optimizer: adaptive per-parameter updates are a practical baseline for this compact CNN without a learning-rate schedule.",
+    "adam": "Historical 20-epoch Adam baseline without weight decay; retained for reading earlier run reports.",
+    "adamw": "Primary optimizer: decoupled weight decay (0.0001) and adaptive per-parameter updates, using the historical Model A Adam learning rate for a new 60-epoch run.",
     "sgd": "Plain-SGD reference using the same fixed learning rate throughout training.",
     "sgd_momentum": (
         "Momentum (0.9) accumulates a smoothed gradient direction. It can accelerate "
@@ -88,8 +89,9 @@ def write_experiment_report(run_dir: Path, run_config: dict, results: list[dict]
         "",
         "## Optimizer comparison and held-out test results",
         "",
-        "All optimizers use cross-entropy, no weight decay, and no learning-rate "
-        "scheduler. The checkpoint with minimum validation loss is evaluated on the "
+        "All optimizers use cross-entropy and no learning-rate scheduler. AdamW uses "
+        "decoupled weight decay of 0.0001; both SGD baselines have zero weight decay. "
+        "The checkpoint with minimum validation loss is evaluated on the "
         "held-out test set.",
         "",
         "| Optimizer | Learning rate | Momentum | Accuracy | Macro precision | Macro recall | "
@@ -215,7 +217,7 @@ def main() -> None:
         if loaders["train"].generator is not None:
             loaders["train"].generator.manual_seed(args.seed)
         model = ModelA(num_classes=len(class_names))
-        optimizer = make_optimizer(model, optimizer_name, settings["learning_rate"])
+        optimizer = make_optimizer(model, optimizer_name, settings["learning_rate"], settings.get("weight_decay", 0.0))
         training = train_model(
             model=model,
             train_loader=loaders["train"],
@@ -236,6 +238,7 @@ def main() -> None:
             "optimizer": optimizer_name,
             "learning_rate": settings["learning_rate"],
             "momentum": settings["momentum"],
+            "weight_decay": settings.get("weight_decay", 0.0),
             "best_epoch": checkpoint["epoch"],
             "best_validation_loss": checkpoint["val_loss"],
             "mean_epoch_seconds": training["mean_epoch_seconds"],
@@ -258,7 +261,7 @@ def main() -> None:
         json.dumps(summaries, indent=2) + "\n", encoding="utf-8"
     )
     summary_fields = (
-        "optimizer", "learning_rate", "momentum", "accuracy", "macro_precision",
+        "optimizer", "learning_rate", "momentum", "weight_decay", "accuracy", "macro_precision",
         "macro_recall", "trainable_parameters", "estimated_float32_size_kb",
         "checkpoint_file_size_kb", "mean_epoch_seconds", "best_epoch",
     )

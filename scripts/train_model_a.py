@@ -22,7 +22,7 @@ def main() -> None:
     parser.add_argument("--data-root", type=Path, default=PROJECT_ROOT / "data" / "raw" / "EuroSAT_RGB")
     parser.add_argument("--split-dir", type=Path, default=PROJECT_ROOT / "data" / "splits_torch_v1")
     parser.add_argument("--output-dir", type=Path, required=True)
-    parser.add_argument("--optimizer", choices=("adam", "sgd", "sgd_momentum"), default="adam")
+    parser.add_argument("--optimizer", choices=("adam", "adamw", "sgd", "sgd_momentum"), default="adam")
     parser.add_argument("--learning-rate", type=float, default=None)
     parser.add_argument("--epochs", type=int, default=20)
     parser.add_argument("--batch-size", type=int, default=64)
@@ -34,7 +34,7 @@ def main() -> None:
         parser.error("--epochs must be at least 20")
     if args.batch_size < 1 or args.num_workers < 0:
         parser.error("--batch-size must be positive and --num-workers nonnegative")
-    learning_rates = {"adam": 0.001, "sgd": 0.01, "sgd_momentum": 0.01}
+    learning_rates = {"adam": 0.001, "adamw": 0.001, "sgd": 0.01, "sgd_momentum": 0.01}
     learning_rate = (
         args.learning_rate
         if args.learning_rate is not None
@@ -60,7 +60,7 @@ def main() -> None:
         seed=args.seed,
     )
     model = ModelA(num_classes=len(loaders["train"].dataset.classes))
-    optimizer = make_optimizer(model, args.optimizer, learning_rate)
+    optimizer = make_optimizer(model, args.optimizer, learning_rate, 0.0001 if args.optimizer == "adamw" else 0.0)
     result = train_model(
         model,
         loaders["train"],

@@ -13,6 +13,11 @@ from en3150_a03.model_a_train import make_optimizer, train_model
 
 
 class ModelTrainingTests(unittest.TestCase):
+    def test_adamw_uses_documented_decoupled_weight_decay(self):
+        optimizer = make_optimizer(ModelA(num_classes=2), "adamw", 0.001, 0.0001)
+        self.assertIsInstance(optimizer, torch.optim.AdamW)
+        self.assertEqual(optimizer.param_groups[0]["weight_decay"], 0.0001)
+
     def test_training_saves_checkpoint_curve_history_and_evaluable_weights(self):
         torch.manual_seed(1)
         samples = torch.rand(4, 3, 8, 8)

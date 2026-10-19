@@ -51,18 +51,18 @@ At four bytes per FP32 weight, the estimated weights-only footprint is `25,994 �
 With EuroSAT already prepared, run the following from the project root:
 
 ```powershell
-python scripts/run_model_a_experiments.py --epochs 20 --batch-size 64
+python scripts/run_model_a_experiments.py --epochs 60 --batch-size 64 --device cuda --run-id modelA_60ep_adamw_cuda
 ```
 
 The runner requires at least 20 epochs; use a larger value for longer runs. It selects the checkpoint with the lowest validation loss and evaluates that checkpoint on the held-out test set exactly once per optimizer. The same canonical split, batch size, seed, model initialization seed, and loss are used for each comparison. No test data is used for checkpoint selection.
 
 | Optimizer | Learning rate | Momentum | Role and rationale |
 | --- | ---: | ---: | --- |
-| Adam | 0.001 | — | Primary: per-parameter adaptive steps are a robust starting point for training a compact CNN without a learning-rate schedule. |
+| AdamW | 0.001 | — | Primary for the new 60-epoch run; decoupled weight decay 0.0001. Historical 20-epoch results used Adam without weight decay. |
 | SGD | 0.01 | — | Plain-SGD reference; uses the same fixed learning rate throughout. |
 | SGD | 0.01 | 0.9 | Momentum reference; accumulates a smoothed gradient direction, which can accelerate progress in consistently descending directions and damp batch-to-batch oscillation. Excessive momentum can overshoot and make validation performance less stable; compare the recorded curves and test metrics rather than assuming it wins. |
 
-All runs use cross-entropy loss, no weight decay, and no scheduler. The selected checkpoint rule, optimizer settings, and split are saved with each result.
+The new runs use cross-entropy and no scheduler. AdamW uses weight decay 0.0001; both SGD baselines use none. The selected checkpoint rule, optimizer settings, and split are saved with each result. The interrupted earlier Adam-based 60-epoch attempt is not a completed experiment and must not be cited.
 
 The run creates `results/model_a/<run-id>/experiment_report.md`, a single shareable report with the architecture/parameter calculations and hardware/optimizer justifications, the measured comparison table, per-optimizer confusion matrices and class scores, plus links to the loss curves. The same directory contains experiment settings/environment and, for each optimizer, `best_model.pt`, `training_history.csv`, `loss_curves.png`, `training_summary.json`, and `test_metrics.json`, plus machine-readable `comparison.csv` and `comparison.json`. Test metrics include accuracy, macro and per-class precision/recall, confusion matrix, trainable parameter count, estimated FP32 weight size, actual checkpoint size, best validation epoch, and mean training-plus-validation seconds per epoch. Device defaults to CUDA when available and otherwise CPU. Set `--device cpu`/`--device cuda`, or use `--num-workers` to configure the input pipeline. Keep the test split for final reporting only.
 
@@ -118,6 +118,12 @@ The [updated comparison](results/comparisons/all_models_v2_20261018/comparison.m
 | [EfficientNet-B0, pretrained](results/efficientnet_b0/adam/run_20261009_193426/metrics.json) | 97.85% | 4,020,358 | 31,979,392 |
 
 Final Model B v2 also scored 96.00% with plain SGD and 97.85% with SGD plus momentum. Unlike the superseded 5,589-parameter Model B v1, v2 uses a larger architecture, SE attention, augmentation, and a 60-epoch schedule: the Model A/B result does **not** isolate the effect of depthwise convolution. These are single-seed results; do not select a preferred optimizer by held-out test accuracy. Hardware timings are not comparable across machines. Model A and EfficientNet-B0 saved metadata do not include manifest hashes; see the [comparison caveats](results/comparisons/all_models_v2_20261018/comparison.md).
+
+## Saved report plots and confusion matrices
+
+`Model A`, final `Model B v2`, `MobileNetV2`, and `EfficientNet-B0` all have per-run test confusion matrices (CSV and PNG) and training plots beside their recorded metrics. The original numeric histories and scores have not changed. The missing Model A matrix images were rendered from its three `test_metrics.json` files. EfficientNet-B0's matrix and loss/validation-accuracy plot were rendered from its `metrics.json`; its saved history contains **no training accuracy**, so none is plotted or inferred.
+
+To recreate these assets from the recorded results in a fresh checkout, use `scripts/make_figures.py --model model-a --run-dir results/model_a/modelA_20261011/adam` (repeat for `sgd` and `sgd_momentum`) or `--model efficientnet-b0 --run-dir results/efficientnet_b0/adam/run_20261009_193426`. The script refuses to overwrite existing figures. None of these plots requires the trained checkpoint. Model A, Model B v2, and MobileNetV2 checkpoints remain external and are not recovered by plotting; EfficientNet-B0's `best.pt` exists only locally and is ignored by Git.
 
 ## Remaining workflow
 

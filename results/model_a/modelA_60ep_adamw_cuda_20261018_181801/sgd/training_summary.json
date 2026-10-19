@@ -1,0 +1,11 @@
+{
+  "optimizer": "sgd",
+  "learning_rate": 0.01,
+  "epochs": 60,
+  "best_epoch": 60,
+  "best_val_loss": 0.8589280811062565,
+  "mean_epoch_seconds": 5.4190938179502455,
+  "checkpoint": "/home/rus1ru/Documents/Academics/PR_assignment_group/EN3150_A03/results/model_a/modelA_60ep_adamw_cuda_20261018_181801/sgd/best_model.pt",
+  "history_csv": "/home/rus1ru/Documents/Academics/PR_assignment_group/EN3150_A03/results/model_a/modelA_60ep_adamw_cuda_20261018_181801/sgd/training_history.csv",
+  "loss_curve": "/home/rus1ru/Documents/Academics/PR_assignment_group/EN3150_A03/results/model_a/modelA_60ep_adamw_cuda_20261018_181801/sgd/loss_curves.png"
+}
