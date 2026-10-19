@@ -48,7 +48,7 @@ class ModelBIntegrationTests(unittest.TestCase):
 
     def test_comparison_reads_teammate_artifacts_without_modifying_them(self):
         # Read the completed final run; all comparison output stays in a temporary directory.
-        a = ROOT / "results/model_a/modelA_20261011"
+        a = ROOT / "results/model_a/modelA_cuda_run"
         mobile = ROOT / "results/mobilenet_v2/run_01"
         tracked = [p for folder in (a, mobile) for p in folder.rglob("*") if p.is_file()]
         before = {p: p.read_bytes() for p in tracked}

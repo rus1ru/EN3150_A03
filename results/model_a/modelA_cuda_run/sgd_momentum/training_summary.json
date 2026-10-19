@@ -1,0 +1,11 @@
+{
+  "optimizer": "sgd_momentum",
+  "learning_rate": 0.01,
+  "epochs": 20,
+  "best_epoch": 20,
+  "best_val_loss": 0.3605732702509857,
+  "mean_epoch_seconds": 19.38610685999738,
+  "checkpoint": "D:\\Important Files\\University\\Files\\Sem 5\\EN3150 - Pattern Recognition\\EN3150 - Assignments\\EN3150_A03\\results\\model_a\\modelA_cuda_run\\sgd_momentum\\best_model.pt",
+  "history_csv": "D:\\Important Files\\University\\Files\\Sem 5\\EN3150 - Pattern Recognition\\EN3150 - Assignments\\EN3150_A03\\results\\model_a\\modelA_cuda_run\\sgd_momentum\\training_history.csv",
+  "loss_curve": "D:\\Important Files\\University\\Files\\Sem 5\\EN3150 - Pattern Recognition\\EN3150 - Assignments\\EN3150_A03\\results\\model_a\\modelA_cuda_run\\sgd_momentum\\loss_curves.png"
+}

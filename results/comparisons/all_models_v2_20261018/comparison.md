@@ -1,5 +1,7 @@
 # Final Model B integration comparison
 
+**Historical comparison:** this table uses the older 25,994-parameter Model A. For the new 195,290-parameter Model A, see the [current comparison](../current_new_model_a/comparison.md).
+
 Read from saved runs. Checkpoints were selected using validation loss; this table does not select an optimizer by test performance.
 
 | Model | Optimizer | Test accuracy | Macro precision | Macro recall | Parameters | FP32 weights (KiB) | Conv/Linear MACs | Mean epoch (s) |

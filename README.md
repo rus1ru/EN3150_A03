@@ -2,7 +2,7 @@
 
 A shared project for comparing two custom CNNs (standard and depthwise-separable) with two fine-tuned lightweight pretrained networks on low-resolution imagery.
 
-**Status:** The frozen EuroSAT RGB split and all four model experiments are implemented. The final Model B v2 has 60-epoch AdamW, SGD, and SGD-with-momentum results. The final group PDF report remains to be written.
+**Status:** All four model implementations and saved experiment results are present. The current Model A is the 195,290-parameter GitHub architecture with 20-epoch results under `results/model_a/modelA_cuda_run/`. The final group PDF remains unfinished.
 
 ## Assignment requirements
 
@@ -30,41 +30,50 @@ PYTHONPATH=src .venv/bin/python -m unittest discover -s tests -p test_splits.py 
 
 Each teammate downloads their own images, verifies the committed split, and trains on the **same file IDs**. Never regenerate a split per model. PRs changing these manifests need explicit group review.
 
-## Model A: compact standard CNN
+## Model A: resource-conscious standard CNN
 
-`src/en3150_a03/models/model_a.py` implements three repeated standard-convolution blocks for 64×64 RGB input. Each block uses a 3×3 `Conv2d` with stride 1 and padding 1, ReLU, then 2×2 max pooling with stride 2. Channel/spatial sizes are `3×64×64 → 16×32×32 → 32×16×16 → 64×8×8`. Adaptive average pooling reduces the final map to 64 values, followed by fully connected layers `64 → 32 → 10` (10 EuroSAT classes).
+`src/en3150_a03/models/model_a.py` implements four standard-convolution blocks for 64×64 RGB input. Each block uses a 3×3 `Conv2d` with stride 1 and padding 1, ReLU, then 2×2 max pooling with stride 2. Channel/spatial sizes are `3×64×64 → 32×32×32 → 64×16×16 → 96×8×8 → 112×4×4`. Adaptive average pooling reduces the final map to 112 values, followed by fully connected layers `112 → 192 → 10` (10 EuroSAT classes). The wider network is around 200,000 parameters, while pooling each block and global average pooling constrain feature-map and classifier costs.
 
 | Layer | Parameter calculation | Trainable parameters |
 | --- | --- | ---: |
-| Conv2d, 3→16, 3×3 + bias | 16 × (3 × 3 × 3 + 1) | 448 |
-| Conv2d, 16→32, 3×3 + bias | 32 × (16 × 3 × 3 + 1) | 4,640 |
+| Conv2d, 3→32, 3×3 + bias | 32 × (3 × 3 × 3 + 1) | 896 |
 | Conv2d, 32→64, 3×3 + bias | 64 × (32 × 3 × 3 + 1) | 18,496 |
+| Conv2d, 64→96, 3×3 + bias | 96 × (64 × 3 × 3 + 1) | 55,392 |
+| Conv2d, 96→112, 3×3 + bias | 112 × (96 × 3 × 3 + 1) | 96,880 |
 | Global average pool | No learned parameters | 0 |
-| Linear, 64→32 + bias | 64 × 32 + 32 | 2,080 |
-| Linear, 32→10 + bias | 32 × 10 + 10 | 330 |
-| **Total** |  | **25,994** |
+| Linear, 112→192 + bias | 112 × 192 + 192 | 21,696 |
+| Linear, 192→10 + bias | 192 × 10 + 10 | 1,930 |
+| **Total** |  | **195,290** |
 
-At four bytes per FP32 weight, the estimated weights-only footprint is `25,994 × 4 / 1,024 = 101.54 KiB` (103.98 decimal kB). The actual saved `.pt` size, including checkpoint metadata, is recorded separately. ReLU is used because it is a simple max-with-zero operation supported efficiently by common CPU, DSP, and quantized inference kernels; unlike sigmoid/tanh, it does not require an exponential and is less prone to saturating small gradients. In-place ReLUs can reuse activation storage. Max pooling and global average pooling reduce later activation and dense-layer cost.
+At four bytes per FP32 weight, the estimated weights-only footprint is `195,290 × 4 / 1,024 = 762.85 KiB` (781.16 decimal kB). The actual saved `.pt` size, including checkpoint metadata, is recorded separately. ReLU is used because it is a simple max-with-zero operation supported efficiently by common CPU, DSP, and quantized inference kernels; unlike sigmoid/tanh, it does not require an exponential and is less prone to saturating small gradients. In-place ReLUs can reuse activation storage. Pooling after every convolution halves the spatial dimensions before the next wider layer; adaptive global average pooling keeps the classifier small rather than flattening the full 112×4×4 activation map.
 
 ## Train and compare Model A optimizers
 
 With EuroSAT already prepared, run the following from the project root:
 
 ```powershell
-python scripts/run_model_a_experiments.py --epochs 60 --batch-size 64 --device cuda --run-id modelA_60ep_adamw_cuda
+python scripts/run_model_a_experiments.py --epochs 20 --batch-size 64
 ```
 
 The runner requires at least 20 epochs; use a larger value for longer runs. It selects the checkpoint with the lowest validation loss and evaluates that checkpoint on the held-out test set exactly once per optimizer. The same canonical split, batch size, seed, model initialization seed, and loss are used for each comparison. No test data is used for checkpoint selection.
 
+Model A training and evaluation default to the first CUDA GPU (`cuda:0`), and fail rather than silently falling back to CPU. Before running, check that this Python environment has a CUDA-enabled PyTorch build:
+
+```powershell
+py -c "import torch; print(torch.__version__, torch.version.cuda, torch.cuda.is_available()); print(torch.cuda.get_device_name(0) if torch.cuda.is_available() else 'No CUDA GPU visible')"
+```
+
+`torch.version.cuda` must not be `None`, and `torch.cuda.is_available()` must be `True`. Install a CUDA-enabled PyTorch build into the same Python environment used to launch the experiment; choose the Windows/Pip/Python/CUDA command from [PyTorch's installation selector](https://pytorch.org/get-started/locally/). If multiple CUDA GPUs are visible, choose one with `--device cuda:1` (or another available index). Use `--device cpu` only to explicitly run on the CPU.
+
 | Optimizer | Learning rate | Momentum | Role and rationale |
 | --- | ---: | ---: | --- |
-| AdamW | 0.001 | — | Primary for the new 60-epoch run; decoupled weight decay 0.0001. Historical 20-epoch results used Adam without weight decay. |
+| Adam | 0.001 | — | Primary: per-parameter adaptive steps are a robust starting point for this resource-constrained CNN without a learning-rate schedule. |
 | SGD | 0.01 | — | Plain-SGD reference; uses the same fixed learning rate throughout. |
 | SGD | 0.01 | 0.9 | Momentum reference; accumulates a smoothed gradient direction, which can accelerate progress in consistently descending directions and damp batch-to-batch oscillation. Excessive momentum can overshoot and make validation performance less stable; compare the recorded curves and test metrics rather than assuming it wins. |
 
-The new runs use cross-entropy and no scheduler. AdamW uses weight decay 0.0001; both SGD baselines use none. The selected checkpoint rule, optimizer settings, and split are saved with each result. The interrupted earlier Adam-based 60-epoch attempt is not a completed experiment and must not be cited.
+All runs use cross-entropy loss, no weight decay, and no scheduler. The selected checkpoint rule, optimizer settings, and split are saved with each result.
 
-The run creates `results/model_a/<run-id>/experiment_report.md`, a single shareable report with the architecture/parameter calculations and hardware/optimizer justifications, the measured comparison table, per-optimizer confusion matrices and class scores, plus links to the loss curves. The same directory contains experiment settings/environment and, for each optimizer, `best_model.pt`, `training_history.csv`, `loss_curves.png`, `training_summary.json`, and `test_metrics.json`, plus machine-readable `comparison.csv` and `comparison.json`. Test metrics include accuracy, macro and per-class precision/recall, confusion matrix, trainable parameter count, estimated FP32 weight size, actual checkpoint size, best validation epoch, and mean training-plus-validation seconds per epoch. Device defaults to CUDA when available and otherwise CPU. Set `--device cpu`/`--device cuda`, or use `--num-workers` to configure the input pipeline. Keep the test split for final reporting only.
+The run creates `results/model_a/<run-id>/experiment_report.md`, a single shareable report with the architecture/parameter calculations and hardware/optimizer justifications, the measured comparison table, per-optimizer confusion matrices and class scores, plus links to the loss curves. The same directory contains experiment settings/environment and, for each optimizer, `best_model.pt`, `training_history.csv`, `loss_curves.png`, `training_summary.json`, and `test_metrics.json`, plus machine-readable `comparison.csv` and `comparison.json`. Test metrics include accuracy, macro and per-class precision/recall, confusion matrix, trainable parameter count, estimated FP32 weight size, actual checkpoint size, best validation epoch, and mean training-plus-validation seconds per epoch. Training and evaluation default to `cuda:0` and stop with an explicit error if CUDA is unavailable; use `--device cpu` to opt into CPU execution. A CUDA-enabled PyTorch build and working NVIDIA driver are required. Use `--device cuda:1` to select another visible GPU, or use `--num-workers` to configure the input pipeline. Keep the test split for final reporting only. Use a new run ID after architecture changes; existing result folders are historical and are not overwritten.
 
 To train just one optimizer, use `scripts/train_model_a.py --optimizer adam --output-dir results/model_a/adam_single --epochs 20`. To evaluate an existing checkpoint independently, use `scripts/evaluate_model_a.py --checkpoint <path-to-best_model.pt>`.
 
@@ -81,59 +90,27 @@ To train just one optimizer, use `scripts/train_model_a.py --optimizer adam --ou
 - `report/`: final report source and generated figures/tables.
 - `docs/`: task checklist and experiment notes.
 
-## EfficientNet-B0 (independent runnable component)
+## Current results and remaining work
 
-The EfficientNet-B0 implementation is in `src/en3150_a03/models/efficientnet_b0.py`.
-It replaces the classifier with 10 outputs, fine-tunes all weights, keeps images at
-64×64, and applies ImageNet normalization for pretrained weights. Training uses
-only the committed split IDs; the best checkpoint is selected by validation accuracy.
-The test split is evaluated once after training, not used to choose hyperparameters.
+Use the [current four-model comparison](results/comparisons/current_new_model_a/comparison.md). It includes the latest GitHub Model A, final Model B v2, MobileNetV2, and EfficientNet-B0.
 
-```bash
-# From the project root, install CUDA PyTorch into the existing .venv (NVIDIA GPU).
-uv pip install --python .venv/bin/python --index-url https://download.pytorch.org/whl/cu121 "torch==2.4.1+cu121" "torchvision==0.19.1+cu121"
-.venv/bin/python -c "import torch; print(torch.__version__, torch.cuda.is_available())"
-# The first run downloads torchvision's ImageNet B0 weights.
-.venv/bin/python scripts/train_efficientnet_b0.py --epochs 10 --batch-size 32
-# Quick pipeline check without a weight download or meaningful benchmark metrics:
-.venv/bin/python scripts/train_efficientnet_b0.py --scratch --epochs 1 --batch-size 2 --max-batches 1 --output /tmp/en3150-efficientnet-smoke
-PYTHONPATH=src .venv/bin/python -m unittest tests/test_efficientnet_b0.py -v
-```
+| Model | Reported optimizer | Epochs | Test accuracy | Parameters |
+| --- | --- | ---: | ---: | ---: |
+| Current Model A | SGD with momentum | 20 | 87.88% | 195,290 |
+| Model B v2 | AdamW | 60 | 98.12% | 96,538 |
+| MobileNetV2 | Two-stage Adam | 20 | 97.65% | 2,236,682 |
+| EfficientNet-B0 | Adam | 10 | 97.85% | 4,020,358 |
 
-The default output is `results/efficientnet_b0/adam/{best.pt,metrics.json}`.
-Use a new `--output` path per experiment to avoid replacing a checkpoint.
-The values in `configs/models/efficientnet_b0.yaml` are starting choices, not
-validated performance claims. The training script selects CUDA automatically when available; otherwise it uses CPU.
-Model B v2 is implemented and trained; see [`docs/model_b_v2.md`](docs/model_b_v2.md) and the [updated comparison](results/comparisons/all_models_v2_20261018/comparison.md).
+Current Model A also scored 85.33% with Adam and 46.91% with plain SGD. Historical 25,994-parameter Model A runs (including the local 60-epoch AdamW experiment) are not results for this architecture and must not be mixed with it. The local AdamW training-code changes have been replaced by the latest GitHub Model A implementation.
 
-## Saved four-model results
+Saved confusion matrices and epoch histories support the reported metrics. Different training recipes, epoch budgets and hardware mean this is not an isolated convolution-type or inference-speed comparison. Single-seed test scores do not establish statistical superiority. See the comparison for provenance limitations.
 
-The [updated comparison](results/comparisons/all_models_v2_20261018/comparison.md) reads the saved test metrics for the final Model B v2 (60 epochs per optimizer) and the other three models. It does not rerun training.
+EfficientNet-B0 is implemented in `src/en3150_a03/models/efficientnet_b0.py`; run `scripts/train_efficientnet_b0.py` in the project environment. Its existing `metrics.json`, matrix CSV/PNG, and `training_curves.png` are under `results/efficientnet_b0/adam/run_20261009_193426/`. That history records training/validation loss and validation accuracy, not training accuracy.
 
-| Model and run | Test accuracy | Trainable parameters | Conv/linear MACs per image |
-| --- | ---: | ---: | ---: |
-| [Model A, SGD with momentum](results/model_a/modelA_20261011/sgd_momentum/test_metrics.json) | 81.68% | 25,994 | 11,209,024 |
-| [Model B v2, AdamW](results/model_b/modelB_v2_adamw_01/test_metrics.json) | 98.12% | 96,538 | 21,358,976 |
-| [MobileNetV2, pretrained](results/mobilenet_v2/run_01/test_metrics.json) | 97.65% | 2,236,682 | 24,461,312 |
-| [EfficientNet-B0, pretrained](results/efficientnet_b0/adam/run_20261009_193426/metrics.json) | 97.85% | 4,020,358 | 31,979,392 |
-
-Final Model B v2 also scored 96.00% with plain SGD and 97.85% with SGD plus momentum. Unlike the superseded 5,589-parameter Model B v1, v2 uses a larger architecture, SE attention, augmentation, and a 60-epoch schedule: the Model A/B result does **not** isolate the effect of depthwise convolution. These are single-seed results; do not select a preferred optimizer by held-out test accuracy. Hardware timings are not comparable across machines. Model A and EfficientNet-B0 saved metadata do not include manifest hashes; see the [comparison caveats](results/comparisons/all_models_v2_20261018/comparison.md).
-
-## Saved report plots and confusion matrices
-
-`Model A`, final `Model B v2`, `MobileNetV2`, and `EfficientNet-B0` all have per-run test confusion matrices (CSV and PNG) and training plots beside their recorded metrics. The original numeric histories and scores have not changed. The missing Model A matrix images were rendered from its three `test_metrics.json` files. EfficientNet-B0's matrix and loss/validation-accuracy plot were rendered from its `metrics.json`; its saved history contains **no training accuracy**, so none is plotted or inferred.
-
-To recreate these assets from the recorded results in a fresh checkout, use `scripts/make_figures.py --model model-a --run-dir results/model_a/modelA_20261011/adam` (repeat for `sgd` and `sgd_momentum`) or `--model efficientnet-b0 --run-dir results/efficientnet_b0/adam/run_20261009_193426`. The script refuses to overwrite existing figures. None of these plots requires the trained checkpoint. Model A, Model B v2, and MobileNetV2 checkpoints remain external and are not recovered by plotting; EfficientNet-B0's `best.pt` exists only locally and is ignored by Git.
-
-## Remaining workflow
-
-1. Dataset and shared PyTorch split are in place; Model A settings are documented above. Agree on remaining model-specific preprocessing and experiment settings.
-2. `scripts/prepare_data.py` creates/verifies `data/splits_torch_v1/{train,val,test}.csv`. Do not replace the published split; make a new version if it must change.
-3. The Model A 20-epoch runs and final Model B v2 60-epoch runs are saved in their respective `results/` folders. MobileNetV2 and EfficientNet-B0 are also trained.
-4. Review the [updated four-model comparison](results/comparisons/all_models_v2_20261018/comparison.md); model accuracies reflect different training recipes and hardware timings are not directly comparable.
-5. Write, compile, and verify the final PDF report in `report/`, with citations and the group's required submission details.
-
-**Code and saved model results are present; the final group PDF remains unfinished.**
+Remaining work:
+1. Write and compile `report/report.tex`, add citations, and verify figures and scores against the saved files.
+2. Obtain and preserve the latest Model A, Model B v2, and MobileNetV2 trained checkpoints from teammates; EfficientNet-B0's checkpoint is local. Weights are excluded from Git.
+3. Review and push the local integration branch; these local commits are not yet on GitHub.
 
 ## Collaboration and reproducibility
 

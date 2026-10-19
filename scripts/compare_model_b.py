@@ -122,7 +122,7 @@ def comparison(model_b_run, model_a_run, mobilenet_run, output, efficientnet_run
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--model-b-run',type=Path,nargs='+',required=True)
-    parser.add_argument('--model-a-run',type=Path,default=ROOT/'results/model_a/modelA_20261011')
+    parser.add_argument('--model-a-run',type=Path,default=ROOT/'results/model_a/modelA_cuda_run')
     parser.add_argument('--mobilenet-run',type=Path,default=ROOT/'results/mobilenet_v2/run_01')
     parser.add_argument('--efficientnet-run',type=Path,default=ROOT/'results/efficientnet_b0/adam/run_20261009_193426')
     parser.add_argument('--output-dir',type=Path,required=True)

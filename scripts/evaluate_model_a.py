@@ -9,10 +9,10 @@ from pathlib import Path
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(PROJECT_ROOT / "src"))
 
-import torch
 from torchvision.transforms import ToTensor
 
 from en3150_a03.data import get_dataloaders
+from en3150_a03.model_a_device import resolve_device
 from en3150_a03.model_a_evaluate import evaluate_model, load_checkpoint, save_evaluation
 from en3150_a03.models.model_a import ModelA
 
@@ -25,17 +25,18 @@ def main() -> None:
     parser.add_argument("--output", type=Path, default=None)
     parser.add_argument("--batch-size", type=int, default=64)
     parser.add_argument("--num-workers", type=int, default=0)
-    parser.add_argument("--device", default="auto")
+    parser.add_argument(
+        "--device",
+        default="cuda:0",
+        help="device for evaluation (default: cuda:0; use cpu to opt out)",
+    )
     args = parser.parse_args()
     if not args.checkpoint.is_file():
         parser.error(f"Checkpoint does not exist: {args.checkpoint}")
-    device = torch.device(
-        "cuda" if args.device == "auto" and torch.cuda.is_available()
-        else "cpu" if args.device == "auto"
-        else args.device
-    )
-    if device.type == "cuda" and not torch.cuda.is_available():
-        parser.error("CUDA was requested but is not available")
+    try:
+        device = resolve_device(args.device)
+    except (RuntimeError, ValueError) as exc:
+        parser.error(str(exc))
     loaders = get_dataloaders(
         args.data_root,
         args.split_dir,

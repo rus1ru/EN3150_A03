@@ -16,13 +16,10 @@ from torch import nn
 from torch.utils.data import DataLoader
 
 
-def make_optimizer(model: nn.Module, name: str, learning_rate: float,
-                   weight_decay: float = 0.0) -> torch.optim.Optimizer:
+def make_optimizer(model: nn.Module, name: str, learning_rate: float) -> torch.optim.Optimizer:
     """Build an optimizer from the documented Model A comparison settings."""
-    if learning_rate <= 0 or weight_decay < 0:
-        raise ValueError("learning_rate must be positive and weight_decay nonnegative")
-    if name == "adamw":
-        return torch.optim.AdamW(model.parameters(), lr=learning_rate, weight_decay=weight_decay)
+    if learning_rate <= 0:
+        raise ValueError("learning_rate must be positive")
     if name == "adam":
         return torch.optim.Adam(model.parameters(), lr=learning_rate)
     if name == "sgd":

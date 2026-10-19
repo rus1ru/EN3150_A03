@@ -1,0 +1,98 @@
+[
+  {
+    "model": "ModelA",
+    "optimizer": "adam",
+    "accuracy": 0.8533333333333334,
+    "macro_precision": 0.8489932106476148,
+    "macro_recall": 0.8462,
+    "parameters": 195290,
+    "fp32_weights_kib": 762.8515625,
+    "macs": 42785664,
+    "mean_epoch_seconds": 55.050627894999344,
+    "source": "results/model_a/modelA_cuda_run"
+  },
+  {
+    "model": "ModelA",
+    "optimizer": "sgd",
+    "accuracy": 0.4691358024691358,
+    "macro_precision": 0.4850918015806629,
+    "macro_recall": 0.4600000000000001,
+    "parameters": 195290,
+    "fp32_weights_kib": 762.8515625,
+    "macs": 42785664,
+    "mean_epoch_seconds": 55.31653796500759,
+    "source": "results/model_a/modelA_cuda_run"
+  },
+  {
+    "model": "ModelA",
+    "optimizer": "sgd_momentum",
+    "accuracy": 0.8787654320987655,
+    "macro_precision": 0.8807984683182527,
+    "macro_recall": 0.8722444444444445,
+    "parameters": 195290,
+    "fp32_weights_kib": 762.8515625,
+    "macs": 42785664,
+    "mean_epoch_seconds": 19.38610685999738,
+    "source": "results/model_a/modelA_cuda_run"
+  },
+  {
+    "model": "ModelB",
+    "optimizer": "adamw",
+    "accuracy": 0.9812345679012345,
+    "macro_precision": 0.9812051836105511,
+    "macro_recall": 0.9799111111111112,
+    "parameters": 96538,
+    "fp32_weights_kib": 377.1015625,
+    "macs": 21358976,
+    "mean_epoch_seconds": 25.10899883458334,
+    "source": "results/model_b/modelB_v2_adamw_01"
+  },
+  {
+    "model": "ModelB",
+    "optimizer": "sgd",
+    "accuracy": 0.96,
+    "macro_precision": 0.9597853093007499,
+    "macro_recall": 0.9582888888888889,
+    "parameters": 96538,
+    "fp32_weights_kib": 377.1015625,
+    "macs": 21358976,
+    "mean_epoch_seconds": 24.72828584911654,
+    "source": "results/model_b/modelB_v2_sgd_01"
+  },
+  {
+    "model": "ModelB",
+    "optimizer": "sgd_momentum",
+    "accuracy": 0.9785185185185186,
+    "macro_precision": 0.9779677653495664,
+    "macro_recall": 0.9777111111111111,
+    "parameters": 96538,
+    "fp32_weights_kib": 377.1015625,
+    "macs": 21358976,
+    "mean_epoch_seconds": 23.893772614799992,
+    "source": "results/model_b/modelB_v2_sgdm_01"
+  },
+  {
+    "model": "MobileNetV2",
+    "optimizer": "adam_two_stage",
+    "accuracy": 0.9765432098765432,
+    "macro_precision": 0.9764044917654265,
+    "macro_recall": 0.9746,
+    "parameters": 2236682,
+    "fp32_weights_kib": 8737.0390625,
+    "macs": 24461312,
+    "mean_epoch_seconds": null,
+    "source": "results/mobilenet_v2/run_01"
+  },
+  {
+    "model": "EfficientNet-B0",
+    "optimizer": "adam",
+    "accuracy": 0.9785185185185186,
+    "macro_precision": 0.9785968197330212,
+    "macro_recall": 0.9775555555555556,
+    "parameters": 4020358,
+    "fp32_weights_kib": 15704.5234375,
+    "macs": 31979392,
+    "mean_epoch_seconds": 16.786121193200053,
+    "source": "results/efficientnet_b0/adam/run_20261009_193426"
+  }
+]

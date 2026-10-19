@@ -16,9 +16,9 @@ class ExperimentReportTests(unittest.TestCase):
             "accuracy": 0.8,
             "macro_precision": 0.79,
             "macro_recall": 0.8,
-            "trainable_parameters": 25_994,
-            "estimated_float32_size_kb": 101.54,
-            "checkpoint_file_size_kb": 103.0,
+            "trainable_parameters": 195_290,
+            "estimated_float32_size_kb": 762.85,
+            "checkpoint_file_size_kb": 764.0,
             "mean_epoch_seconds": 12.3,
             "best_epoch": 4,
             "class_names": ["AnnualCrop", "Forest"],
@@ -44,8 +44,8 @@ class ExperimentReportTests(unittest.TestCase):
             report_path = write_experiment_report(Path(temporary), config, [result])
             report = report_path.read_text(encoding="utf-8")
 
-        self.assertIn("25,994", report)
-        self.assertIn("101.54 KiB", report)
+        self.assertIn("195,290", report)
+        self.assertIn("762.85 KiB", report)
         self.assertIn("0.8000", report)
         self.assertIn("Confusion matrix", report)
         self.assertIn("Per-class precision and recall", report)

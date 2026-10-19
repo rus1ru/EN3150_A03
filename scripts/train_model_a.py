@@ -13,6 +13,7 @@ import torch
 from torchvision.transforms import ToTensor
 
 from en3150_a03.data import get_dataloaders
+from en3150_a03.model_a_device import resolve_device
 from en3150_a03.models.model_a import ModelA
 from en3150_a03.model_a_train import make_optimizer, train_model
 
@@ -22,19 +23,23 @@ def main() -> None:
     parser.add_argument("--data-root", type=Path, default=PROJECT_ROOT / "data" / "raw" / "EuroSAT_RGB")
     parser.add_argument("--split-dir", type=Path, default=PROJECT_ROOT / "data" / "splits_torch_v1")
     parser.add_argument("--output-dir", type=Path, required=True)
-    parser.add_argument("--optimizer", choices=("adam", "adamw", "sgd", "sgd_momentum"), default="adam")
+    parser.add_argument("--optimizer", choices=("adam", "sgd", "sgd_momentum"), default="adam")
     parser.add_argument("--learning-rate", type=float, default=None)
     parser.add_argument("--epochs", type=int, default=20)
     parser.add_argument("--batch-size", type=int, default=64)
     parser.add_argument("--num-workers", type=int, default=0)
     parser.add_argument("--seed", type=int, default=42)
-    parser.add_argument("--device", default="auto")
+    parser.add_argument(
+        "--device",
+        default="cuda:0",
+        help="device for training (default: cuda:0; use cpu to opt out)",
+    )
     args = parser.parse_args()
     if args.epochs < 20:
         parser.error("--epochs must be at least 20")
     if args.batch_size < 1 or args.num_workers < 0:
         parser.error("--batch-size must be positive and --num-workers nonnegative")
-    learning_rates = {"adam": 0.001, "adamw": 0.001, "sgd": 0.01, "sgd_momentum": 0.01}
+    learning_rates = {"adam": 0.001, "sgd": 0.01, "sgd_momentum": 0.01}
     learning_rate = (
         args.learning_rate
         if args.learning_rate is not None
@@ -42,13 +47,10 @@ def main() -> None:
     )
     if learning_rate <= 0:
         parser.error("--learning-rate must be positive")
-    device = torch.device(
-        "cuda" if args.device == "auto" and torch.cuda.is_available()
-        else "cpu" if args.device == "auto"
-        else args.device
-    )
-    if device.type == "cuda" and not torch.cuda.is_available():
-        parser.error("CUDA was requested but is not available")
+    try:
+        device = resolve_device(args.device)
+    except (RuntimeError, ValueError) as exc:
+        parser.error(str(exc))
 
     torch.manual_seed(args.seed)
     loaders = get_dataloaders(
@@ -60,7 +62,7 @@ def main() -> None:
         seed=args.seed,
     )
     model = ModelA(num_classes=len(loaders["train"].dataset.classes))
-    optimizer = make_optimizer(model, args.optimizer, learning_rate, 0.0001 if args.optimizer == "adamw" else 0.0)
+    optimizer = make_optimizer(model, args.optimizer, learning_rate)
     result = train_model(
         model,
         loaders["train"],
