@@ -1,0 +1,10 @@
+{
+  "Model A": "/home/rus1ru/Documents/Academics/PR_assignment_group/EN3150_A03/results/model_a/modelA_40ep_20261019_095058",
+  "Model B": {
+    "adamw": "/home/rus1ru/Documents/Academics/PR_assignment_group/EN3150_A03/results/model_b/modelB_40ep_adamw_20261019_095058",
+    "sgd": "/home/rus1ru/Documents/Academics/PR_assignment_group/EN3150_A03/results/model_b/modelB_40ep_sgd_20261019_095058",
+    "sgd_momentum": "/home/rus1ru/Documents/Academics/PR_assignment_group/EN3150_A03/results/model_b/modelB_40ep_sgd_momentum_20261019_095058"
+  },
+  "MobileNetV2": "/home/rus1ru/Documents/Academics/PR_assignment_group/EN3150_A03/results/mobilenet_v2/run_01",
+  "EfficientNet-B0": "/home/rus1ru/Documents/Academics/PR_assignment_group/EN3150_A03/results/efficientnet_b0/adam/run_20261009_193426"
+}

@@ -1,3 +1,6 @@
+# Local-only interrupted runs and archived logs
+local_archive/
+
 # Local environment and Python cache
 .venv/
 __pycache__/

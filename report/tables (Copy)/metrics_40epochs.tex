@@ -1,0 +1,15 @@
+\begin{tabular}{llrrrr}
+\toprule
+Model & Optimizer & Accuracy (\%) & Precision (\%) & Recall (\%) & s/epoch \\
+\midrule
+Model A & Adam & 95.48 & 95.33 & 95.39 & 9.02 \\
+Model A & SGD & 83.51 & 82.98 & 82.84 & 8.23 \\
+Model A & SGD + momentum & 95.95 & 95.93 & 95.89 & 9.82 \\
+Model B & Adam & 96.69 & 96.70 & 96.55 & 14.90 \\
+Model B & SGD & 93.06 & 92.86 & 92.88 & 14.12 \\
+Model B & SGD + momentum & 97.14 & 97.07 & 97.04 & 14.10 \\
+\midrule
+MobileNetV2 & Adam (two-stage) & 97.65 & 97.64 & 97.46 & --- \\
+EfficientNet-B0 & Adam & 97.85 & 97.86 & 97.76 & 16.79 \\
+\bottomrule
+\end{tabular}

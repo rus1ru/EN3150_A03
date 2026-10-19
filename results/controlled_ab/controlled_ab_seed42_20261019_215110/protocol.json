@@ -1,0 +1,52 @@
+{
+  "seed": 42,
+  "epochs": 40,
+  "batch_size": 64,
+  "workers": 0,
+  "optimizers": {
+    "adam": 0.001,
+    "sgd": 0.01,
+    "sgd_momentum": 0.01
+  },
+  "momentum": 0.9,
+  "weight_decay": 0.0,
+  "scheduler": null,
+  "loss": "plain cross entropy",
+  "label_smoothing": 0.0,
+  "precision": "FP32; AMP and TF32 disabled",
+  "augmentation": "independent horizontal/vertical flips p=0.5; training only",
+  "normalization": {
+    "mean": [
+      0.3438910812612735,
+      0.37992633406044773,
+      0.40740579897991663
+    ],
+    "std": [
+      0.20255131387739245,
+      0.13690414616451543,
+      0.11545699146655192
+    ],
+    "source": "train.csv only",
+    "pixels": 77414400
+  },
+  "checkpoint_selection": "minimum validation cross entropy",
+  "device": "cuda",
+  "gpu": "NVIDIA GeForce RTX 4050 Laptop GPU",
+  "torch": "2.4.1+cu121",
+  "dataset_sha256": "548a976e7d3f714d69f2a93f1abaf6261494537faa33af10f762ad7614644dd1",
+  "manifest_sha256": {
+    "class_to_idx.json": "f5f85be6ee3c28e1c91d7b1701500f213c4ed2fbc28cb7346efcd9ec1492c6dc",
+    "test.csv": "3342e7a21356fdad0287193535c1dfa6334dd306606cebebbd268f7ff385c98a",
+    "train.csv": "8f5ae8a0f005ea8ebdf5f1e58ad68958d64298e22c65f9b7c7f8d132f70ad8d5",
+    "val.csv": "89cc8a34de0b677311e11d361c6d1404c6a31d849a49186ac4c65774d18e8c4b"
+  },
+  "source_sha256": {
+    "scripts/run_controlled_ab.py": "3db1e3d27b209630cc3d94b17201b3d0bf346ebf19402c8ab6d236bfd478dbdb",
+    "src/en3150_a03/models/model_a.py": "4936ce4279fcf191d10be48e76332f77bd57b83d7d63ed2eb92065121322ccbe",
+    "src/en3150_a03/models/model_b_v2.py": "d7dec98c821bc2d3015b24c533dfc130a64bb597f24cb2d0b8925d0171e1d4b3",
+    "src/en3150_a03/data.py": "de20d2aac212daecb2d137329969fdf7a612ae7a8794a9251c403ff888a01c17",
+    "src/en3150_a03/model_b_v2_data.py": "a7109bfd3020394b89088dff66580bcec737910463e9d50ec9650951b56b7214",
+    "src/en3150_a03/model_a_evaluate.py": "0a6de137a6f2a9a6a0369874095a88322119255d6b24b330915fea29da5f86f2"
+  },
+  "scope": "Matched complete architectures, not an isolated convolution-type ablation; single seed; prior test reuse"
+}

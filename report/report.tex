@@ -1,2 +1,275 @@
-% EN3150 Assignment 03 final report (not written yet).
-% Add the group's verified experimental results and citations here.
+\documentclass[11pt,a4paper]{article}
+
+% Layout adapted from the student's EN3551 Assignment 02 template.
+\usepackage[a4paper,margin=1in,headheight=15pt]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern,microtype,setspace,parskip}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{booktabs,array,tabularx}
+\usepackage{graphicx,float,caption,subcaption}
+\usepackage{xcolor,enumitem,fancyhdr,titlesec}
+\usepackage[hidelinks,hypertexnames=false]{hyperref}
+
+% Group details: complete the remaining entries before submission.
+\newcommand{\StudentName}{Rasanjana W.P.G.R.A.}
+\newcommand{\IndexNumber}{230536E}
+\newcommand{\GroupNumber}{Kernel}
+\newcommand{\SubmissionDate}{19/11/2026}
+\newcommand{\CourseCode}{EN3150}
+\newcommand{\CourseTitle}{Pattern Recognition}
+\newcommand{\AssignmentNumber}{Assignment 03}
+\newcommand{\AssignmentTitle}{Resource-Constrained CNNs for EuroSAT Classification}
+\newcommand{\Department}{Department of Electronic and Telecommunication Engineering}
+\newcommand{\University}{University of Moratuwa}
+
+\definecolor{accent}{HTML}{17365D}
+\hypersetup{
+ pdftitle={\CourseCode\ -- \AssignmentNumber},
+ pdfauthor={\StudentName\ and group members},
+ colorlinks=true,linkcolor=accent,citecolor=accent,urlcolor=accent
+}
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{\CourseCode\ -- \AssignmentNumber}
+\rhead{Group \GroupNumber}
+\cfoot{\thepage}
+\setstretch{1.15}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.65em}
+\setlength{\emergencystretch}{2em}
+\setlist{nosep,leftmargin=*}
+\raggedbottom
+\setcounter{tocdepth}{2}
+\setlength{\textfloatsep}{14pt plus 3pt minus 4pt}
+\setlength{\floatsep}{12pt plus 3pt minus 3pt}
+\setlength{\intextsep}{12pt plus 3pt minus 3pt}
+\renewcommand{\topfraction}{0.88}
+\renewcommand{\bottomfraction}{0.75}
+\renewcommand{\textfraction}{0.10}
+\renewcommand{\floatpagefraction}{0.80}
+\titleformat{\section}
+ {\Large\bfseries\color{accent}}
+ {\thesection}{0.75em}{}[\vspace{0.25em}\titlerule]
+\titleformat{\subsection}
+ {\large\bfseries\color{accent}}
+ {\thesubsection}{0.65em}{}
+\titlespacing*{\section}{0pt}{1.8em}{0.9em}
+\titlespacing*{\subsection}{0pt}{1.3em}{0.5em}
+\captionsetup{font=small,labelfont=bf,justification=centering,skip=6pt}
+\graphicspath{{./}}
+
+\begin{document}
+\pagenumbering{gobble}
+\begin{titlepage}
+ \centering
+ \vspace*{1.4cm}
+ {\Large\bfseries \University\par}
+ \vspace{0.35cm}
+ {\large \Department\par}
+ \vfill
+ {\color{accent}\rule{0.88\textwidth}{1.2pt}\par}
+ \vspace{0.7cm}
+ {\LARGE\bfseries \CourseCode\ -- \AssignmentNumber\par}
+ \vspace{0.6cm}
+ {\Large\bfseries \AssignmentTitle\par}
+ \vspace{0.7cm}
+ {\color{accent}\rule{0.88\textwidth}{1.2pt}\par}
+ \vfill
+ \begin{tabular}{>{\bfseries}rl}
+ Group name: & \GroupNumber \\
+ Course: & \CourseCode\ -- \CourseTitle \\
+ Submission date: & \SubmissionDate
+ \end{tabular}\par
+ \vspace{0.6cm}
+ {\small Repository: \url{https://github.com/rus1ru/EN3150_A03}\par}
+ \vfill
+\end{titlepage}
+\pagenumbering{roman}
+\section*{Group Members}
+\addcontentsline{toc}{section}{Group Members}
+\textbf{Group name:} \GroupNumber
+
+\begin{table}[h]
+\centering
+\renewcommand{\arraystretch}{1.8}
+\begin{tabularx}{\textwidth}{lXl}
+\toprule
+Member & Name & Index number \\
+\midrule
+Member 1 & \StudentName & \IndexNumber \\
+Member 2 & Karunarathna G.K.T & 230322U \\
+Member 3 & Ubeysekara V.T.T. & 230650X \\
+Member 4 & Imaduwage O.N.H. & 230258D \\
+\bottomrule
+\end{tabularx}
+\end{table}
+\clearpage
+\tableofcontents
+\clearpage
+\pagenumbering{arabic}
+\begin{abstract}
+We compare two custom convolutional networks on EuroSAT RGB under a matched, single-seed training protocol. Both models use the same split, normalization, augmentation, batch size, 40-epoch budget and optimizer settings. Model A achieves 95.48\% test accuracy with Adam and 95.95\% with momentum SGD. Model B achieves 96.69\% and 97.14\%, respectively, with 96,538 parameters, below the 100,000-parameter limit. Separate pretrained MobileNetV2 and EfficientNet-B0 reference experiments achieve 97.65\% and 97.85\%. Model B offers lower parameter storage and counted arithmetic than Model A, but the comparison concerns complete architectures, not convolution type alone. Single-seed results and prior test-set reuse limit generalization claims.
+\end{abstract}
+\section{Introduction}
+Deploying an image classifier on limited hardware requires balancing accuracy, weight storage and computation. Standard convolutions jointly learn spatial and channel features, whereas depthwise-separable convolutions split these operations to reduce arithmetic and parameter cost \cite{mobilenet}. Pretrained lightweight networks provide an alternative: they reuse features learned on a larger dataset, but may still exceed a small custom network's storage budget.
+
+This study compares a standard CNN (Model A), a custom depthwise CNN (Model B), and fine-tuned MobileNetV2 and EfficientNet-B0. We examine three questions: how the custom models respond to different optimizers, whether Model B meets the 100,000-parameter constraint without a large accuracy loss, and how its accuracy and theoretical cost compare with the pretrained references.
+
+\section{Dataset and protocol}
+EuroSAT provides satellite imagery for land-use and land-cover classification \cite{helber}. We use the official RGB release from Zenodo record 7711810: 27,000 RGB images, ten classes, native $64\times64$ resolution. The frozen class-stratified split contains 18,900 training, 4,050 validation and 4,050 test images, using seed 42. The split manifests are shared across models; verification found no overlapping image paths between partitions.
+
+Classes are AnnualCrop, Forest, HerbaceousVegetation, Highway, Industrial, Pasture, PermanentCrop, Residential, River and SeaLake, in that order. Augmentation and normalization fitting use training data only. Metrics use the complete 4,050-image test split; confusion-matrix rows represent true classes and columns predicted classes. We report accuracy and macro precision/recall with zero-denominator scores set to zero. Checkpoints are chosen using validation loss for A/B/MobileNetV2, and validation accuracy for EfficientNet-B0.
+
+\section{Architectures and parameter accounting}
+\subsection{Model A: standard convolution}
+Model A contains four $3\times3$ convolutions. Every convolution is followed by ReLU and $2\times2$ max pooling. Channel/spatial sizes are
+$3\times64\times64\rightarrow32\times32\times32\rightarrow64\times16\times16\rightarrow96\times8\times8\rightarrow112\times4\times4$.
+Global average pooling produces 112 features, followed by a $112\rightarrow192\rightarrow10$ classifier with ReLU between linear layers. Standard convolutions/max pooling are established CNN operations \cite{alexnet}; global pooling avoids a large flattened head \cite{nin}.
+
+\begin{center}\begin{tabular}{lrr}
+\toprule Layer & Calculation (including bias) & Parameters \\
+\midrule
+Conv $3\rightarrow32$ & $32(9\cdot3+1)$ & 896 \\
+Conv $32\rightarrow64$ & $64(9\cdot32+1)$ & 18,496 \\
+Conv $64\rightarrow96$ & $96(9\cdot64+1)$ & 55,392 \\
+Conv $96\rightarrow112$ & $112(9\cdot96+1)$ & 96,880 \\
+Linear $112\rightarrow192$ & $112\cdot192+192$ & 21,696 \\
+Linear $192\rightarrow10$ & $192\cdot10+10$ & 1,930 \\
+\midrule Total & & 195,290 \\
+\bottomrule\end{tabular}\end{center}
+ReLU is a max-with-zero operation without exponentials. Pooling reduces activation sizes. Parameter storage is not peak runtime memory.
+
+\subsection{Model B: custom depthwise network}
+Model B combines depthwise/pointwise convolution \cite{mobilenet}, inverted residuals and linear projections \cite{sandler}, and squeeze-and-excitation channel gates \cite{hu}. It is a custom configuration trained from scratch, not a pretrained MobileNet or a claimed new operation. An RGB pointwise lift creates 24 channels before the first strided depthwise filter. Seven expanded bottlenecks use expansion ratio two, widths 24, 32, 32, 48, 48, 80, 80, and four residual additions. Two SE gates are used. A pointwise head produces 192 channels, followed by global average pooling, dropout 0.1 and ten logits. Batch normalization and ReLU6 are used; hard-sigmoid gates avoid an exponential at inference.
+Framework profiling gives a total of \textbf{96,538 trainable parameters}, including normalization and attention parameters, below the 100,000 cap. A depthwise/pointwise pair without biases has $9C_{in}+C_{in}C_{out}$ weights; normalization, linear layers and SE weights must also be included.
+
+\begin{table}[htbp]\centering\small
+\caption{Model B stage shapes and parameter counts, including normalization and attention. Shapes exclude the batch dimension.}\label{tab:b-stages}
+\begin{tabular}{lrr}
+\toprule Stage & Output ($C\times H\times W$) & Parameters \\
+\midrule
+Pointwise RGB lift & $24\times64\times64$ & 120 \\
+Depthwise stem & $24\times32\times32$ & 264 \\
+Inverted residual 1 & $24\times32\times32$ & 2,976 \\
+Inverted residual 2 & $32\times32\times32$ & 3,376 \\
+Inverted residual 3 & $32\times32\times32$ & 4,992 \\
+Inverted residual 4 & $48\times16\times16$ & 6,048 \\
+Inverted residual 5 & $48\times16\times16$ & 12,972 \\
+Inverted residual 6 & $80\times8\times8$ & 13,696 \\
+Inverted residual 7 & $80\times8\times8$ & 34,420 \\
+Head, pooling and classifier & $10$ & 17,674 \\
+\midrule Total & & 96,538 \\
+\bottomrule\end{tabular}
+\end{table}
+\subsection{Pretrained references}
+MobileNetV2 \cite{sandler} uses ImageNet weights, three classifier-head warmup epochs then full fine-tuning, for 20 total epochs. EfficientNet-B0 \cite{tan} replaces its classifier with ten outputs and fine-tunes all weights for ten epochs. Both retain $64\times64$ inputs and apply ImageNet normalization and training-only horizontal/vertical flips. These are reference recipes, not matched-budget architecture ablations.
+
+\section{Training settings}
+The controlled custom-model study uses seed 42, the frozen shared split and the RTX 4050 Laptop GPU with PyTorch 2.4.1+cu121. Both architectures are unchanged. Each is trained independently for 40 epochs per optimizer, with batch size 64, plain cross-entropy and FP32 arithmetic (AMP and TF32 disabled). Both use the same training-pixel mean/std normalization and independent horizontal and vertical flips with probability 0.5. Validation and test apply normalization only.
+
+Both models use Adam at learning rate 0.001, plain SGD at 0.01, and SGD with momentum 0.9 at 0.01. Weight decay is zero; there is no scheduler, label smoothing or early stopping. Adam provides an adaptive-step baseline, while plain and momentum SGD expose the effect of gradient accumulation under fixed settings. These learning rates were fixed before this study, not selected by a learning-rate search. Equal settings do not guarantee each architecture's optimal performance.
+
+Within each architecture, the three optimizers begin from identical initialization. Training shuffle and augmentation streams are reset for each recipe. All six runs finish before any test evaluation. Checkpoints are selected by minimum validation cross-entropy, then evaluated on the full test split. CuDNN deterministic settings reduce variation but do not guarantee bitwise GPU reproducibility.
+
+The pretrained references are separate, unmatched experiments. MobileNetV2 uses 20 epochs, batch size 32, Adam with head learning rate 0.001 then 0.0001, and CPU execution. EfficientNet-B0 uses ten epochs, batch size 32, Adam at 0.0001, and CUDA execution. They are not part of the controlled A/B training comparison.
+
+\section{Results}
+\begin{table}[htbp]\centering\small
+\begin{tabular}{llrrrr}
+\toprule
+Model & Optimizer & Accuracy (\%) & Precision (\%) & Recall (\%) & s/epoch \\
+\midrule
+Model A & Adam & 95.48 & 95.33 & 95.39 & 9.02 \\
+Model A & SGD & 83.51 & 82.98 & 82.84 & 8.23 \\
+Model A & SGD + momentum & 95.95 & 95.93 & 95.89 & 9.82 \\
+Model B & Adam & 96.69 & 96.70 & 96.55 & 14.90 \\
+Model B & SGD & 93.06 & 92.86 & 92.88 & 14.12 \\
+Model B & SGD + momentum & 97.14 & 97.07 & 97.04 & 14.10 \\
+\midrule
+MobileNetV2 & Adam (two-stage) & 97.65 & 97.64 & 97.46 & --- \\
+EfficientNet-B0 & Adam & 97.85 & 97.86 & 97.76 & 16.79 \\
+\bottomrule
+\end{tabular}
+\caption{Recorded test metrics. Precision and recall are macro averages. Timing is mean training-plus-validation time per epoch, not inference latency. A dash denotes timing not reported in this comparison.}
+\end{table}
+\begin{table}[htbp]\centering\small
+\input{tables/resources.tex}
+\caption{Parameter and operation accounting at $64\times64$, batch one. FP32 storage is parameters times four bytes divided by 1,024; it excludes activations and optimizer state.}
+\end{table}
+One MAC denotes one multiply-accumulate (approximately two FLOPs). Counts cover Conv2d and Linear operations, including SE convolutions; they exclude bias additions, activations, pooling, normalization, residual additions, SE elementwise multiplication, framework overhead and memory traffic. They are not deployment benchmarks. Actual checkpoint size also includes buffers/metadata and is stored separately in run artifacts. In decimal MB ($10^6$ bytes), FP32 parameter storage is 8.95 MB for MobileNetV2 and 16.08 MB for EfficientNet-B0.
+
+\section{Discussion}
+Model B exceeds Model A by 1.21 percentage points with Adam, 9.56 points with plain SGD, and 1.19 points with momentum SGD. Momentum SGD improves on plain SGD by 12.44 points for Model A and 4.07 points for Model B. Momentum can accumulate consistent gradient directions, but these results apply to the fixed learning rates and one seed; they do not establish universal optimizer superiority.
+
+Model B has approximately 50.6\% fewer parameters and 50.1\% fewer counted MACs than Model A. Its accuracy advantage persists under the matched training protocol. However, it also differs through batch normalization, residual additions, attention, dropout, activation functions and initialization. The experiment therefore compares complete architectures, not an isolated standard-to-depthwise replacement.
+
+The separately trained MobileNetV2 and EfficientNet-B0 references score 97.65\% and 97.85\%. Model B with momentum SGD records 97.14\%, while using substantially fewer parameters. These reference scores provide context, not a matched-budget comparison or statistical ranking.
+
+\subsection{Convergence and classification errors}
+The largest directed off-diagonal counts in the displayed custom-model matrices are Model A momentum SGD: HerbaceousVegetation to PermanentCrop (17), PermanentCrop to HerbaceousVegetation (12), River to AnnualCrop (10). Model B Adam: PermanentCrop to HerbaceousVegetation (19), Industrial to Residential (11), Industrial to Highway (11). These identify observed errors; inspecting the images would be necessary to establish their visual causes.
+
+Figures~\ref{fig:curves-a} and~\ref{fig:curves-b} show loss and accuracy histories for the controlled recipes. Both now use the same plain cross-entropy definition, although training augmentation and Model B's training-only dropout still affect training/validation differences. Figure~\ref{fig:confusion} displays Model A momentum SGD and Model B Adam, together with the pretrained references. All six custom-model results are reported in the table; the displayed matrices are illustrative, not a new test-based selection rule.
+
+\subsection{Limitations}
+The experiments use one seed and an image-level split, not a geographic holdout; spatially related satellite tiles can limit generalization. Earlier test scores were visible before architecture and epoch-budget changes. This adaptive test reuse means the results are exploratory rather than an untouched final assessment. An independent holdout and repeated seeds would be needed for stronger comparisons.
+
+The custom models now share augmentation, normalization, optimizer settings, batch size, loss and epoch budget. Nevertheless, one fixed learning rate per optimizer and one seed cannot characterize optimal performance or uncertainty. Pretraining and different budgets distinguish the reference networks. Timing is also recipe- and hardware-dependent: MobileNetV2 ran on CPU, whereas the new custom runs and EfficientNet-B0 ran on CUDA. Parameter counts and MACs do not establish inference latency, energy use or peak runtime memory.
+
+\section{Conclusion}
+Under the recorded recipes, the custom sub-100k Model B attains accuracy close to the pretrained references while using substantially fewer parameters. Model B scores higher than Model A for each optimizer under the matched training protocol; repeat-seed studies are needed to assess the stability of these differences. Resource claims are restricted to parameter storage and explicitly counted operations; deployment speed and peak runtime memory remain unmeasured.
+
+\clearpage
+\begin{figure}[p]\centering
+\begin{subfigure}{0.76\linewidth}\centering
+\includegraphics[width=\linewidth]{figures/controlled_ab/model_a/adam/training_curves.png}
+\caption{Adam}\end{subfigure}\par\medskip
+\begin{subfigure}{0.76\linewidth}\centering
+\includegraphics[width=\linewidth]{figures/controlled_ab/model_a/sgd/training_curves.png}
+\caption{SGD}\end{subfigure}\par\medskip
+\begin{subfigure}{0.76\linewidth}\centering
+\includegraphics[width=\linewidth]{figures/controlled_ab/model_a/sgd_momentum/training_curves.png}
+\caption{SGD with momentum}\end{subfigure}\par\medskip
+\caption{Model A: controlled training/validation loss and accuracy over 40 epochs.}\label{fig:curves-a}\end{figure}
+\begin{figure}[p]\centering
+\begin{subfigure}{0.76\linewidth}\centering
+\includegraphics[width=\linewidth]{figures/controlled_ab/model_b/adam/training_curves.png}
+\caption{Adam}\end{subfigure}\par\medskip
+\begin{subfigure}{0.76\linewidth}\centering
+\includegraphics[width=\linewidth]{figures/controlled_ab/model_b/sgd/training_curves.png}
+\caption{SGD}\end{subfigure}\par\medskip
+\begin{subfigure}{0.76\linewidth}\centering
+\includegraphics[width=\linewidth]{figures/controlled_ab/model_b/sgd_momentum/training_curves.png}
+\caption{SGD with momentum}\end{subfigure}\par\medskip
+\caption{Model B: training/validation loss and accuracy for each optimizer over 40 epochs.}\label{fig:curves-b}\end{figure}
+\begin{figure}[p]\centering
+\begin{subfigure}{0.49\linewidth}\centering
+\includegraphics[width=\linewidth]{figures/controlled_ab/model_a/sgd_momentum/confusion_matrix.png}
+\caption{Model A: momentum SGD}\end{subfigure}
+\begin{subfigure}{0.49\linewidth}\centering
+\includegraphics[width=\linewidth]{figures/controlled_ab/model_b/adam/confusion_matrix.png}
+\caption{Model B: Adam}\end{subfigure}
+\begin{subfigure}{0.49\linewidth}\centering
+\includegraphics[width=\linewidth]{figures/mobilenet_v2/run_01/confusion_matrix.png}
+\caption{MobileNetV2}\end{subfigure}
+\begin{subfigure}{0.49\linewidth}\centering
+\includegraphics[width=\linewidth]{figures/efficientnet_b0/adam/run_20261009_193426/confusion_matrix.png}
+\caption{EfficientNet-B0}\end{subfigure}
+\caption{Test confusion matrices for the displayed recipes. Rows are true classes and columns are predictions; each panel covers 4,050 images. Counts are not normalized and colour scales are panel-specific.}\label{fig:confusion}\end{figure}
+\begin{figure}[p]\centering
+\begin{subfigure}{0.90\linewidth}\centering
+\includegraphics[width=\linewidth]{figures/mobilenet_v2/run_01/training_curves.png}
+\caption{MobileNetV2}\end{subfigure}\par\medskip
+\begin{subfigure}{0.90\linewidth}\centering
+\includegraphics[width=\linewidth]{figures/efficientnet_b0/adam/run_20261009_193426/training_curves.png}
+\caption{EfficientNet-B0}\end{subfigure}\par\medskip
+\caption{Pretrained-model training histories. EfficientNet-B0 did not log training accuracy, so its plot shows training/validation loss and validation accuracy only.}\end{figure}
+\clearpage
+\appendix
+\section{Experiment records}
+The controlled study directory is:
+\begin{flushleft}\path{results/controlled_ab/controlled_ab_seed42_20261019_215110/}\end{flushleft}
+Its \path{protocol.json} records shared settings, software/hardware, source hashes and dataset/split hashes. Each recipe has a 40-epoch history, a validation-best checkpoint, metrics and figures. The six histories and test matrices were checked for completeness and numerical consistency. Earlier unmatched runs remain historical records and are not the custom-model results reported here.
+
+All report figures are copied into this report directory, so compilation does not require experiment folders. Checkpoints are preserved locally outside Git. MobileNetV2's original checkpoint remains unavailable locally; its saved metrics are reference artifacts, not independently reproduced predictions. EfficientNet-B0's older metadata lacks dataset and manifest hashes, limiting independent provenance verification.
+\end{document}

@@ -1,0 +1,68 @@
+{
+  "model_a_run": "modelA_40ep_20261019_095058",
+  "model_b_runs": {
+    "adamw": "modelB_40ep_adamw_20261019_095058",
+    "sgd": "modelB_40ep_sgd_20261019_095058",
+    "sgd_momentum": "modelB_40ep_sgd_momentum_20261019_095058"
+  },
+  "epochs_per_optimizer": 40,
+  "seed": 42,
+  "status": "complete",
+  "manifest_sha256": {
+    "class_to_idx.json": "f5f85be6ee3c28e1c91d7b1701500f213c4ed2fbc28cb7346efcd9ec1492c6dc",
+    "test.csv": "3342e7a21356fdad0287193535c1dfa6334dd306606cebebbd268f7ff385c98a",
+    "train.csv": "8f5ae8a0f005ea8ebdf5f1e58ad68958d64298e22c65f9b7c7f8d132f70ad8d5",
+    "val.csv": "89cc8a34de0b677311e11d361c6d1404c6a31d849a49186ac4c65774d18e8c4b"
+  },
+  "model_a_code_sha256": {
+    "src/en3150_a03/models/model_a.py": "4936ce4279fcf191d10be48e76332f77bd57b83d7d63ed2eb92065121322ccbe",
+    "src/en3150_a03/model_a_train.py": "92796be1914c61141d5693d644d1ff1a542d313dc5370bcac7d79ba57eaa6dfd",
+    "scripts/run_model_a_experiments.py": "9488c5220a23a1ded2e90a7d4f31f8d492116152bede3c627bdbf78b350eee5a"
+  },
+  "note": "New 40-epoch runs; do not replace prior completed results until validated.",
+  "validation": [
+    {
+      "model": "A",
+      "optimizer": "adam",
+      "accuracy": 0.9241975308641975,
+      "epochs": 40,
+      "checkpoint_bytes": 785442
+    },
+    {
+      "model": "A",
+      "optimizer": "sgd",
+      "accuracy": 0.6925925925925925,
+      "epochs": 40,
+      "checkpoint_bytes": 785442
+    },
+    {
+      "model": "A",
+      "optimizer": "sgd_momentum",
+      "accuracy": 0.9293827160493827,
+      "epochs": 40,
+      "checkpoint_bytes": 785442
+    },
+    {
+      "model": "B",
+      "optimizer": "adamw",
+      "accuracy": 0.9782716049382716,
+      "epochs": 40,
+      "checkpoint_bytes": 450000
+    },
+    {
+      "model": "B",
+      "optimizer": "sgd",
+      "accuracy": 0.9479012345679012,
+      "epochs": 40,
+      "checkpoint_bytes": 450000
+    },
+    {
+      "model": "B",
+      "optimizer": "sgd_momentum",
+      "accuracy": 0.9758024691358025,
+      "epochs": 40,
+      "checkpoint_bytes": 450000
+    }
+  ],
+  "comparison": "results/comparisons/40epochs_20261019/comparison.md"
+}

@@ -1,0 +1,78 @@
+[
+  {
+    "model": "Model A",
+    "optimizer": "adam",
+    "accuracy": 0.9241975308641975,
+    "epochs": 40,
+    "checkpoints": [
+      "results/model_a/modelA_40ep_20261019_095058/adam/best_model.pt"
+    ]
+  },
+  {
+    "model": "Model A",
+    "optimizer": "sgd",
+    "accuracy": 0.6925925925925925,
+    "epochs": 40,
+    "checkpoints": [
+      "results/model_a/modelA_40ep_20261019_095058/sgd/best_model.pt"
+    ]
+  },
+  {
+    "model": "Model A",
+    "optimizer": "sgd_momentum",
+    "accuracy": 0.9293827160493827,
+    "epochs": 40,
+    "checkpoints": [
+      "results/model_a/modelA_40ep_20261019_095058/sgd_momentum/best_model.pt"
+    ]
+  },
+  {
+    "model": "Model B",
+    "optimizer": "adamw",
+    "accuracy": 0.9782716049382716,
+    "epochs": 40,
+    "checkpoints": [
+      "results/model_b/modelB_40ep_adamw_20261019_095058/best_model.pt",
+      "results/model_b/modelB_40ep_adamw_20261019_095058/model_weights.pt",
+      "results/model_b/modelB_40ep_adamw_20261019_095058/last_model.pt"
+    ]
+  },
+  {
+    "model": "Model B",
+    "optimizer": "sgd",
+    "accuracy": 0.9479012345679012,
+    "epochs": 40,
+    "checkpoints": [
+      "results/model_b/modelB_40ep_sgd_20261019_095058/best_model.pt",
+      "results/model_b/modelB_40ep_sgd_20261019_095058/model_weights.pt",
+      "results/model_b/modelB_40ep_sgd_20261019_095058/last_model.pt"
+    ]
+  },
+  {
+    "model": "Model B",
+    "optimizer": "sgd_momentum",
+    "accuracy": 0.9758024691358025,
+    "epochs": 40,
+    "checkpoints": [
+      "results/model_b/modelB_40ep_sgd_momentum_20261019_095058/best_model.pt",
+      "results/model_b/modelB_40ep_sgd_momentum_20261019_095058/model_weights.pt",
+      "results/model_b/modelB_40ep_sgd_momentum_20261019_095058/last_model.pt"
+    ]
+  },
+  {
+    "model": "MobileNetV2",
+    "optimizer": "Adam (two-stage)",
+    "accuracy": 0.9765432098765432,
+    "epochs": 20,
+    "checkpoints": []
+  },
+  {
+    "model": "EfficientNet-B0",
+    "optimizer": "Adam",
+    "accuracy": 0.9785185185185186,
+    "epochs": 10,
+    "checkpoints": [
+      "results/efficientnet_b0/adam/run_20261009_193426/best.pt"
+    ]
+  }
+]

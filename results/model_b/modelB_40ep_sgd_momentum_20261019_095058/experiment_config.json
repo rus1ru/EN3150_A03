@@ -1,0 +1,70 @@
+{
+  "architecture": "model_b_v2_inverted_residual_se",
+  "attention": true,
+  "dropout": 0.1,
+  "optimizer": "sgd_momentum",
+  "learning_rate": 0.05,
+  "weight_decay": 0.0001,
+  "label_smoothing": 0.05,
+  "augmentation": true,
+  "epochs": 40,
+  "batch_size": 128,
+  "num_workers": 0,
+  "seed": 42,
+  "amp": true,
+  "normalization": {
+    "mean": [
+      0.3438910812612735,
+      0.37992633406044773,
+      0.40740579897991663
+    ],
+    "std": [
+      0.20255131387739245,
+      0.13690414616451543,
+      0.11545699146655192
+    ],
+    "source": "train.csv only",
+    "pixels": 77414400
+  },
+  "class_to_idx": {
+    "AnnualCrop": 0,
+    "Forest": 1,
+    "HerbaceousVegetation": 2,
+    "Highway": 3,
+    "Industrial": 4,
+    "Pasture": 5,
+    "PermanentCrop": 6,
+    "Residential": 7,
+    "River": 8,
+    "SeaLake": 9
+  },
+  "dataset_sha256": "548a976e7d3f714d69f2a93f1abaf6261494537faa33af10f762ad7614644dd1",
+  "manifest_sha256": {
+    "class_to_idx.json": "f5f85be6ee3c28e1c91d7b1701500f213c4ed2fbc28cb7346efcd9ec1492c6dc",
+    "test.csv": "3342e7a21356fdad0287193535c1dfa6334dd306606cebebbd268f7ff385c98a",
+    "train.csv": "8f5ae8a0f005ea8ebdf5f1e58ad68958d64298e22c65f9b7c7f8d132f70ad8d5",
+    "val.csv": "89cc8a34de0b677311e11d361c6d1404c6a31d849a49186ac4c65774d18e8c4b"
+  },
+  "code_sha256": {
+    "models/model_b_v2.py": "d7dec98c821bc2d3015b24c533dfc130a64bb597f24cb2d0b8925d0171e1d4b3",
+    "model_b_v2_data.py": "a7109bfd3020394b89088dff66580bcec737910463e9d50ec9650951b56b7214",
+    "model_b_v2_train.py": "fadce1a265e800bd93ff32c88934eedda08e7f083cbbb61338599ff9cd84f1e7",
+    "data.py": "de20d2aac212daecb2d137329969fdf7a612ae7a8794a9251c403ff888a01c17",
+    "model_a_evaluate.py": "0a6de137a6f2a9a6a0369874095a88322119255d6b24b330915fea29da5f86f2",
+    "model_a_metrics.py": "1fff3bb33a85647f9e475eb82c721ea418c992407c044e1067911c22ff5c00f8"
+  },
+  "schedule": "5-epoch linear warmup then cosine to 1e-5",
+  "checkpoint_selection": "minimum validation plain cross-entropy; test requires explicit --evaluate-only",
+  "environment": {
+    "platform": "Linux-7.0.0-38-generic-x86_64-with-glibc2.39",
+    "processor": "x86_64",
+    "python": "3.12.3",
+    "torch": "2.4.1+cu121",
+    "torchvision": "0.19.1+cu121",
+    "device": "cuda",
+    "gpu": "NVIDIA GeForce RTX 4050 Laptop GPU",
+    "cpu_threads": 2,
+    "git_commit": "c7b31db4be90c469fd1385f0107f080fec0c6400",
+    "working_tree_dirty": true
+  }
+}

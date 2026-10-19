@@ -1,0 +1,196 @@
+{
+  "accuracy": 0.9548148148148148,
+  "macro_precision": 0.9533029952185224,
+  "macro_recall": 0.953888888888889,
+  "per_class": {
+    "AnnualCrop": {
+      "precision": 0.9535398230088495,
+      "recall": 0.9577777777777777,
+      "support": 450
+    },
+    "Forest": {
+      "precision": 0.973741794310722,
+      "recall": 0.9888888888888889,
+      "support": 450
+    },
+    "HerbaceousVegetation": {
+      "precision": 0.9450800915331807,
+      "recall": 0.9177777777777778,
+      "support": 450
+    },
+    "Highway": {
+      "precision": 0.915,
+      "recall": 0.976,
+      "support": 375
+    },
+    "Industrial": {
+      "precision": 0.9549071618037135,
+      "recall": 0.96,
+      "support": 375
+    },
+    "Pasture": {
+      "precision": 0.932258064516129,
+      "recall": 0.9633333333333334,
+      "support": 300
+    },
+    "PermanentCrop": {
+      "precision": 0.9344262295081968,
+      "recall": 0.912,
+      "support": 375
+    },
+    "Residential": {
+      "precision": 0.9778761061946902,
+      "recall": 0.9822222222222222,
+      "support": 450
+    },
+    "River": {
+      "precision": 0.9573863636363636,
+      "recall": 0.8986666666666666,
+      "support": 375
+    },
+    "SeaLake": {
+      "precision": 0.9888143176733781,
+      "recall": 0.9822222222222222,
+      "support": 450
+    }
+  },
+  "confusion_matrix": [
+    [
+      431,
+      1,
+      0,
+      2,
+      0,
+      6,
+      4,
+      0,
+      5,
+      1
+    ],
+    [
+      0,
+      445,
+      2,
+      0,
+      0,
+      3,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      1,
+      4,
+      413,
+      1,
+      2,
+      5,
+      17,
+      4,
+      3,
+      0
+    ],
+    [
+      0,
+      0,
+      1,
+      366,
+      5,
+      0,
+      2,
+      0,
+      1,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      8,
+      360,
+      0,
+      1,
+      6,
+      0,
+      0
+    ],
+    [
+      5,
+      0,
+      3,
+      2,
+      0,
+      289,
+      0,
+      0,
+      1,
+      0
+    ],
+    [
+      6,
+      0,
+      12,
+      5,
+      3,
+      4,
+      342,
+      0,
+      3,
+      0
+    ],
+    [
+      0,
+      0,
+      2,
+      1,
+      5,
+      0,
+      0,
+      442,
+      0,
+      0
+    ],
+    [
+      6,
+      5,
+      3,
+      15,
+      2,
+      3,
+      0,
+      0,
+      337,
+      4
+    ],
+    [
+      3,
+      2,
+      1,
+      0,
+      0,
+      0,
+      0,
+      0,
+      2,
+      442
+    ]
+  ],
+  "class_names": [
+    "AnnualCrop",
+    "Forest",
+    "HerbaceousVegetation",
+    "Highway",
+    "Industrial",
+    "Pasture",
+    "PermanentCrop",
+    "Residential",
+    "River",
+    "SeaLake"
+  ],
+  "trainable_parameters": 195290,
+  "estimated_float32_size_kb": 762.8515625,
+  "model": "model_a",
+  "optimizer": "adam",
+  "best_epoch": 32
+}

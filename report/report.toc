@@ -1,0 +1,14 @@
+\contentsline {section}{Group Members}{i}{Doc-Start}%
+\contentsline {section}{\numberline {1}Introduction}{1}{section.2}%
+\contentsline {section}{\numberline {2}Dataset and protocol}{1}{section.3}%
+\contentsline {section}{\numberline {3}Architectures and parameter accounting}{1}{section.4}%
+\contentsline {subsection}{\numberline {3.1}Model A: standard convolution}{1}{subsection.5}%
+\contentsline {subsection}{\numberline {3.2}Model B: custom depthwise network}{2}{subsection.6}%
+\contentsline {subsection}{\numberline {3.3}Pretrained references}{3}{subsection.8}%
+\contentsline {section}{\numberline {4}Training settings}{3}{section.9}%
+\contentsline {section}{\numberline {5}Results}{3}{section.10}%
+\contentsline {section}{\numberline {6}Discussion}{4}{section.13}%
+\contentsline {subsection}{\numberline {6.1}Convergence and classification errors}{4}{subsection.14}%
+\contentsline {subsection}{\numberline {6.2}Limitations}{5}{subsection.15}%
+\contentsline {section}{\numberline {7}Conclusion}{5}{section.16}%
+\contentsline {section}{\numberline {A}Experiment records}{10}{appendix.21}%

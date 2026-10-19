@@ -1,0 +1,9825 @@
+{
+  "Model A": {
+    "input_shape": [
+      1,
+      3,
+      64,
+      64
+    ],
+    "total_parameters": 195290,
+    "trainable_parameters": 195290,
+    "estimated_float32_size_kb": 762.8515625,
+    "fp32_parameter_size_mb": 0.78116,
+    "macs": 42785664,
+    "flops_conv_linear": 85571328,
+    "mac_convention": "Batch-one Conv2d and Linear only; one multiply-accumulate = one MAC (approximately two FLOPs). Bias adds, activations, pooling, memory traffic and framework overhead excluded. This is operation count, not latency.",
+    "layers": [
+      {
+        "layer": "features.0",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          3,
+          64,
+          64
+        ],
+        "output_shape": [
+          1,
+          32,
+          64,
+          64
+        ],
+        "kernel": [
+          3,
+          3
+        ],
+        "groups": 1,
+        "parameters": 896,
+        "macs": 3538944
+      },
+      {
+        "layer": "features.1",
+        "type": "ReLU",
+        "input_shape": [
+          1,
+          32,
+          64,
+          64
+        ],
+        "output_shape": [
+          1,
+          32,
+          64,
+          64
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.2",
+        "type": "MaxPool2d",
+        "input_shape": [
+          1,
+          32,
+          64,
+          64
+        ],
+        "output_shape": [
+          1,
+          32,
+          32,
+          32
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.3",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          32,
+          32,
+          32
+        ],
+        "output_shape": [
+          1,
+          64,
+          32,
+          32
+        ],
+        "kernel": [
+          3,
+          3
+        ],
+        "groups": 1,
+        "parameters": 18496,
+        "macs": 18874368
+      },
+      {
+        "layer": "features.4",
+        "type": "ReLU",
+        "input_shape": [
+          1,
+          64,
+          32,
+          32
+        ],
+        "output_shape": [
+          1,
+          64,
+          32,
+          32
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.5",
+        "type": "MaxPool2d",
+        "input_shape": [
+          1,
+          64,
+          32,
+          32
+        ],
+        "output_shape": [
+          1,
+          64,
+          16,
+          16
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.6",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          64,
+          16,
+          16
+        ],
+        "output_shape": [
+          1,
+          96,
+          16,
+          16
+        ],
+        "kernel": [
+          3,
+          3
+        ],
+        "groups": 1,
+        "parameters": 55392,
+        "macs": 14155776
+      },
+      {
+        "layer": "features.7",
+        "type": "ReLU",
+        "input_shape": [
+          1,
+          96,
+          16,
+          16
+        ],
+        "output_shape": [
+          1,
+          96,
+          16,
+          16
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.8",
+        "type": "MaxPool2d",
+        "input_shape": [
+          1,
+          96,
+          16,
+          16
+        ],
+        "output_shape": [
+          1,
+          96,
+          8,
+          8
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.9",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          96,
+          8,
+          8
+        ],
+        "output_shape": [
+          1,
+          112,
+          8,
+          8
+        ],
+        "kernel": [
+          3,
+          3
+        ],
+        "groups": 1,
+        "parameters": 96880,
+        "macs": 6193152
+      },
+      {
+        "layer": "features.10",
+        "type": "ReLU",
+        "input_shape": [
+          1,
+          112,
+          8,
+          8
+        ],
+        "output_shape": [
+          1,
+          112,
+          8,
+          8
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.11",
+        "type": "MaxPool2d",
+        "input_shape": [
+          1,
+          112,
+          8,
+          8
+        ],
+        "output_shape": [
+          1,
+          112,
+          4,
+          4
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.12",
+        "type": "AdaptiveAvgPool2d",
+        "input_shape": [
+          1,
+          112,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          112,
+          1,
+          1
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "classifier.0",
+        "type": "Flatten",
+        "input_shape": [
+          1,
+          112,
+          1,
+          1
+        ],
+        "output_shape": [
+          1,
+          112
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "classifier.1",
+        "type": "Linear",
+        "input_shape": [
+          1,
+          112
+        ],
+        "output_shape": [
+          1,
+          192
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 21696,
+        "macs": 21504
+      },
+      {
+        "layer": "classifier.2",
+        "type": "ReLU",
+        "input_shape": [
+          1,
+          192
+        ],
+        "output_shape": [
+          1,
+          192
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "classifier.3",
+        "type": "Linear",
+        "input_shape": [
+          1,
+          192
+        ],
+        "output_shape": [
+          1,
+          10
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 1930,
+        "macs": 1920
+      }
+    ]
+  },
+  "Model B": {
+    "input_shape": [
+      1,
+      3,
+      64,
+      64
+    ],
+    "total_parameters": 96538,
+    "trainable_parameters": 96538,
+    "estimated_float32_size_kb": 377.1015625,
+    "fp32_parameter_size_mb": 0.386152,
+    "macs": 21358976,
+    "flops_conv_linear": 42717952,
+    "mac_convention": "Batch-one Conv2d and Linear only; one multiply-accumulate = one MAC (approximately two FLOPs). Bias adds, activations, pooling, memory traffic and framework overhead excluded. This is operation count, not latency.",
+    "layers": [
+      {
+        "layer": "stem.0.0",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          3,
+          64,
+          64
+        ],
+        "output_shape": [
+          1,
+          24,
+          64,
+          64
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 72,
+        "macs": 294912
+      },
+      {
+        "layer": "stem.0.1",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          24,
+          64,
+          64
+        ],
+        "output_shape": [
+          1,
+          24,
+          64,
+          64
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 48,
+        "macs": 0
+      },
+      {
+        "layer": "stem.0.2",
+        "type": "ReLU6",
+        "input_shape": [
+          1,
+          24,
+          64,
+          64
+        ],
+        "output_shape": [
+          1,
+          24,
+          64,
+          64
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "stem.1.0",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          24,
+          64,
+          64
+        ],
+        "output_shape": [
+          1,
+          24,
+          32,
+          32
+        ],
+        "kernel": [
+          3,
+          3
+        ],
+        "groups": 24,
+        "parameters": 216,
+        "macs": 221184
+      },
+      {
+        "layer": "stem.1.1",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          24,
+          32,
+          32
+        ],
+        "output_shape": [
+          1,
+          24,
+          32,
+          32
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 48,
+        "macs": 0
+      },
+      {
+        "layer": "stem.1.2",
+        "type": "ReLU6",
+        "input_shape": [
+          1,
+          24,
+          32,
+          32
+        ],
+        "output_shape": [
+          1,
+          24,
+          32,
+          32
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "blocks.0.transform.0.0",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          24,
+          32,
+          32
+        ],
+        "output_shape": [
+          1,
+          48,
+          32,
+          32
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 1152,
+        "macs": 1179648
+      },
+      {
+        "layer": "blocks.0.transform.0.1",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          48,
+          32,
+          32
+        ],
+        "output_shape": [
+          1,
+          48,
+          32,
+          32
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 96,
+        "macs": 0
+      },
+      {
+        "layer": "blocks.0.transform.0.2",
+        "type": "ReLU6",
+        "input_shape": [
+          1,
+          48,
+          32,
+          32
+        ],
+        "output_shape": [
+          1,
+          48,
+          32,
+          32
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "blocks.0.transform.1.0",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          48,
+          32,
+          32
+        ],
+        "output_shape": [
+          1,
+          48,
+          32,
+          32
+        ],
+        "kernel": [
+          3,
+          3
+        ],
+        "groups": 48,
+        "parameters": 432,
+        "macs": 442368
+      },
+      {
+        "layer": "blocks.0.transform.1.1",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          48,
+          32,
+          32
+        ],
+        "output_shape": [
+          1,
+          48,
+          32,
+          32
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 96,
+        "macs": 0
+      },
+      {
+        "layer": "blocks.0.transform.1.2",
+        "type": "ReLU6",
+        "input_shape": [
+          1,
+          48,
+          32,
+          32
+        ],
+        "output_shape": [
+          1,
+          48,
+          32,
+          32
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "blocks.0.transform.2",
+        "type": "Identity",
+        "input_shape": [
+          1,
+          48,
+          32,
+          32
+        ],
+        "output_shape": [
+          1,
+          48,
+          32,
+          32
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "blocks.0.transform.3.0",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          48,
+          32,
+          32
+        ],
+        "output_shape": [
+          1,
+          24,
+          32,
+          32
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 1152,
+        "macs": 1179648
+      },
+      {
+        "layer": "blocks.0.transform.3.1",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          24,
+          32,
+          32
+        ],
+        "output_shape": [
+          1,
+          24,
+          32,
+          32
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 48,
+        "macs": 0
+      },
+      {
+        "layer": "blocks.1.transform.0.0",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          24,
+          32,
+          32
+        ],
+        "output_shape": [
+          1,
+          48,
+          32,
+          32
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 1152,
+        "macs": 1179648
+      },
+      {
+        "layer": "blocks.1.transform.0.1",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          48,
+          32,
+          32
+        ],
+        "output_shape": [
+          1,
+          48,
+          32,
+          32
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 96,
+        "macs": 0
+      },
+      {
+        "layer": "blocks.1.transform.0.2",
+        "type": "ReLU6",
+        "input_shape": [
+          1,
+          48,
+          32,
+          32
+        ],
+        "output_shape": [
+          1,
+          48,
+          32,
+          32
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "blocks.1.transform.1.0",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          48,
+          32,
+          32
+        ],
+        "output_shape": [
+          1,
+          48,
+          32,
+          32
+        ],
+        "kernel": [
+          3,
+          3
+        ],
+        "groups": 48,
+        "parameters": 432,
+        "macs": 442368
+      },
+      {
+        "layer": "blocks.1.transform.1.1",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          48,
+          32,
+          32
+        ],
+        "output_shape": [
+          1,
+          48,
+          32,
+          32
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 96,
+        "macs": 0
+      },
+      {
+        "layer": "blocks.1.transform.1.2",
+        "type": "ReLU6",
+        "input_shape": [
+          1,
+          48,
+          32,
+          32
+        ],
+        "output_shape": [
+          1,
+          48,
+          32,
+          32
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "blocks.1.transform.2",
+        "type": "Identity",
+        "input_shape": [
+          1,
+          48,
+          32,
+          32
+        ],
+        "output_shape": [
+          1,
+          48,
+          32,
+          32
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "blocks.1.transform.3.0",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          48,
+          32,
+          32
+        ],
+        "output_shape": [
+          1,
+          32,
+          32,
+          32
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 1536,
+        "macs": 1572864
+      },
+      {
+        "layer": "blocks.1.transform.3.1",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          32,
+          32,
+          32
+        ],
+        "output_shape": [
+          1,
+          32,
+          32,
+          32
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 64,
+        "macs": 0
+      },
+      {
+        "layer": "blocks.2.transform.0.0",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          32,
+          32,
+          32
+        ],
+        "output_shape": [
+          1,
+          64,
+          32,
+          32
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 2048,
+        "macs": 2097152
+      },
+      {
+        "layer": "blocks.2.transform.0.1",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          64,
+          32,
+          32
+        ],
+        "output_shape": [
+          1,
+          64,
+          32,
+          32
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 128,
+        "macs": 0
+      },
+      {
+        "layer": "blocks.2.transform.0.2",
+        "type": "ReLU6",
+        "input_shape": [
+          1,
+          64,
+          32,
+          32
+        ],
+        "output_shape": [
+          1,
+          64,
+          32,
+          32
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "blocks.2.transform.1.0",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          64,
+          32,
+          32
+        ],
+        "output_shape": [
+          1,
+          64,
+          32,
+          32
+        ],
+        "kernel": [
+          3,
+          3
+        ],
+        "groups": 64,
+        "parameters": 576,
+        "macs": 589824
+      },
+      {
+        "layer": "blocks.2.transform.1.1",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          64,
+          32,
+          32
+        ],
+        "output_shape": [
+          1,
+          64,
+          32,
+          32
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 128,
+        "macs": 0
+      },
+      {
+        "layer": "blocks.2.transform.1.2",
+        "type": "ReLU6",
+        "input_shape": [
+          1,
+          64,
+          32,
+          32
+        ],
+        "output_shape": [
+          1,
+          64,
+          32,
+          32
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "blocks.2.transform.2",
+        "type": "Identity",
+        "input_shape": [
+          1,
+          64,
+          32,
+          32
+        ],
+        "output_shape": [
+          1,
+          64,
+          32,
+          32
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "blocks.2.transform.3.0",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          64,
+          32,
+          32
+        ],
+        "output_shape": [
+          1,
+          32,
+          32,
+          32
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 2048,
+        "macs": 2097152
+      },
+      {
+        "layer": "blocks.2.transform.3.1",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          32,
+          32,
+          32
+        ],
+        "output_shape": [
+          1,
+          32,
+          32,
+          32
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 64,
+        "macs": 0
+      },
+      {
+        "layer": "blocks.3.transform.0.0",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          32,
+          32,
+          32
+        ],
+        "output_shape": [
+          1,
+          64,
+          32,
+          32
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 2048,
+        "macs": 2097152
+      },
+      {
+        "layer": "blocks.3.transform.0.1",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          64,
+          32,
+          32
+        ],
+        "output_shape": [
+          1,
+          64,
+          32,
+          32
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 128,
+        "macs": 0
+      },
+      {
+        "layer": "blocks.3.transform.0.2",
+        "type": "ReLU6",
+        "input_shape": [
+          1,
+          64,
+          32,
+          32
+        ],
+        "output_shape": [
+          1,
+          64,
+          32,
+          32
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "blocks.3.transform.1.0",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          64,
+          32,
+          32
+        ],
+        "output_shape": [
+          1,
+          64,
+          16,
+          16
+        ],
+        "kernel": [
+          3,
+          3
+        ],
+        "groups": 64,
+        "parameters": 576,
+        "macs": 147456
+      },
+      {
+        "layer": "blocks.3.transform.1.1",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          64,
+          16,
+          16
+        ],
+        "output_shape": [
+          1,
+          64,
+          16,
+          16
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 128,
+        "macs": 0
+      },
+      {
+        "layer": "blocks.3.transform.1.2",
+        "type": "ReLU6",
+        "input_shape": [
+          1,
+          64,
+          16,
+          16
+        ],
+        "output_shape": [
+          1,
+          64,
+          16,
+          16
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "blocks.3.transform.2",
+        "type": "Identity",
+        "input_shape": [
+          1,
+          64,
+          16,
+          16
+        ],
+        "output_shape": [
+          1,
+          64,
+          16,
+          16
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "blocks.3.transform.3.0",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          64,
+          16,
+          16
+        ],
+        "output_shape": [
+          1,
+          48,
+          16,
+          16
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 3072,
+        "macs": 786432
+      },
+      {
+        "layer": "blocks.3.transform.3.1",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          48,
+          16,
+          16
+        ],
+        "output_shape": [
+          1,
+          48,
+          16,
+          16
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 96,
+        "macs": 0
+      },
+      {
+        "layer": "blocks.4.transform.0.0",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          48,
+          16,
+          16
+        ],
+        "output_shape": [
+          1,
+          96,
+          16,
+          16
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 4608,
+        "macs": 1179648
+      },
+      {
+        "layer": "blocks.4.transform.0.1",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          96,
+          16,
+          16
+        ],
+        "output_shape": [
+          1,
+          96,
+          16,
+          16
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 192,
+        "macs": 0
+      },
+      {
+        "layer": "blocks.4.transform.0.2",
+        "type": "ReLU6",
+        "input_shape": [
+          1,
+          96,
+          16,
+          16
+        ],
+        "output_shape": [
+          1,
+          96,
+          16,
+          16
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "blocks.4.transform.1.0",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          96,
+          16,
+          16
+        ],
+        "output_shape": [
+          1,
+          96,
+          16,
+          16
+        ],
+        "kernel": [
+          3,
+          3
+        ],
+        "groups": 96,
+        "parameters": 864,
+        "macs": 221184
+      },
+      {
+        "layer": "blocks.4.transform.1.1",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          96,
+          16,
+          16
+        ],
+        "output_shape": [
+          1,
+          96,
+          16,
+          16
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 192,
+        "macs": 0
+      },
+      {
+        "layer": "blocks.4.transform.1.2",
+        "type": "ReLU6",
+        "input_shape": [
+          1,
+          96,
+          16,
+          16
+        ],
+        "output_shape": [
+          1,
+          96,
+          16,
+          16
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "blocks.4.transform.2.gate.0",
+        "type": "AdaptiveAvgPool2d",
+        "input_shape": [
+          1,
+          96,
+          16,
+          16
+        ],
+        "output_shape": [
+          1,
+          96,
+          1,
+          1
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "blocks.4.transform.2.gate.1",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          96,
+          1,
+          1
+        ],
+        "output_shape": [
+          1,
+          12,
+          1,
+          1
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 1164,
+        "macs": 1152
+      },
+      {
+        "layer": "blocks.4.transform.2.gate.2",
+        "type": "ReLU",
+        "input_shape": [
+          1,
+          12,
+          1,
+          1
+        ],
+        "output_shape": [
+          1,
+          12,
+          1,
+          1
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "blocks.4.transform.2.gate.3",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          12,
+          1,
+          1
+        ],
+        "output_shape": [
+          1,
+          96,
+          1,
+          1
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 1248,
+        "macs": 1152
+      },
+      {
+        "layer": "blocks.4.transform.2.gate.4",
+        "type": "Hardsigmoid",
+        "input_shape": [
+          1,
+          96,
+          1,
+          1
+        ],
+        "output_shape": [
+          1,
+          96,
+          1,
+          1
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "blocks.4.transform.3.0",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          96,
+          16,
+          16
+        ],
+        "output_shape": [
+          1,
+          48,
+          16,
+          16
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 4608,
+        "macs": 1179648
+      },
+      {
+        "layer": "blocks.4.transform.3.1",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          48,
+          16,
+          16
+        ],
+        "output_shape": [
+          1,
+          48,
+          16,
+          16
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 96,
+        "macs": 0
+      },
+      {
+        "layer": "blocks.5.transform.0.0",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          48,
+          16,
+          16
+        ],
+        "output_shape": [
+          1,
+          96,
+          16,
+          16
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 4608,
+        "macs": 1179648
+      },
+      {
+        "layer": "blocks.5.transform.0.1",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          96,
+          16,
+          16
+        ],
+        "output_shape": [
+          1,
+          96,
+          16,
+          16
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 192,
+        "macs": 0
+      },
+      {
+        "layer": "blocks.5.transform.0.2",
+        "type": "ReLU6",
+        "input_shape": [
+          1,
+          96,
+          16,
+          16
+        ],
+        "output_shape": [
+          1,
+          96,
+          16,
+          16
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "blocks.5.transform.1.0",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          96,
+          16,
+          16
+        ],
+        "output_shape": [
+          1,
+          96,
+          8,
+          8
+        ],
+        "kernel": [
+          3,
+          3
+        ],
+        "groups": 96,
+        "parameters": 864,
+        "macs": 55296
+      },
+      {
+        "layer": "blocks.5.transform.1.1",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          96,
+          8,
+          8
+        ],
+        "output_shape": [
+          1,
+          96,
+          8,
+          8
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 192,
+        "macs": 0
+      },
+      {
+        "layer": "blocks.5.transform.1.2",
+        "type": "ReLU6",
+        "input_shape": [
+          1,
+          96,
+          8,
+          8
+        ],
+        "output_shape": [
+          1,
+          96,
+          8,
+          8
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "blocks.5.transform.2",
+        "type": "Identity",
+        "input_shape": [
+          1,
+          96,
+          8,
+          8
+        ],
+        "output_shape": [
+          1,
+          96,
+          8,
+          8
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "blocks.5.transform.3.0",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          96,
+          8,
+          8
+        ],
+        "output_shape": [
+          1,
+          80,
+          8,
+          8
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 7680,
+        "macs": 491520
+      },
+      {
+        "layer": "blocks.5.transform.3.1",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          80,
+          8,
+          8
+        ],
+        "output_shape": [
+          1,
+          80,
+          8,
+          8
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 160,
+        "macs": 0
+      },
+      {
+        "layer": "blocks.6.transform.0.0",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          80,
+          8,
+          8
+        ],
+        "output_shape": [
+          1,
+          160,
+          8,
+          8
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 12800,
+        "macs": 819200
+      },
+      {
+        "layer": "blocks.6.transform.0.1",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          160,
+          8,
+          8
+        ],
+        "output_shape": [
+          1,
+          160,
+          8,
+          8
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 320,
+        "macs": 0
+      },
+      {
+        "layer": "blocks.6.transform.0.2",
+        "type": "ReLU6",
+        "input_shape": [
+          1,
+          160,
+          8,
+          8
+        ],
+        "output_shape": [
+          1,
+          160,
+          8,
+          8
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "blocks.6.transform.1.0",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          160,
+          8,
+          8
+        ],
+        "output_shape": [
+          1,
+          160,
+          8,
+          8
+        ],
+        "kernel": [
+          3,
+          3
+        ],
+        "groups": 160,
+        "parameters": 1440,
+        "macs": 92160
+      },
+      {
+        "layer": "blocks.6.transform.1.1",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          160,
+          8,
+          8
+        ],
+        "output_shape": [
+          1,
+          160,
+          8,
+          8
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 320,
+        "macs": 0
+      },
+      {
+        "layer": "blocks.6.transform.1.2",
+        "type": "ReLU6",
+        "input_shape": [
+          1,
+          160,
+          8,
+          8
+        ],
+        "output_shape": [
+          1,
+          160,
+          8,
+          8
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "blocks.6.transform.2.gate.0",
+        "type": "AdaptiveAvgPool2d",
+        "input_shape": [
+          1,
+          160,
+          8,
+          8
+        ],
+        "output_shape": [
+          1,
+          160,
+          1,
+          1
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "blocks.6.transform.2.gate.1",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          160,
+          1,
+          1
+        ],
+        "output_shape": [
+          1,
+          20,
+          1,
+          1
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 3220,
+        "macs": 3200
+      },
+      {
+        "layer": "blocks.6.transform.2.gate.2",
+        "type": "ReLU",
+        "input_shape": [
+          1,
+          20,
+          1,
+          1
+        ],
+        "output_shape": [
+          1,
+          20,
+          1,
+          1
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "blocks.6.transform.2.gate.3",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          20,
+          1,
+          1
+        ],
+        "output_shape": [
+          1,
+          160,
+          1,
+          1
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 3360,
+        "macs": 3200
+      },
+      {
+        "layer": "blocks.6.transform.2.gate.4",
+        "type": "Hardsigmoid",
+        "input_shape": [
+          1,
+          160,
+          1,
+          1
+        ],
+        "output_shape": [
+          1,
+          160,
+          1,
+          1
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "blocks.6.transform.3.0",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          160,
+          8,
+          8
+        ],
+        "output_shape": [
+          1,
+          80,
+          8,
+          8
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 12800,
+        "macs": 819200
+      },
+      {
+        "layer": "blocks.6.transform.3.1",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          80,
+          8,
+          8
+        ],
+        "output_shape": [
+          1,
+          80,
+          8,
+          8
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 160,
+        "macs": 0
+      },
+      {
+        "layer": "head.0.0",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          80,
+          8,
+          8
+        ],
+        "output_shape": [
+          1,
+          192,
+          8,
+          8
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 15360,
+        "macs": 983040
+      },
+      {
+        "layer": "head.0.1",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          192,
+          8,
+          8
+        ],
+        "output_shape": [
+          1,
+          192,
+          8,
+          8
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 384,
+        "macs": 0
+      },
+      {
+        "layer": "head.0.2",
+        "type": "ReLU6",
+        "input_shape": [
+          1,
+          192,
+          8,
+          8
+        ],
+        "output_shape": [
+          1,
+          192,
+          8,
+          8
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "head.1",
+        "type": "AdaptiveAvgPool2d",
+        "input_shape": [
+          1,
+          192,
+          8,
+          8
+        ],
+        "output_shape": [
+          1,
+          192,
+          1,
+          1
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "head.2",
+        "type": "Flatten",
+        "input_shape": [
+          1,
+          192,
+          1,
+          1
+        ],
+        "output_shape": [
+          1,
+          192
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "head.3",
+        "type": "Dropout",
+        "input_shape": [
+          1,
+          192
+        ],
+        "output_shape": [
+          1,
+          192
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "head.4",
+        "type": "Linear",
+        "input_shape": [
+          1,
+          192
+        ],
+        "output_shape": [
+          1,
+          10
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 1930,
+        "macs": 1920
+      }
+    ]
+  },
+  "MobileNetV2": {
+    "input_shape": [
+      1,
+      3,
+      64,
+      64
+    ],
+    "total_parameters": 2236682,
+    "trainable_parameters": 2236682,
+    "estimated_float32_size_kb": 8737.0390625,
+    "fp32_parameter_size_mb": 8.946728,
+    "macs": 24461312,
+    "flops_conv_linear": 48922624,
+    "mac_convention": "Batch-one Conv2d and Linear only; one multiply-accumulate = one MAC (approximately two FLOPs). Bias adds, activations, pooling, memory traffic and framework overhead excluded. This is operation count, not latency.",
+    "layers": [
+      {
+        "layer": "features.0.0",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          3,
+          64,
+          64
+        ],
+        "output_shape": [
+          1,
+          32,
+          32,
+          32
+        ],
+        "kernel": [
+          3,
+          3
+        ],
+        "groups": 1,
+        "parameters": 864,
+        "macs": 884736
+      },
+      {
+        "layer": "features.0.1",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          32,
+          32,
+          32
+        ],
+        "output_shape": [
+          1,
+          32,
+          32,
+          32
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 64,
+        "macs": 0
+      },
+      {
+        "layer": "features.0.2",
+        "type": "ReLU6",
+        "input_shape": [
+          1,
+          32,
+          32,
+          32
+        ],
+        "output_shape": [
+          1,
+          32,
+          32,
+          32
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.1.conv.0.0",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          32,
+          32,
+          32
+        ],
+        "output_shape": [
+          1,
+          32,
+          32,
+          32
+        ],
+        "kernel": [
+          3,
+          3
+        ],
+        "groups": 32,
+        "parameters": 288,
+        "macs": 294912
+      },
+      {
+        "layer": "features.1.conv.0.1",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          32,
+          32,
+          32
+        ],
+        "output_shape": [
+          1,
+          32,
+          32,
+          32
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 64,
+        "macs": 0
+      },
+      {
+        "layer": "features.1.conv.0.2",
+        "type": "ReLU6",
+        "input_shape": [
+          1,
+          32,
+          32,
+          32
+        ],
+        "output_shape": [
+          1,
+          32,
+          32,
+          32
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.1.conv.1",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          32,
+          32,
+          32
+        ],
+        "output_shape": [
+          1,
+          16,
+          32,
+          32
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 512,
+        "macs": 524288
+      },
+      {
+        "layer": "features.1.conv.2",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          16,
+          32,
+          32
+        ],
+        "output_shape": [
+          1,
+          16,
+          32,
+          32
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 32,
+        "macs": 0
+      },
+      {
+        "layer": "features.2.conv.0.0",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          16,
+          32,
+          32
+        ],
+        "output_shape": [
+          1,
+          96,
+          32,
+          32
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 1536,
+        "macs": 1572864
+      },
+      {
+        "layer": "features.2.conv.0.1",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          96,
+          32,
+          32
+        ],
+        "output_shape": [
+          1,
+          96,
+          32,
+          32
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 192,
+        "macs": 0
+      },
+      {
+        "layer": "features.2.conv.0.2",
+        "type": "ReLU6",
+        "input_shape": [
+          1,
+          96,
+          32,
+          32
+        ],
+        "output_shape": [
+          1,
+          96,
+          32,
+          32
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.2.conv.1.0",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          96,
+          32,
+          32
+        ],
+        "output_shape": [
+          1,
+          96,
+          16,
+          16
+        ],
+        "kernel": [
+          3,
+          3
+        ],
+        "groups": 96,
+        "parameters": 864,
+        "macs": 221184
+      },
+      {
+        "layer": "features.2.conv.1.1",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          96,
+          16,
+          16
+        ],
+        "output_shape": [
+          1,
+          96,
+          16,
+          16
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 192,
+        "macs": 0
+      },
+      {
+        "layer": "features.2.conv.1.2",
+        "type": "ReLU6",
+        "input_shape": [
+          1,
+          96,
+          16,
+          16
+        ],
+        "output_shape": [
+          1,
+          96,
+          16,
+          16
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.2.conv.2",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          96,
+          16,
+          16
+        ],
+        "output_shape": [
+          1,
+          24,
+          16,
+          16
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 2304,
+        "macs": 589824
+      },
+      {
+        "layer": "features.2.conv.3",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          24,
+          16,
+          16
+        ],
+        "output_shape": [
+          1,
+          24,
+          16,
+          16
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 48,
+        "macs": 0
+      },
+      {
+        "layer": "features.3.conv.0.0",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          24,
+          16,
+          16
+        ],
+        "output_shape": [
+          1,
+          144,
+          16,
+          16
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 3456,
+        "macs": 884736
+      },
+      {
+        "layer": "features.3.conv.0.1",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          144,
+          16,
+          16
+        ],
+        "output_shape": [
+          1,
+          144,
+          16,
+          16
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 288,
+        "macs": 0
+      },
+      {
+        "layer": "features.3.conv.0.2",
+        "type": "ReLU6",
+        "input_shape": [
+          1,
+          144,
+          16,
+          16
+        ],
+        "output_shape": [
+          1,
+          144,
+          16,
+          16
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.3.conv.1.0",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          144,
+          16,
+          16
+        ],
+        "output_shape": [
+          1,
+          144,
+          16,
+          16
+        ],
+        "kernel": [
+          3,
+          3
+        ],
+        "groups": 144,
+        "parameters": 1296,
+        "macs": 331776
+      },
+      {
+        "layer": "features.3.conv.1.1",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          144,
+          16,
+          16
+        ],
+        "output_shape": [
+          1,
+          144,
+          16,
+          16
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 288,
+        "macs": 0
+      },
+      {
+        "layer": "features.3.conv.1.2",
+        "type": "ReLU6",
+        "input_shape": [
+          1,
+          144,
+          16,
+          16
+        ],
+        "output_shape": [
+          1,
+          144,
+          16,
+          16
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.3.conv.2",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          144,
+          16,
+          16
+        ],
+        "output_shape": [
+          1,
+          24,
+          16,
+          16
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 3456,
+        "macs": 884736
+      },
+      {
+        "layer": "features.3.conv.3",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          24,
+          16,
+          16
+        ],
+        "output_shape": [
+          1,
+          24,
+          16,
+          16
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 48,
+        "macs": 0
+      },
+      {
+        "layer": "features.4.conv.0.0",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          24,
+          16,
+          16
+        ],
+        "output_shape": [
+          1,
+          144,
+          16,
+          16
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 3456,
+        "macs": 884736
+      },
+      {
+        "layer": "features.4.conv.0.1",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          144,
+          16,
+          16
+        ],
+        "output_shape": [
+          1,
+          144,
+          16,
+          16
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 288,
+        "macs": 0
+      },
+      {
+        "layer": "features.4.conv.0.2",
+        "type": "ReLU6",
+        "input_shape": [
+          1,
+          144,
+          16,
+          16
+        ],
+        "output_shape": [
+          1,
+          144,
+          16,
+          16
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.4.conv.1.0",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          144,
+          16,
+          16
+        ],
+        "output_shape": [
+          1,
+          144,
+          8,
+          8
+        ],
+        "kernel": [
+          3,
+          3
+        ],
+        "groups": 144,
+        "parameters": 1296,
+        "macs": 82944
+      },
+      {
+        "layer": "features.4.conv.1.1",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          144,
+          8,
+          8
+        ],
+        "output_shape": [
+          1,
+          144,
+          8,
+          8
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 288,
+        "macs": 0
+      },
+      {
+        "layer": "features.4.conv.1.2",
+        "type": "ReLU6",
+        "input_shape": [
+          1,
+          144,
+          8,
+          8
+        ],
+        "output_shape": [
+          1,
+          144,
+          8,
+          8
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.4.conv.2",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          144,
+          8,
+          8
+        ],
+        "output_shape": [
+          1,
+          32,
+          8,
+          8
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 4608,
+        "macs": 294912
+      },
+      {
+        "layer": "features.4.conv.3",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          32,
+          8,
+          8
+        ],
+        "output_shape": [
+          1,
+          32,
+          8,
+          8
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 64,
+        "macs": 0
+      },
+      {
+        "layer": "features.5.conv.0.0",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          32,
+          8,
+          8
+        ],
+        "output_shape": [
+          1,
+          192,
+          8,
+          8
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 6144,
+        "macs": 393216
+      },
+      {
+        "layer": "features.5.conv.0.1",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          192,
+          8,
+          8
+        ],
+        "output_shape": [
+          1,
+          192,
+          8,
+          8
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 384,
+        "macs": 0
+      },
+      {
+        "layer": "features.5.conv.0.2",
+        "type": "ReLU6",
+        "input_shape": [
+          1,
+          192,
+          8,
+          8
+        ],
+        "output_shape": [
+          1,
+          192,
+          8,
+          8
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.5.conv.1.0",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          192,
+          8,
+          8
+        ],
+        "output_shape": [
+          1,
+          192,
+          8,
+          8
+        ],
+        "kernel": [
+          3,
+          3
+        ],
+        "groups": 192,
+        "parameters": 1728,
+        "macs": 110592
+      },
+      {
+        "layer": "features.5.conv.1.1",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          192,
+          8,
+          8
+        ],
+        "output_shape": [
+          1,
+          192,
+          8,
+          8
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 384,
+        "macs": 0
+      },
+      {
+        "layer": "features.5.conv.1.2",
+        "type": "ReLU6",
+        "input_shape": [
+          1,
+          192,
+          8,
+          8
+        ],
+        "output_shape": [
+          1,
+          192,
+          8,
+          8
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.5.conv.2",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          192,
+          8,
+          8
+        ],
+        "output_shape": [
+          1,
+          32,
+          8,
+          8
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 6144,
+        "macs": 393216
+      },
+      {
+        "layer": "features.5.conv.3",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          32,
+          8,
+          8
+        ],
+        "output_shape": [
+          1,
+          32,
+          8,
+          8
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 64,
+        "macs": 0
+      },
+      {
+        "layer": "features.6.conv.0.0",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          32,
+          8,
+          8
+        ],
+        "output_shape": [
+          1,
+          192,
+          8,
+          8
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 6144,
+        "macs": 393216
+      },
+      {
+        "layer": "features.6.conv.0.1",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          192,
+          8,
+          8
+        ],
+        "output_shape": [
+          1,
+          192,
+          8,
+          8
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 384,
+        "macs": 0
+      },
+      {
+        "layer": "features.6.conv.0.2",
+        "type": "ReLU6",
+        "input_shape": [
+          1,
+          192,
+          8,
+          8
+        ],
+        "output_shape": [
+          1,
+          192,
+          8,
+          8
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.6.conv.1.0",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          192,
+          8,
+          8
+        ],
+        "output_shape": [
+          1,
+          192,
+          8,
+          8
+        ],
+        "kernel": [
+          3,
+          3
+        ],
+        "groups": 192,
+        "parameters": 1728,
+        "macs": 110592
+      },
+      {
+        "layer": "features.6.conv.1.1",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          192,
+          8,
+          8
+        ],
+        "output_shape": [
+          1,
+          192,
+          8,
+          8
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 384,
+        "macs": 0
+      },
+      {
+        "layer": "features.6.conv.1.2",
+        "type": "ReLU6",
+        "input_shape": [
+          1,
+          192,
+          8,
+          8
+        ],
+        "output_shape": [
+          1,
+          192,
+          8,
+          8
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.6.conv.2",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          192,
+          8,
+          8
+        ],
+        "output_shape": [
+          1,
+          32,
+          8,
+          8
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 6144,
+        "macs": 393216
+      },
+      {
+        "layer": "features.6.conv.3",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          32,
+          8,
+          8
+        ],
+        "output_shape": [
+          1,
+          32,
+          8,
+          8
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 64,
+        "macs": 0
+      },
+      {
+        "layer": "features.7.conv.0.0",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          32,
+          8,
+          8
+        ],
+        "output_shape": [
+          1,
+          192,
+          8,
+          8
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 6144,
+        "macs": 393216
+      },
+      {
+        "layer": "features.7.conv.0.1",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          192,
+          8,
+          8
+        ],
+        "output_shape": [
+          1,
+          192,
+          8,
+          8
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 384,
+        "macs": 0
+      },
+      {
+        "layer": "features.7.conv.0.2",
+        "type": "ReLU6",
+        "input_shape": [
+          1,
+          192,
+          8,
+          8
+        ],
+        "output_shape": [
+          1,
+          192,
+          8,
+          8
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.7.conv.1.0",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          192,
+          8,
+          8
+        ],
+        "output_shape": [
+          1,
+          192,
+          4,
+          4
+        ],
+        "kernel": [
+          3,
+          3
+        ],
+        "groups": 192,
+        "parameters": 1728,
+        "macs": 27648
+      },
+      {
+        "layer": "features.7.conv.1.1",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          192,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          192,
+          4,
+          4
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 384,
+        "macs": 0
+      },
+      {
+        "layer": "features.7.conv.1.2",
+        "type": "ReLU6",
+        "input_shape": [
+          1,
+          192,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          192,
+          4,
+          4
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.7.conv.2",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          192,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          64,
+          4,
+          4
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 12288,
+        "macs": 196608
+      },
+      {
+        "layer": "features.7.conv.3",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          64,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          64,
+          4,
+          4
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 128,
+        "macs": 0
+      },
+      {
+        "layer": "features.8.conv.0.0",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          64,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          384,
+          4,
+          4
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 24576,
+        "macs": 393216
+      },
+      {
+        "layer": "features.8.conv.0.1",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          384,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          384,
+          4,
+          4
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 768,
+        "macs": 0
+      },
+      {
+        "layer": "features.8.conv.0.2",
+        "type": "ReLU6",
+        "input_shape": [
+          1,
+          384,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          384,
+          4,
+          4
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.8.conv.1.0",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          384,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          384,
+          4,
+          4
+        ],
+        "kernel": [
+          3,
+          3
+        ],
+        "groups": 384,
+        "parameters": 3456,
+        "macs": 55296
+      },
+      {
+        "layer": "features.8.conv.1.1",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          384,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          384,
+          4,
+          4
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 768,
+        "macs": 0
+      },
+      {
+        "layer": "features.8.conv.1.2",
+        "type": "ReLU6",
+        "input_shape": [
+          1,
+          384,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          384,
+          4,
+          4
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.8.conv.2",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          384,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          64,
+          4,
+          4
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 24576,
+        "macs": 393216
+      },
+      {
+        "layer": "features.8.conv.3",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          64,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          64,
+          4,
+          4
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 128,
+        "macs": 0
+      },
+      {
+        "layer": "features.9.conv.0.0",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          64,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          384,
+          4,
+          4
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 24576,
+        "macs": 393216
+      },
+      {
+        "layer": "features.9.conv.0.1",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          384,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          384,
+          4,
+          4
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 768,
+        "macs": 0
+      },
+      {
+        "layer": "features.9.conv.0.2",
+        "type": "ReLU6",
+        "input_shape": [
+          1,
+          384,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          384,
+          4,
+          4
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.9.conv.1.0",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          384,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          384,
+          4,
+          4
+        ],
+        "kernel": [
+          3,
+          3
+        ],
+        "groups": 384,
+        "parameters": 3456,
+        "macs": 55296
+      },
+      {
+        "layer": "features.9.conv.1.1",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          384,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          384,
+          4,
+          4
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 768,
+        "macs": 0
+      },
+      {
+        "layer": "features.9.conv.1.2",
+        "type": "ReLU6",
+        "input_shape": [
+          1,
+          384,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          384,
+          4,
+          4
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.9.conv.2",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          384,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          64,
+          4,
+          4
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 24576,
+        "macs": 393216
+      },
+      {
+        "layer": "features.9.conv.3",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          64,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          64,
+          4,
+          4
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 128,
+        "macs": 0
+      },
+      {
+        "layer": "features.10.conv.0.0",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          64,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          384,
+          4,
+          4
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 24576,
+        "macs": 393216
+      },
+      {
+        "layer": "features.10.conv.0.1",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          384,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          384,
+          4,
+          4
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 768,
+        "macs": 0
+      },
+      {
+        "layer": "features.10.conv.0.2",
+        "type": "ReLU6",
+        "input_shape": [
+          1,
+          384,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          384,
+          4,
+          4
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.10.conv.1.0",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          384,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          384,
+          4,
+          4
+        ],
+        "kernel": [
+          3,
+          3
+        ],
+        "groups": 384,
+        "parameters": 3456,
+        "macs": 55296
+      },
+      {
+        "layer": "features.10.conv.1.1",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          384,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          384,
+          4,
+          4
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 768,
+        "macs": 0
+      },
+      {
+        "layer": "features.10.conv.1.2",
+        "type": "ReLU6",
+        "input_shape": [
+          1,
+          384,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          384,
+          4,
+          4
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.10.conv.2",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          384,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          64,
+          4,
+          4
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 24576,
+        "macs": 393216
+      },
+      {
+        "layer": "features.10.conv.3",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          64,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          64,
+          4,
+          4
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 128,
+        "macs": 0
+      },
+      {
+        "layer": "features.11.conv.0.0",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          64,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          384,
+          4,
+          4
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 24576,
+        "macs": 393216
+      },
+      {
+        "layer": "features.11.conv.0.1",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          384,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          384,
+          4,
+          4
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 768,
+        "macs": 0
+      },
+      {
+        "layer": "features.11.conv.0.2",
+        "type": "ReLU6",
+        "input_shape": [
+          1,
+          384,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          384,
+          4,
+          4
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.11.conv.1.0",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          384,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          384,
+          4,
+          4
+        ],
+        "kernel": [
+          3,
+          3
+        ],
+        "groups": 384,
+        "parameters": 3456,
+        "macs": 55296
+      },
+      {
+        "layer": "features.11.conv.1.1",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          384,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          384,
+          4,
+          4
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 768,
+        "macs": 0
+      },
+      {
+        "layer": "features.11.conv.1.2",
+        "type": "ReLU6",
+        "input_shape": [
+          1,
+          384,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          384,
+          4,
+          4
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.11.conv.2",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          384,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          96,
+          4,
+          4
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 36864,
+        "macs": 589824
+      },
+      {
+        "layer": "features.11.conv.3",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          96,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          96,
+          4,
+          4
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 192,
+        "macs": 0
+      },
+      {
+        "layer": "features.12.conv.0.0",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          96,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          576,
+          4,
+          4
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 55296,
+        "macs": 884736
+      },
+      {
+        "layer": "features.12.conv.0.1",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          576,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          576,
+          4,
+          4
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 1152,
+        "macs": 0
+      },
+      {
+        "layer": "features.12.conv.0.2",
+        "type": "ReLU6",
+        "input_shape": [
+          1,
+          576,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          576,
+          4,
+          4
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.12.conv.1.0",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          576,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          576,
+          4,
+          4
+        ],
+        "kernel": [
+          3,
+          3
+        ],
+        "groups": 576,
+        "parameters": 5184,
+        "macs": 82944
+      },
+      {
+        "layer": "features.12.conv.1.1",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          576,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          576,
+          4,
+          4
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 1152,
+        "macs": 0
+      },
+      {
+        "layer": "features.12.conv.1.2",
+        "type": "ReLU6",
+        "input_shape": [
+          1,
+          576,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          576,
+          4,
+          4
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.12.conv.2",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          576,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          96,
+          4,
+          4
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 55296,
+        "macs": 884736
+      },
+      {
+        "layer": "features.12.conv.3",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          96,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          96,
+          4,
+          4
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 192,
+        "macs": 0
+      },
+      {
+        "layer": "features.13.conv.0.0",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          96,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          576,
+          4,
+          4
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 55296,
+        "macs": 884736
+      },
+      {
+        "layer": "features.13.conv.0.1",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          576,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          576,
+          4,
+          4
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 1152,
+        "macs": 0
+      },
+      {
+        "layer": "features.13.conv.0.2",
+        "type": "ReLU6",
+        "input_shape": [
+          1,
+          576,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          576,
+          4,
+          4
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.13.conv.1.0",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          576,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          576,
+          4,
+          4
+        ],
+        "kernel": [
+          3,
+          3
+        ],
+        "groups": 576,
+        "parameters": 5184,
+        "macs": 82944
+      },
+      {
+        "layer": "features.13.conv.1.1",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          576,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          576,
+          4,
+          4
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 1152,
+        "macs": 0
+      },
+      {
+        "layer": "features.13.conv.1.2",
+        "type": "ReLU6",
+        "input_shape": [
+          1,
+          576,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          576,
+          4,
+          4
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.13.conv.2",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          576,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          96,
+          4,
+          4
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 55296,
+        "macs": 884736
+      },
+      {
+        "layer": "features.13.conv.3",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          96,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          96,
+          4,
+          4
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 192,
+        "macs": 0
+      },
+      {
+        "layer": "features.14.conv.0.0",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          96,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          576,
+          4,
+          4
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 55296,
+        "macs": 884736
+      },
+      {
+        "layer": "features.14.conv.0.1",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          576,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          576,
+          4,
+          4
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 1152,
+        "macs": 0
+      },
+      {
+        "layer": "features.14.conv.0.2",
+        "type": "ReLU6",
+        "input_shape": [
+          1,
+          576,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          576,
+          4,
+          4
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.14.conv.1.0",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          576,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          576,
+          2,
+          2
+        ],
+        "kernel": [
+          3,
+          3
+        ],
+        "groups": 576,
+        "parameters": 5184,
+        "macs": 20736
+      },
+      {
+        "layer": "features.14.conv.1.1",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          576,
+          2,
+          2
+        ],
+        "output_shape": [
+          1,
+          576,
+          2,
+          2
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 1152,
+        "macs": 0
+      },
+      {
+        "layer": "features.14.conv.1.2",
+        "type": "ReLU6",
+        "input_shape": [
+          1,
+          576,
+          2,
+          2
+        ],
+        "output_shape": [
+          1,
+          576,
+          2,
+          2
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.14.conv.2",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          576,
+          2,
+          2
+        ],
+        "output_shape": [
+          1,
+          160,
+          2,
+          2
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 92160,
+        "macs": 368640
+      },
+      {
+        "layer": "features.14.conv.3",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          160,
+          2,
+          2
+        ],
+        "output_shape": [
+          1,
+          160,
+          2,
+          2
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 320,
+        "macs": 0
+      },
+      {
+        "layer": "features.15.conv.0.0",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          160,
+          2,
+          2
+        ],
+        "output_shape": [
+          1,
+          960,
+          2,
+          2
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 153600,
+        "macs": 614400
+      },
+      {
+        "layer": "features.15.conv.0.1",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          960,
+          2,
+          2
+        ],
+        "output_shape": [
+          1,
+          960,
+          2,
+          2
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 1920,
+        "macs": 0
+      },
+      {
+        "layer": "features.15.conv.0.2",
+        "type": "ReLU6",
+        "input_shape": [
+          1,
+          960,
+          2,
+          2
+        ],
+        "output_shape": [
+          1,
+          960,
+          2,
+          2
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.15.conv.1.0",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          960,
+          2,
+          2
+        ],
+        "output_shape": [
+          1,
+          960,
+          2,
+          2
+        ],
+        "kernel": [
+          3,
+          3
+        ],
+        "groups": 960,
+        "parameters": 8640,
+        "macs": 34560
+      },
+      {
+        "layer": "features.15.conv.1.1",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          960,
+          2,
+          2
+        ],
+        "output_shape": [
+          1,
+          960,
+          2,
+          2
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 1920,
+        "macs": 0
+      },
+      {
+        "layer": "features.15.conv.1.2",
+        "type": "ReLU6",
+        "input_shape": [
+          1,
+          960,
+          2,
+          2
+        ],
+        "output_shape": [
+          1,
+          960,
+          2,
+          2
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.15.conv.2",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          960,
+          2,
+          2
+        ],
+        "output_shape": [
+          1,
+          160,
+          2,
+          2
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 153600,
+        "macs": 614400
+      },
+      {
+        "layer": "features.15.conv.3",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          160,
+          2,
+          2
+        ],
+        "output_shape": [
+          1,
+          160,
+          2,
+          2
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 320,
+        "macs": 0
+      },
+      {
+        "layer": "features.16.conv.0.0",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          160,
+          2,
+          2
+        ],
+        "output_shape": [
+          1,
+          960,
+          2,
+          2
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 153600,
+        "macs": 614400
+      },
+      {
+        "layer": "features.16.conv.0.1",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          960,
+          2,
+          2
+        ],
+        "output_shape": [
+          1,
+          960,
+          2,
+          2
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 1920,
+        "macs": 0
+      },
+      {
+        "layer": "features.16.conv.0.2",
+        "type": "ReLU6",
+        "input_shape": [
+          1,
+          960,
+          2,
+          2
+        ],
+        "output_shape": [
+          1,
+          960,
+          2,
+          2
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.16.conv.1.0",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          960,
+          2,
+          2
+        ],
+        "output_shape": [
+          1,
+          960,
+          2,
+          2
+        ],
+        "kernel": [
+          3,
+          3
+        ],
+        "groups": 960,
+        "parameters": 8640,
+        "macs": 34560
+      },
+      {
+        "layer": "features.16.conv.1.1",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          960,
+          2,
+          2
+        ],
+        "output_shape": [
+          1,
+          960,
+          2,
+          2
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 1920,
+        "macs": 0
+      },
+      {
+        "layer": "features.16.conv.1.2",
+        "type": "ReLU6",
+        "input_shape": [
+          1,
+          960,
+          2,
+          2
+        ],
+        "output_shape": [
+          1,
+          960,
+          2,
+          2
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.16.conv.2",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          960,
+          2,
+          2
+        ],
+        "output_shape": [
+          1,
+          160,
+          2,
+          2
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 153600,
+        "macs": 614400
+      },
+      {
+        "layer": "features.16.conv.3",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          160,
+          2,
+          2
+        ],
+        "output_shape": [
+          1,
+          160,
+          2,
+          2
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 320,
+        "macs": 0
+      },
+      {
+        "layer": "features.17.conv.0.0",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          160,
+          2,
+          2
+        ],
+        "output_shape": [
+          1,
+          960,
+          2,
+          2
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 153600,
+        "macs": 614400
+      },
+      {
+        "layer": "features.17.conv.0.1",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          960,
+          2,
+          2
+        ],
+        "output_shape": [
+          1,
+          960,
+          2,
+          2
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 1920,
+        "macs": 0
+      },
+      {
+        "layer": "features.17.conv.0.2",
+        "type": "ReLU6",
+        "input_shape": [
+          1,
+          960,
+          2,
+          2
+        ],
+        "output_shape": [
+          1,
+          960,
+          2,
+          2
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.17.conv.1.0",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          960,
+          2,
+          2
+        ],
+        "output_shape": [
+          1,
+          960,
+          2,
+          2
+        ],
+        "kernel": [
+          3,
+          3
+        ],
+        "groups": 960,
+        "parameters": 8640,
+        "macs": 34560
+      },
+      {
+        "layer": "features.17.conv.1.1",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          960,
+          2,
+          2
+        ],
+        "output_shape": [
+          1,
+          960,
+          2,
+          2
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 1920,
+        "macs": 0
+      },
+      {
+        "layer": "features.17.conv.1.2",
+        "type": "ReLU6",
+        "input_shape": [
+          1,
+          960,
+          2,
+          2
+        ],
+        "output_shape": [
+          1,
+          960,
+          2,
+          2
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.17.conv.2",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          960,
+          2,
+          2
+        ],
+        "output_shape": [
+          1,
+          320,
+          2,
+          2
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 307200,
+        "macs": 1228800
+      },
+      {
+        "layer": "features.17.conv.3",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          320,
+          2,
+          2
+        ],
+        "output_shape": [
+          1,
+          320,
+          2,
+          2
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 640,
+        "macs": 0
+      },
+      {
+        "layer": "features.18.0",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          320,
+          2,
+          2
+        ],
+        "output_shape": [
+          1,
+          1280,
+          2,
+          2
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 409600,
+        "macs": 1638400
+      },
+      {
+        "layer": "features.18.1",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          1280,
+          2,
+          2
+        ],
+        "output_shape": [
+          1,
+          1280,
+          2,
+          2
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 2560,
+        "macs": 0
+      },
+      {
+        "layer": "features.18.2",
+        "type": "ReLU6",
+        "input_shape": [
+          1,
+          1280,
+          2,
+          2
+        ],
+        "output_shape": [
+          1,
+          1280,
+          2,
+          2
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "classifier.0",
+        "type": "Dropout",
+        "input_shape": [
+          1,
+          1280
+        ],
+        "output_shape": [
+          1,
+          1280
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "classifier.1",
+        "type": "Linear",
+        "input_shape": [
+          1,
+          1280
+        ],
+        "output_shape": [
+          1,
+          10
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 12810,
+        "macs": 12800
+      }
+    ]
+  },
+  "EfficientNet-B0": {
+    "input_shape": [
+      1,
+      3,
+      64,
+      64
+    ],
+    "total_parameters": 4020358,
+    "trainable_parameters": 4020358,
+    "estimated_float32_size_kb": 15704.5234375,
+    "fp32_parameter_size_mb": 16.081432,
+    "macs": 31979392,
+    "flops_conv_linear": 63958784,
+    "mac_convention": "Batch-one Conv2d and Linear only; one multiply-accumulate = one MAC (approximately two FLOPs). Bias adds, activations, pooling, memory traffic and framework overhead excluded. This is operation count, not latency.",
+    "layers": [
+      {
+        "layer": "features.0.0",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          3,
+          64,
+          64
+        ],
+        "output_shape": [
+          1,
+          32,
+          32,
+          32
+        ],
+        "kernel": [
+          3,
+          3
+        ],
+        "groups": 1,
+        "parameters": 864,
+        "macs": 884736
+      },
+      {
+        "layer": "features.0.1",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          32,
+          32,
+          32
+        ],
+        "output_shape": [
+          1,
+          32,
+          32,
+          32
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 64,
+        "macs": 0
+      },
+      {
+        "layer": "features.0.2",
+        "type": "SiLU",
+        "input_shape": [
+          1,
+          32,
+          32,
+          32
+        ],
+        "output_shape": [
+          1,
+          32,
+          32,
+          32
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.1.0.block.0.0",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          32,
+          32,
+          32
+        ],
+        "output_shape": [
+          1,
+          32,
+          32,
+          32
+        ],
+        "kernel": [
+          3,
+          3
+        ],
+        "groups": 32,
+        "parameters": 288,
+        "macs": 294912
+      },
+      {
+        "layer": "features.1.0.block.0.1",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          32,
+          32,
+          32
+        ],
+        "output_shape": [
+          1,
+          32,
+          32,
+          32
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 64,
+        "macs": 0
+      },
+      {
+        "layer": "features.1.0.block.0.2",
+        "type": "SiLU",
+        "input_shape": [
+          1,
+          32,
+          32,
+          32
+        ],
+        "output_shape": [
+          1,
+          32,
+          32,
+          32
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.1.0.block.1.avgpool",
+        "type": "AdaptiveAvgPool2d",
+        "input_shape": [
+          1,
+          32,
+          32,
+          32
+        ],
+        "output_shape": [
+          1,
+          32,
+          1,
+          1
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.1.0.block.1.fc1",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          32,
+          1,
+          1
+        ],
+        "output_shape": [
+          1,
+          8,
+          1,
+          1
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 264,
+        "macs": 256
+      },
+      {
+        "layer": "features.1.0.block.1.activation",
+        "type": "SiLU",
+        "input_shape": [
+          1,
+          8,
+          1,
+          1
+        ],
+        "output_shape": [
+          1,
+          8,
+          1,
+          1
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.1.0.block.1.fc2",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          8,
+          1,
+          1
+        ],
+        "output_shape": [
+          1,
+          32,
+          1,
+          1
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 288,
+        "macs": 256
+      },
+      {
+        "layer": "features.1.0.block.1.scale_activation",
+        "type": "Sigmoid",
+        "input_shape": [
+          1,
+          32,
+          1,
+          1
+        ],
+        "output_shape": [
+          1,
+          32,
+          1,
+          1
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.1.0.block.2.0",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          32,
+          32,
+          32
+        ],
+        "output_shape": [
+          1,
+          16,
+          32,
+          32
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 512,
+        "macs": 524288
+      },
+      {
+        "layer": "features.1.0.block.2.1",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          16,
+          32,
+          32
+        ],
+        "output_shape": [
+          1,
+          16,
+          32,
+          32
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 32,
+        "macs": 0
+      },
+      {
+        "layer": "features.2.0.block.0.0",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          16,
+          32,
+          32
+        ],
+        "output_shape": [
+          1,
+          96,
+          32,
+          32
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 1536,
+        "macs": 1572864
+      },
+      {
+        "layer": "features.2.0.block.0.1",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          96,
+          32,
+          32
+        ],
+        "output_shape": [
+          1,
+          96,
+          32,
+          32
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 192,
+        "macs": 0
+      },
+      {
+        "layer": "features.2.0.block.0.2",
+        "type": "SiLU",
+        "input_shape": [
+          1,
+          96,
+          32,
+          32
+        ],
+        "output_shape": [
+          1,
+          96,
+          32,
+          32
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.2.0.block.1.0",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          96,
+          32,
+          32
+        ],
+        "output_shape": [
+          1,
+          96,
+          16,
+          16
+        ],
+        "kernel": [
+          3,
+          3
+        ],
+        "groups": 96,
+        "parameters": 864,
+        "macs": 221184
+      },
+      {
+        "layer": "features.2.0.block.1.1",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          96,
+          16,
+          16
+        ],
+        "output_shape": [
+          1,
+          96,
+          16,
+          16
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 192,
+        "macs": 0
+      },
+      {
+        "layer": "features.2.0.block.1.2",
+        "type": "SiLU",
+        "input_shape": [
+          1,
+          96,
+          16,
+          16
+        ],
+        "output_shape": [
+          1,
+          96,
+          16,
+          16
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.2.0.block.2.avgpool",
+        "type": "AdaptiveAvgPool2d",
+        "input_shape": [
+          1,
+          96,
+          16,
+          16
+        ],
+        "output_shape": [
+          1,
+          96,
+          1,
+          1
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.2.0.block.2.fc1",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          96,
+          1,
+          1
+        ],
+        "output_shape": [
+          1,
+          4,
+          1,
+          1
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 388,
+        "macs": 384
+      },
+      {
+        "layer": "features.2.0.block.2.activation",
+        "type": "SiLU",
+        "input_shape": [
+          1,
+          4,
+          1,
+          1
+        ],
+        "output_shape": [
+          1,
+          4,
+          1,
+          1
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.2.0.block.2.fc2",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          4,
+          1,
+          1
+        ],
+        "output_shape": [
+          1,
+          96,
+          1,
+          1
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 480,
+        "macs": 384
+      },
+      {
+        "layer": "features.2.0.block.2.scale_activation",
+        "type": "Sigmoid",
+        "input_shape": [
+          1,
+          96,
+          1,
+          1
+        ],
+        "output_shape": [
+          1,
+          96,
+          1,
+          1
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.2.0.block.3.0",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          96,
+          16,
+          16
+        ],
+        "output_shape": [
+          1,
+          24,
+          16,
+          16
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 2304,
+        "macs": 589824
+      },
+      {
+        "layer": "features.2.0.block.3.1",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          24,
+          16,
+          16
+        ],
+        "output_shape": [
+          1,
+          24,
+          16,
+          16
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 48,
+        "macs": 0
+      },
+      {
+        "layer": "features.2.1.block.0.0",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          24,
+          16,
+          16
+        ],
+        "output_shape": [
+          1,
+          144,
+          16,
+          16
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 3456,
+        "macs": 884736
+      },
+      {
+        "layer": "features.2.1.block.0.1",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          144,
+          16,
+          16
+        ],
+        "output_shape": [
+          1,
+          144,
+          16,
+          16
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 288,
+        "macs": 0
+      },
+      {
+        "layer": "features.2.1.block.0.2",
+        "type": "SiLU",
+        "input_shape": [
+          1,
+          144,
+          16,
+          16
+        ],
+        "output_shape": [
+          1,
+          144,
+          16,
+          16
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.2.1.block.1.0",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          144,
+          16,
+          16
+        ],
+        "output_shape": [
+          1,
+          144,
+          16,
+          16
+        ],
+        "kernel": [
+          3,
+          3
+        ],
+        "groups": 144,
+        "parameters": 1296,
+        "macs": 331776
+      },
+      {
+        "layer": "features.2.1.block.1.1",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          144,
+          16,
+          16
+        ],
+        "output_shape": [
+          1,
+          144,
+          16,
+          16
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 288,
+        "macs": 0
+      },
+      {
+        "layer": "features.2.1.block.1.2",
+        "type": "SiLU",
+        "input_shape": [
+          1,
+          144,
+          16,
+          16
+        ],
+        "output_shape": [
+          1,
+          144,
+          16,
+          16
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.2.1.block.2.avgpool",
+        "type": "AdaptiveAvgPool2d",
+        "input_shape": [
+          1,
+          144,
+          16,
+          16
+        ],
+        "output_shape": [
+          1,
+          144,
+          1,
+          1
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.2.1.block.2.fc1",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          144,
+          1,
+          1
+        ],
+        "output_shape": [
+          1,
+          6,
+          1,
+          1
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 870,
+        "macs": 864
+      },
+      {
+        "layer": "features.2.1.block.2.activation",
+        "type": "SiLU",
+        "input_shape": [
+          1,
+          6,
+          1,
+          1
+        ],
+        "output_shape": [
+          1,
+          6,
+          1,
+          1
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.2.1.block.2.fc2",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          6,
+          1,
+          1
+        ],
+        "output_shape": [
+          1,
+          144,
+          1,
+          1
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 1008,
+        "macs": 864
+      },
+      {
+        "layer": "features.2.1.block.2.scale_activation",
+        "type": "Sigmoid",
+        "input_shape": [
+          1,
+          144,
+          1,
+          1
+        ],
+        "output_shape": [
+          1,
+          144,
+          1,
+          1
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.2.1.block.3.0",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          144,
+          16,
+          16
+        ],
+        "output_shape": [
+          1,
+          24,
+          16,
+          16
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 3456,
+        "macs": 884736
+      },
+      {
+        "layer": "features.2.1.block.3.1",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          24,
+          16,
+          16
+        ],
+        "output_shape": [
+          1,
+          24,
+          16,
+          16
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 48,
+        "macs": 0
+      },
+      {
+        "layer": "features.2.1.stochastic_depth",
+        "type": "StochasticDepth",
+        "input_shape": [
+          1,
+          24,
+          16,
+          16
+        ],
+        "output_shape": [
+          1,
+          24,
+          16,
+          16
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.3.0.block.0.0",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          24,
+          16,
+          16
+        ],
+        "output_shape": [
+          1,
+          144,
+          16,
+          16
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 3456,
+        "macs": 884736
+      },
+      {
+        "layer": "features.3.0.block.0.1",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          144,
+          16,
+          16
+        ],
+        "output_shape": [
+          1,
+          144,
+          16,
+          16
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 288,
+        "macs": 0
+      },
+      {
+        "layer": "features.3.0.block.0.2",
+        "type": "SiLU",
+        "input_shape": [
+          1,
+          144,
+          16,
+          16
+        ],
+        "output_shape": [
+          1,
+          144,
+          16,
+          16
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.3.0.block.1.0",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          144,
+          16,
+          16
+        ],
+        "output_shape": [
+          1,
+          144,
+          8,
+          8
+        ],
+        "kernel": [
+          5,
+          5
+        ],
+        "groups": 144,
+        "parameters": 3600,
+        "macs": 230400
+      },
+      {
+        "layer": "features.3.0.block.1.1",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          144,
+          8,
+          8
+        ],
+        "output_shape": [
+          1,
+          144,
+          8,
+          8
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 288,
+        "macs": 0
+      },
+      {
+        "layer": "features.3.0.block.1.2",
+        "type": "SiLU",
+        "input_shape": [
+          1,
+          144,
+          8,
+          8
+        ],
+        "output_shape": [
+          1,
+          144,
+          8,
+          8
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.3.0.block.2.avgpool",
+        "type": "AdaptiveAvgPool2d",
+        "input_shape": [
+          1,
+          144,
+          8,
+          8
+        ],
+        "output_shape": [
+          1,
+          144,
+          1,
+          1
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.3.0.block.2.fc1",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          144,
+          1,
+          1
+        ],
+        "output_shape": [
+          1,
+          6,
+          1,
+          1
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 870,
+        "macs": 864
+      },
+      {
+        "layer": "features.3.0.block.2.activation",
+        "type": "SiLU",
+        "input_shape": [
+          1,
+          6,
+          1,
+          1
+        ],
+        "output_shape": [
+          1,
+          6,
+          1,
+          1
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.3.0.block.2.fc2",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          6,
+          1,
+          1
+        ],
+        "output_shape": [
+          1,
+          144,
+          1,
+          1
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 1008,
+        "macs": 864
+      },
+      {
+        "layer": "features.3.0.block.2.scale_activation",
+        "type": "Sigmoid",
+        "input_shape": [
+          1,
+          144,
+          1,
+          1
+        ],
+        "output_shape": [
+          1,
+          144,
+          1,
+          1
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.3.0.block.3.0",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          144,
+          8,
+          8
+        ],
+        "output_shape": [
+          1,
+          40,
+          8,
+          8
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 5760,
+        "macs": 368640
+      },
+      {
+        "layer": "features.3.0.block.3.1",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          40,
+          8,
+          8
+        ],
+        "output_shape": [
+          1,
+          40,
+          8,
+          8
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 80,
+        "macs": 0
+      },
+      {
+        "layer": "features.3.1.block.0.0",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          40,
+          8,
+          8
+        ],
+        "output_shape": [
+          1,
+          240,
+          8,
+          8
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 9600,
+        "macs": 614400
+      },
+      {
+        "layer": "features.3.1.block.0.1",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          240,
+          8,
+          8
+        ],
+        "output_shape": [
+          1,
+          240,
+          8,
+          8
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 480,
+        "macs": 0
+      },
+      {
+        "layer": "features.3.1.block.0.2",
+        "type": "SiLU",
+        "input_shape": [
+          1,
+          240,
+          8,
+          8
+        ],
+        "output_shape": [
+          1,
+          240,
+          8,
+          8
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.3.1.block.1.0",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          240,
+          8,
+          8
+        ],
+        "output_shape": [
+          1,
+          240,
+          8,
+          8
+        ],
+        "kernel": [
+          5,
+          5
+        ],
+        "groups": 240,
+        "parameters": 6000,
+        "macs": 384000
+      },
+      {
+        "layer": "features.3.1.block.1.1",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          240,
+          8,
+          8
+        ],
+        "output_shape": [
+          1,
+          240,
+          8,
+          8
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 480,
+        "macs": 0
+      },
+      {
+        "layer": "features.3.1.block.1.2",
+        "type": "SiLU",
+        "input_shape": [
+          1,
+          240,
+          8,
+          8
+        ],
+        "output_shape": [
+          1,
+          240,
+          8,
+          8
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.3.1.block.2.avgpool",
+        "type": "AdaptiveAvgPool2d",
+        "input_shape": [
+          1,
+          240,
+          8,
+          8
+        ],
+        "output_shape": [
+          1,
+          240,
+          1,
+          1
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.3.1.block.2.fc1",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          240,
+          1,
+          1
+        ],
+        "output_shape": [
+          1,
+          10,
+          1,
+          1
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 2410,
+        "macs": 2400
+      },
+      {
+        "layer": "features.3.1.block.2.activation",
+        "type": "SiLU",
+        "input_shape": [
+          1,
+          10,
+          1,
+          1
+        ],
+        "output_shape": [
+          1,
+          10,
+          1,
+          1
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.3.1.block.2.fc2",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          10,
+          1,
+          1
+        ],
+        "output_shape": [
+          1,
+          240,
+          1,
+          1
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 2640,
+        "macs": 2400
+      },
+      {
+        "layer": "features.3.1.block.2.scale_activation",
+        "type": "Sigmoid",
+        "input_shape": [
+          1,
+          240,
+          1,
+          1
+        ],
+        "output_shape": [
+          1,
+          240,
+          1,
+          1
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.3.1.block.3.0",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          240,
+          8,
+          8
+        ],
+        "output_shape": [
+          1,
+          40,
+          8,
+          8
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 9600,
+        "macs": 614400
+      },
+      {
+        "layer": "features.3.1.block.3.1",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          40,
+          8,
+          8
+        ],
+        "output_shape": [
+          1,
+          40,
+          8,
+          8
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 80,
+        "macs": 0
+      },
+      {
+        "layer": "features.3.1.stochastic_depth",
+        "type": "StochasticDepth",
+        "input_shape": [
+          1,
+          40,
+          8,
+          8
+        ],
+        "output_shape": [
+          1,
+          40,
+          8,
+          8
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.4.0.block.0.0",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          40,
+          8,
+          8
+        ],
+        "output_shape": [
+          1,
+          240,
+          8,
+          8
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 9600,
+        "macs": 614400
+      },
+      {
+        "layer": "features.4.0.block.0.1",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          240,
+          8,
+          8
+        ],
+        "output_shape": [
+          1,
+          240,
+          8,
+          8
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 480,
+        "macs": 0
+      },
+      {
+        "layer": "features.4.0.block.0.2",
+        "type": "SiLU",
+        "input_shape": [
+          1,
+          240,
+          8,
+          8
+        ],
+        "output_shape": [
+          1,
+          240,
+          8,
+          8
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.4.0.block.1.0",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          240,
+          8,
+          8
+        ],
+        "output_shape": [
+          1,
+          240,
+          4,
+          4
+        ],
+        "kernel": [
+          3,
+          3
+        ],
+        "groups": 240,
+        "parameters": 2160,
+        "macs": 34560
+      },
+      {
+        "layer": "features.4.0.block.1.1",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          240,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          240,
+          4,
+          4
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 480,
+        "macs": 0
+      },
+      {
+        "layer": "features.4.0.block.1.2",
+        "type": "SiLU",
+        "input_shape": [
+          1,
+          240,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          240,
+          4,
+          4
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.4.0.block.2.avgpool",
+        "type": "AdaptiveAvgPool2d",
+        "input_shape": [
+          1,
+          240,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          240,
+          1,
+          1
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.4.0.block.2.fc1",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          240,
+          1,
+          1
+        ],
+        "output_shape": [
+          1,
+          10,
+          1,
+          1
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 2410,
+        "macs": 2400
+      },
+      {
+        "layer": "features.4.0.block.2.activation",
+        "type": "SiLU",
+        "input_shape": [
+          1,
+          10,
+          1,
+          1
+        ],
+        "output_shape": [
+          1,
+          10,
+          1,
+          1
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.4.0.block.2.fc2",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          10,
+          1,
+          1
+        ],
+        "output_shape": [
+          1,
+          240,
+          1,
+          1
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 2640,
+        "macs": 2400
+      },
+      {
+        "layer": "features.4.0.block.2.scale_activation",
+        "type": "Sigmoid",
+        "input_shape": [
+          1,
+          240,
+          1,
+          1
+        ],
+        "output_shape": [
+          1,
+          240,
+          1,
+          1
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.4.0.block.3.0",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          240,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          80,
+          4,
+          4
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 19200,
+        "macs": 307200
+      },
+      {
+        "layer": "features.4.0.block.3.1",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          80,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          80,
+          4,
+          4
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 160,
+        "macs": 0
+      },
+      {
+        "layer": "features.4.1.block.0.0",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          80,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          480,
+          4,
+          4
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 38400,
+        "macs": 614400
+      },
+      {
+        "layer": "features.4.1.block.0.1",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          480,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          480,
+          4,
+          4
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 960,
+        "macs": 0
+      },
+      {
+        "layer": "features.4.1.block.0.2",
+        "type": "SiLU",
+        "input_shape": [
+          1,
+          480,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          480,
+          4,
+          4
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.4.1.block.1.0",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          480,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          480,
+          4,
+          4
+        ],
+        "kernel": [
+          3,
+          3
+        ],
+        "groups": 480,
+        "parameters": 4320,
+        "macs": 69120
+      },
+      {
+        "layer": "features.4.1.block.1.1",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          480,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          480,
+          4,
+          4
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 960,
+        "macs": 0
+      },
+      {
+        "layer": "features.4.1.block.1.2",
+        "type": "SiLU",
+        "input_shape": [
+          1,
+          480,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          480,
+          4,
+          4
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.4.1.block.2.avgpool",
+        "type": "AdaptiveAvgPool2d",
+        "input_shape": [
+          1,
+          480,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          480,
+          1,
+          1
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.4.1.block.2.fc1",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          480,
+          1,
+          1
+        ],
+        "output_shape": [
+          1,
+          20,
+          1,
+          1
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 9620,
+        "macs": 9600
+      },
+      {
+        "layer": "features.4.1.block.2.activation",
+        "type": "SiLU",
+        "input_shape": [
+          1,
+          20,
+          1,
+          1
+        ],
+        "output_shape": [
+          1,
+          20,
+          1,
+          1
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.4.1.block.2.fc2",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          20,
+          1,
+          1
+        ],
+        "output_shape": [
+          1,
+          480,
+          1,
+          1
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 10080,
+        "macs": 9600
+      },
+      {
+        "layer": "features.4.1.block.2.scale_activation",
+        "type": "Sigmoid",
+        "input_shape": [
+          1,
+          480,
+          1,
+          1
+        ],
+        "output_shape": [
+          1,
+          480,
+          1,
+          1
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.4.1.block.3.0",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          480,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          80,
+          4,
+          4
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 38400,
+        "macs": 614400
+      },
+      {
+        "layer": "features.4.1.block.3.1",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          80,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          80,
+          4,
+          4
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 160,
+        "macs": 0
+      },
+      {
+        "layer": "features.4.1.stochastic_depth",
+        "type": "StochasticDepth",
+        "input_shape": [
+          1,
+          80,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          80,
+          4,
+          4
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.4.2.block.0.0",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          80,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          480,
+          4,
+          4
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 38400,
+        "macs": 614400
+      },
+      {
+        "layer": "features.4.2.block.0.1",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          480,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          480,
+          4,
+          4
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 960,
+        "macs": 0
+      },
+      {
+        "layer": "features.4.2.block.0.2",
+        "type": "SiLU",
+        "input_shape": [
+          1,
+          480,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          480,
+          4,
+          4
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.4.2.block.1.0",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          480,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          480,
+          4,
+          4
+        ],
+        "kernel": [
+          3,
+          3
+        ],
+        "groups": 480,
+        "parameters": 4320,
+        "macs": 69120
+      },
+      {
+        "layer": "features.4.2.block.1.1",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          480,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          480,
+          4,
+          4
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 960,
+        "macs": 0
+      },
+      {
+        "layer": "features.4.2.block.1.2",
+        "type": "SiLU",
+        "input_shape": [
+          1,
+          480,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          480,
+          4,
+          4
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.4.2.block.2.avgpool",
+        "type": "AdaptiveAvgPool2d",
+        "input_shape": [
+          1,
+          480,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          480,
+          1,
+          1
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.4.2.block.2.fc1",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          480,
+          1,
+          1
+        ],
+        "output_shape": [
+          1,
+          20,
+          1,
+          1
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 9620,
+        "macs": 9600
+      },
+      {
+        "layer": "features.4.2.block.2.activation",
+        "type": "SiLU",
+        "input_shape": [
+          1,
+          20,
+          1,
+          1
+        ],
+        "output_shape": [
+          1,
+          20,
+          1,
+          1
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.4.2.block.2.fc2",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          20,
+          1,
+          1
+        ],
+        "output_shape": [
+          1,
+          480,
+          1,
+          1
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 10080,
+        "macs": 9600
+      },
+      {
+        "layer": "features.4.2.block.2.scale_activation",
+        "type": "Sigmoid",
+        "input_shape": [
+          1,
+          480,
+          1,
+          1
+        ],
+        "output_shape": [
+          1,
+          480,
+          1,
+          1
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.4.2.block.3.0",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          480,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          80,
+          4,
+          4
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 38400,
+        "macs": 614400
+      },
+      {
+        "layer": "features.4.2.block.3.1",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          80,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          80,
+          4,
+          4
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 160,
+        "macs": 0
+      },
+      {
+        "layer": "features.4.2.stochastic_depth",
+        "type": "StochasticDepth",
+        "input_shape": [
+          1,
+          80,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          80,
+          4,
+          4
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.5.0.block.0.0",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          80,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          480,
+          4,
+          4
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 38400,
+        "macs": 614400
+      },
+      {
+        "layer": "features.5.0.block.0.1",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          480,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          480,
+          4,
+          4
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 960,
+        "macs": 0
+      },
+      {
+        "layer": "features.5.0.block.0.2",
+        "type": "SiLU",
+        "input_shape": [
+          1,
+          480,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          480,
+          4,
+          4
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.5.0.block.1.0",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          480,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          480,
+          4,
+          4
+        ],
+        "kernel": [
+          5,
+          5
+        ],
+        "groups": 480,
+        "parameters": 12000,
+        "macs": 192000
+      },
+      {
+        "layer": "features.5.0.block.1.1",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          480,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          480,
+          4,
+          4
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 960,
+        "macs": 0
+      },
+      {
+        "layer": "features.5.0.block.1.2",
+        "type": "SiLU",
+        "input_shape": [
+          1,
+          480,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          480,
+          4,
+          4
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.5.0.block.2.avgpool",
+        "type": "AdaptiveAvgPool2d",
+        "input_shape": [
+          1,
+          480,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          480,
+          1,
+          1
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.5.0.block.2.fc1",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          480,
+          1,
+          1
+        ],
+        "output_shape": [
+          1,
+          20,
+          1,
+          1
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 9620,
+        "macs": 9600
+      },
+      {
+        "layer": "features.5.0.block.2.activation",
+        "type": "SiLU",
+        "input_shape": [
+          1,
+          20,
+          1,
+          1
+        ],
+        "output_shape": [
+          1,
+          20,
+          1,
+          1
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.5.0.block.2.fc2",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          20,
+          1,
+          1
+        ],
+        "output_shape": [
+          1,
+          480,
+          1,
+          1
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 10080,
+        "macs": 9600
+      },
+      {
+        "layer": "features.5.0.block.2.scale_activation",
+        "type": "Sigmoid",
+        "input_shape": [
+          1,
+          480,
+          1,
+          1
+        ],
+        "output_shape": [
+          1,
+          480,
+          1,
+          1
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.5.0.block.3.0",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          480,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          112,
+          4,
+          4
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 53760,
+        "macs": 860160
+      },
+      {
+        "layer": "features.5.0.block.3.1",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          112,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          112,
+          4,
+          4
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 224,
+        "macs": 0
+      },
+      {
+        "layer": "features.5.1.block.0.0",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          112,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          672,
+          4,
+          4
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 75264,
+        "macs": 1204224
+      },
+      {
+        "layer": "features.5.1.block.0.1",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          672,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          672,
+          4,
+          4
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 1344,
+        "macs": 0
+      },
+      {
+        "layer": "features.5.1.block.0.2",
+        "type": "SiLU",
+        "input_shape": [
+          1,
+          672,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          672,
+          4,
+          4
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.5.1.block.1.0",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          672,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          672,
+          4,
+          4
+        ],
+        "kernel": [
+          5,
+          5
+        ],
+        "groups": 672,
+        "parameters": 16800,
+        "macs": 268800
+      },
+      {
+        "layer": "features.5.1.block.1.1",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          672,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          672,
+          4,
+          4
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 1344,
+        "macs": 0
+      },
+      {
+        "layer": "features.5.1.block.1.2",
+        "type": "SiLU",
+        "input_shape": [
+          1,
+          672,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          672,
+          4,
+          4
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.5.1.block.2.avgpool",
+        "type": "AdaptiveAvgPool2d",
+        "input_shape": [
+          1,
+          672,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          672,
+          1,
+          1
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.5.1.block.2.fc1",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          672,
+          1,
+          1
+        ],
+        "output_shape": [
+          1,
+          28,
+          1,
+          1
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 18844,
+        "macs": 18816
+      },
+      {
+        "layer": "features.5.1.block.2.activation",
+        "type": "SiLU",
+        "input_shape": [
+          1,
+          28,
+          1,
+          1
+        ],
+        "output_shape": [
+          1,
+          28,
+          1,
+          1
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.5.1.block.2.fc2",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          28,
+          1,
+          1
+        ],
+        "output_shape": [
+          1,
+          672,
+          1,
+          1
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 19488,
+        "macs": 18816
+      },
+      {
+        "layer": "features.5.1.block.2.scale_activation",
+        "type": "Sigmoid",
+        "input_shape": [
+          1,
+          672,
+          1,
+          1
+        ],
+        "output_shape": [
+          1,
+          672,
+          1,
+          1
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.5.1.block.3.0",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          672,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          112,
+          4,
+          4
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 75264,
+        "macs": 1204224
+      },
+      {
+        "layer": "features.5.1.block.3.1",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          112,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          112,
+          4,
+          4
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 224,
+        "macs": 0
+      },
+      {
+        "layer": "features.5.1.stochastic_depth",
+        "type": "StochasticDepth",
+        "input_shape": [
+          1,
+          112,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          112,
+          4,
+          4
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.5.2.block.0.0",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          112,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          672,
+          4,
+          4
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 75264,
+        "macs": 1204224
+      },
+      {
+        "layer": "features.5.2.block.0.1",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          672,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          672,
+          4,
+          4
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 1344,
+        "macs": 0
+      },
+      {
+        "layer": "features.5.2.block.0.2",
+        "type": "SiLU",
+        "input_shape": [
+          1,
+          672,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          672,
+          4,
+          4
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.5.2.block.1.0",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          672,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          672,
+          4,
+          4
+        ],
+        "kernel": [
+          5,
+          5
+        ],
+        "groups": 672,
+        "parameters": 16800,
+        "macs": 268800
+      },
+      {
+        "layer": "features.5.2.block.1.1",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          672,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          672,
+          4,
+          4
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 1344,
+        "macs": 0
+      },
+      {
+        "layer": "features.5.2.block.1.2",
+        "type": "SiLU",
+        "input_shape": [
+          1,
+          672,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          672,
+          4,
+          4
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.5.2.block.2.avgpool",
+        "type": "AdaptiveAvgPool2d",
+        "input_shape": [
+          1,
+          672,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          672,
+          1,
+          1
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.5.2.block.2.fc1",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          672,
+          1,
+          1
+        ],
+        "output_shape": [
+          1,
+          28,
+          1,
+          1
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 18844,
+        "macs": 18816
+      },
+      {
+        "layer": "features.5.2.block.2.activation",
+        "type": "SiLU",
+        "input_shape": [
+          1,
+          28,
+          1,
+          1
+        ],
+        "output_shape": [
+          1,
+          28,
+          1,
+          1
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.5.2.block.2.fc2",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          28,
+          1,
+          1
+        ],
+        "output_shape": [
+          1,
+          672,
+          1,
+          1
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 19488,
+        "macs": 18816
+      },
+      {
+        "layer": "features.5.2.block.2.scale_activation",
+        "type": "Sigmoid",
+        "input_shape": [
+          1,
+          672,
+          1,
+          1
+        ],
+        "output_shape": [
+          1,
+          672,
+          1,
+          1
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.5.2.block.3.0",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          672,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          112,
+          4,
+          4
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 75264,
+        "macs": 1204224
+      },
+      {
+        "layer": "features.5.2.block.3.1",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          112,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          112,
+          4,
+          4
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 224,
+        "macs": 0
+      },
+      {
+        "layer": "features.5.2.stochastic_depth",
+        "type": "StochasticDepth",
+        "input_shape": [
+          1,
+          112,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          112,
+          4,
+          4
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.6.0.block.0.0",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          112,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          672,
+          4,
+          4
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 75264,
+        "macs": 1204224
+      },
+      {
+        "layer": "features.6.0.block.0.1",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          672,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          672,
+          4,
+          4
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 1344,
+        "macs": 0
+      },
+      {
+        "layer": "features.6.0.block.0.2",
+        "type": "SiLU",
+        "input_shape": [
+          1,
+          672,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          672,
+          4,
+          4
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.6.0.block.1.0",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          672,
+          4,
+          4
+        ],
+        "output_shape": [
+          1,
+          672,
+          2,
+          2
+        ],
+        "kernel": [
+          5,
+          5
+        ],
+        "groups": 672,
+        "parameters": 16800,
+        "macs": 67200
+      },
+      {
+        "layer": "features.6.0.block.1.1",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          672,
+          2,
+          2
+        ],
+        "output_shape": [
+          1,
+          672,
+          2,
+          2
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 1344,
+        "macs": 0
+      },
+      {
+        "layer": "features.6.0.block.1.2",
+        "type": "SiLU",
+        "input_shape": [
+          1,
+          672,
+          2,
+          2
+        ],
+        "output_shape": [
+          1,
+          672,
+          2,
+          2
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.6.0.block.2.avgpool",
+        "type": "AdaptiveAvgPool2d",
+        "input_shape": [
+          1,
+          672,
+          2,
+          2
+        ],
+        "output_shape": [
+          1,
+          672,
+          1,
+          1
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.6.0.block.2.fc1",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          672,
+          1,
+          1
+        ],
+        "output_shape": [
+          1,
+          28,
+          1,
+          1
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 18844,
+        "macs": 18816
+      },
+      {
+        "layer": "features.6.0.block.2.activation",
+        "type": "SiLU",
+        "input_shape": [
+          1,
+          28,
+          1,
+          1
+        ],
+        "output_shape": [
+          1,
+          28,
+          1,
+          1
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.6.0.block.2.fc2",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          28,
+          1,
+          1
+        ],
+        "output_shape": [
+          1,
+          672,
+          1,
+          1
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 19488,
+        "macs": 18816
+      },
+      {
+        "layer": "features.6.0.block.2.scale_activation",
+        "type": "Sigmoid",
+        "input_shape": [
+          1,
+          672,
+          1,
+          1
+        ],
+        "output_shape": [
+          1,
+          672,
+          1,
+          1
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.6.0.block.3.0",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          672,
+          2,
+          2
+        ],
+        "output_shape": [
+          1,
+          192,
+          2,
+          2
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 129024,
+        "macs": 516096
+      },
+      {
+        "layer": "features.6.0.block.3.1",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          192,
+          2,
+          2
+        ],
+        "output_shape": [
+          1,
+          192,
+          2,
+          2
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 384,
+        "macs": 0
+      },
+      {
+        "layer": "features.6.1.block.0.0",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          192,
+          2,
+          2
+        ],
+        "output_shape": [
+          1,
+          1152,
+          2,
+          2
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 221184,
+        "macs": 884736
+      },
+      {
+        "layer": "features.6.1.block.0.1",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          1152,
+          2,
+          2
+        ],
+        "output_shape": [
+          1,
+          1152,
+          2,
+          2
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 2304,
+        "macs": 0
+      },
+      {
+        "layer": "features.6.1.block.0.2",
+        "type": "SiLU",
+        "input_shape": [
+          1,
+          1152,
+          2,
+          2
+        ],
+        "output_shape": [
+          1,
+          1152,
+          2,
+          2
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.6.1.block.1.0",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          1152,
+          2,
+          2
+        ],
+        "output_shape": [
+          1,
+          1152,
+          2,
+          2
+        ],
+        "kernel": [
+          5,
+          5
+        ],
+        "groups": 1152,
+        "parameters": 28800,
+        "macs": 115200
+      },
+      {
+        "layer": "features.6.1.block.1.1",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          1152,
+          2,
+          2
+        ],
+        "output_shape": [
+          1,
+          1152,
+          2,
+          2
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 2304,
+        "macs": 0
+      },
+      {
+        "layer": "features.6.1.block.1.2",
+        "type": "SiLU",
+        "input_shape": [
+          1,
+          1152,
+          2,
+          2
+        ],
+        "output_shape": [
+          1,
+          1152,
+          2,
+          2
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.6.1.block.2.avgpool",
+        "type": "AdaptiveAvgPool2d",
+        "input_shape": [
+          1,
+          1152,
+          2,
+          2
+        ],
+        "output_shape": [
+          1,
+          1152,
+          1,
+          1
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.6.1.block.2.fc1",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          1152,
+          1,
+          1
+        ],
+        "output_shape": [
+          1,
+          48,
+          1,
+          1
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 55344,
+        "macs": 55296
+      },
+      {
+        "layer": "features.6.1.block.2.activation",
+        "type": "SiLU",
+        "input_shape": [
+          1,
+          48,
+          1,
+          1
+        ],
+        "output_shape": [
+          1,
+          48,
+          1,
+          1
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.6.1.block.2.fc2",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          48,
+          1,
+          1
+        ],
+        "output_shape": [
+          1,
+          1152,
+          1,
+          1
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 56448,
+        "macs": 55296
+      },
+      {
+        "layer": "features.6.1.block.2.scale_activation",
+        "type": "Sigmoid",
+        "input_shape": [
+          1,
+          1152,
+          1,
+          1
+        ],
+        "output_shape": [
+          1,
+          1152,
+          1,
+          1
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.6.1.block.3.0",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          1152,
+          2,
+          2
+        ],
+        "output_shape": [
+          1,
+          192,
+          2,
+          2
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 221184,
+        "macs": 884736
+      },
+      {
+        "layer": "features.6.1.block.3.1",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          192,
+          2,
+          2
+        ],
+        "output_shape": [
+          1,
+          192,
+          2,
+          2
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 384,
+        "macs": 0
+      },
+      {
+        "layer": "features.6.1.stochastic_depth",
+        "type": "StochasticDepth",
+        "input_shape": [
+          1,
+          192,
+          2,
+          2
+        ],
+        "output_shape": [
+          1,
+          192,
+          2,
+          2
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.6.2.block.0.0",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          192,
+          2,
+          2
+        ],
+        "output_shape": [
+          1,
+          1152,
+          2,
+          2
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 221184,
+        "macs": 884736
+      },
+      {
+        "layer": "features.6.2.block.0.1",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          1152,
+          2,
+          2
+        ],
+        "output_shape": [
+          1,
+          1152,
+          2,
+          2
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 2304,
+        "macs": 0
+      },
+      {
+        "layer": "features.6.2.block.0.2",
+        "type": "SiLU",
+        "input_shape": [
+          1,
+          1152,
+          2,
+          2
+        ],
+        "output_shape": [
+          1,
+          1152,
+          2,
+          2
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.6.2.block.1.0",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          1152,
+          2,
+          2
+        ],
+        "output_shape": [
+          1,
+          1152,
+          2,
+          2
+        ],
+        "kernel": [
+          5,
+          5
+        ],
+        "groups": 1152,
+        "parameters": 28800,
+        "macs": 115200
+      },
+      {
+        "layer": "features.6.2.block.1.1",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          1152,
+          2,
+          2
+        ],
+        "output_shape": [
+          1,
+          1152,
+          2,
+          2
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 2304,
+        "macs": 0
+      },
+      {
+        "layer": "features.6.2.block.1.2",
+        "type": "SiLU",
+        "input_shape": [
+          1,
+          1152,
+          2,
+          2
+        ],
+        "output_shape": [
+          1,
+          1152,
+          2,
+          2
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.6.2.block.2.avgpool",
+        "type": "AdaptiveAvgPool2d",
+        "input_shape": [
+          1,
+          1152,
+          2,
+          2
+        ],
+        "output_shape": [
+          1,
+          1152,
+          1,
+          1
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.6.2.block.2.fc1",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          1152,
+          1,
+          1
+        ],
+        "output_shape": [
+          1,
+          48,
+          1,
+          1
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 55344,
+        "macs": 55296
+      },
+      {
+        "layer": "features.6.2.block.2.activation",
+        "type": "SiLU",
+        "input_shape": [
+          1,
+          48,
+          1,
+          1
+        ],
+        "output_shape": [
+          1,
+          48,
+          1,
+          1
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.6.2.block.2.fc2",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          48,
+          1,
+          1
+        ],
+        "output_shape": [
+          1,
+          1152,
+          1,
+          1
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 56448,
+        "macs": 55296
+      },
+      {
+        "layer": "features.6.2.block.2.scale_activation",
+        "type": "Sigmoid",
+        "input_shape": [
+          1,
+          1152,
+          1,
+          1
+        ],
+        "output_shape": [
+          1,
+          1152,
+          1,
+          1
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.6.2.block.3.0",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          1152,
+          2,
+          2
+        ],
+        "output_shape": [
+          1,
+          192,
+          2,
+          2
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 221184,
+        "macs": 884736
+      },
+      {
+        "layer": "features.6.2.block.3.1",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          192,
+          2,
+          2
+        ],
+        "output_shape": [
+          1,
+          192,
+          2,
+          2
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 384,
+        "macs": 0
+      },
+      {
+        "layer": "features.6.2.stochastic_depth",
+        "type": "StochasticDepth",
+        "input_shape": [
+          1,
+          192,
+          2,
+          2
+        ],
+        "output_shape": [
+          1,
+          192,
+          2,
+          2
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.6.3.block.0.0",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          192,
+          2,
+          2
+        ],
+        "output_shape": [
+          1,
+          1152,
+          2,
+          2
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 221184,
+        "macs": 884736
+      },
+      {
+        "layer": "features.6.3.block.0.1",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          1152,
+          2,
+          2
+        ],
+        "output_shape": [
+          1,
+          1152,
+          2,
+          2
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 2304,
+        "macs": 0
+      },
+      {
+        "layer": "features.6.3.block.0.2",
+        "type": "SiLU",
+        "input_shape": [
+          1,
+          1152,
+          2,
+          2
+        ],
+        "output_shape": [
+          1,
+          1152,
+          2,
+          2
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.6.3.block.1.0",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          1152,
+          2,
+          2
+        ],
+        "output_shape": [
+          1,
+          1152,
+          2,
+          2
+        ],
+        "kernel": [
+          5,
+          5
+        ],
+        "groups": 1152,
+        "parameters": 28800,
+        "macs": 115200
+      },
+      {
+        "layer": "features.6.3.block.1.1",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          1152,
+          2,
+          2
+        ],
+        "output_shape": [
+          1,
+          1152,
+          2,
+          2
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 2304,
+        "macs": 0
+      },
+      {
+        "layer": "features.6.3.block.1.2",
+        "type": "SiLU",
+        "input_shape": [
+          1,
+          1152,
+          2,
+          2
+        ],
+        "output_shape": [
+          1,
+          1152,
+          2,
+          2
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.6.3.block.2.avgpool",
+        "type": "AdaptiveAvgPool2d",
+        "input_shape": [
+          1,
+          1152,
+          2,
+          2
+        ],
+        "output_shape": [
+          1,
+          1152,
+          1,
+          1
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.6.3.block.2.fc1",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          1152,
+          1,
+          1
+        ],
+        "output_shape": [
+          1,
+          48,
+          1,
+          1
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 55344,
+        "macs": 55296
+      },
+      {
+        "layer": "features.6.3.block.2.activation",
+        "type": "SiLU",
+        "input_shape": [
+          1,
+          48,
+          1,
+          1
+        ],
+        "output_shape": [
+          1,
+          48,
+          1,
+          1
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.6.3.block.2.fc2",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          48,
+          1,
+          1
+        ],
+        "output_shape": [
+          1,
+          1152,
+          1,
+          1
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 56448,
+        "macs": 55296
+      },
+      {
+        "layer": "features.6.3.block.2.scale_activation",
+        "type": "Sigmoid",
+        "input_shape": [
+          1,
+          1152,
+          1,
+          1
+        ],
+        "output_shape": [
+          1,
+          1152,
+          1,
+          1
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.6.3.block.3.0",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          1152,
+          2,
+          2
+        ],
+        "output_shape": [
+          1,
+          192,
+          2,
+          2
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 221184,
+        "macs": 884736
+      },
+      {
+        "layer": "features.6.3.block.3.1",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          192,
+          2,
+          2
+        ],
+        "output_shape": [
+          1,
+          192,
+          2,
+          2
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 384,
+        "macs": 0
+      },
+      {
+        "layer": "features.6.3.stochastic_depth",
+        "type": "StochasticDepth",
+        "input_shape": [
+          1,
+          192,
+          2,
+          2
+        ],
+        "output_shape": [
+          1,
+          192,
+          2,
+          2
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.7.0.block.0.0",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          192,
+          2,
+          2
+        ],
+        "output_shape": [
+          1,
+          1152,
+          2,
+          2
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 221184,
+        "macs": 884736
+      },
+      {
+        "layer": "features.7.0.block.0.1",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          1152,
+          2,
+          2
+        ],
+        "output_shape": [
+          1,
+          1152,
+          2,
+          2
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 2304,
+        "macs": 0
+      },
+      {
+        "layer": "features.7.0.block.0.2",
+        "type": "SiLU",
+        "input_shape": [
+          1,
+          1152,
+          2,
+          2
+        ],
+        "output_shape": [
+          1,
+          1152,
+          2,
+          2
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.7.0.block.1.0",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          1152,
+          2,
+          2
+        ],
+        "output_shape": [
+          1,
+          1152,
+          2,
+          2
+        ],
+        "kernel": [
+          3,
+          3
+        ],
+        "groups": 1152,
+        "parameters": 10368,
+        "macs": 41472
+      },
+      {
+        "layer": "features.7.0.block.1.1",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          1152,
+          2,
+          2
+        ],
+        "output_shape": [
+          1,
+          1152,
+          2,
+          2
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 2304,
+        "macs": 0
+      },
+      {
+        "layer": "features.7.0.block.1.2",
+        "type": "SiLU",
+        "input_shape": [
+          1,
+          1152,
+          2,
+          2
+        ],
+        "output_shape": [
+          1,
+          1152,
+          2,
+          2
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.7.0.block.2.avgpool",
+        "type": "AdaptiveAvgPool2d",
+        "input_shape": [
+          1,
+          1152,
+          2,
+          2
+        ],
+        "output_shape": [
+          1,
+          1152,
+          1,
+          1
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.7.0.block.2.fc1",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          1152,
+          1,
+          1
+        ],
+        "output_shape": [
+          1,
+          48,
+          1,
+          1
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 55344,
+        "macs": 55296
+      },
+      {
+        "layer": "features.7.0.block.2.activation",
+        "type": "SiLU",
+        "input_shape": [
+          1,
+          48,
+          1,
+          1
+        ],
+        "output_shape": [
+          1,
+          48,
+          1,
+          1
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.7.0.block.2.fc2",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          48,
+          1,
+          1
+        ],
+        "output_shape": [
+          1,
+          1152,
+          1,
+          1
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 56448,
+        "macs": 55296
+      },
+      {
+        "layer": "features.7.0.block.2.scale_activation",
+        "type": "Sigmoid",
+        "input_shape": [
+          1,
+          1152,
+          1,
+          1
+        ],
+        "output_shape": [
+          1,
+          1152,
+          1,
+          1
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "features.7.0.block.3.0",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          1152,
+          2,
+          2
+        ],
+        "output_shape": [
+          1,
+          320,
+          2,
+          2
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 368640,
+        "macs": 1474560
+      },
+      {
+        "layer": "features.7.0.block.3.1",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          320,
+          2,
+          2
+        ],
+        "output_shape": [
+          1,
+          320,
+          2,
+          2
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 640,
+        "macs": 0
+      },
+      {
+        "layer": "features.8.0",
+        "type": "Conv2d",
+        "input_shape": [
+          1,
+          320,
+          2,
+          2
+        ],
+        "output_shape": [
+          1,
+          1280,
+          2,
+          2
+        ],
+        "kernel": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "parameters": 409600,
+        "macs": 1638400
+      },
+      {
+        "layer": "features.8.1",
+        "type": "BatchNorm2d",
+        "input_shape": [
+          1,
+          1280,
+          2,
+          2
+        ],
+        "output_shape": [
+          1,
+          1280,
+          2,
+          2
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 2560,
+        "macs": 0
+      },
+      {
+        "layer": "features.8.2",
+        "type": "SiLU",
+        "input_shape": [
+          1,
+          1280,
+          2,
+          2
+        ],
+        "output_shape": [
+          1,
+          1280,
+          2,
+          2
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "avgpool",
+        "type": "AdaptiveAvgPool2d",
+        "input_shape": [
+          1,
+          1280,
+          2,
+          2
+        ],
+        "output_shape": [
+          1,
+          1280,
+          1,
+          1
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "classifier.0",
+        "type": "Dropout",
+        "input_shape": [
+          1,
+          1280
+        ],
+        "output_shape": [
+          1,
+          1280
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 0,
+        "macs": 0
+      },
+      {
+        "layer": "classifier.1",
+        "type": "Linear",
+        "input_shape": [
+          1,
+          1280
+        ],
+        "output_shape": [
+          1,
+          10
+        ],
+        "kernel": null,
+        "groups": null,
+        "parameters": 12810,
+        "macs": 12800
+      }
+    ]
+  }
+}

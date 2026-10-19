@@ -1,0 +1,11 @@
+{
+  "optimizer": "sgd_momentum",
+  "learning_rate": 0.01,
+  "epochs": 40,
+  "best_epoch": 38,
+  "best_val_loss": 0.22743614411740393,
+  "mean_epoch_seconds": 6.117021025274516,
+  "checkpoint": "/home/rus1ru/Documents/Academics/PR_assignment_group/EN3150_A03/results/model_a/modelA_40ep_20261019_095058/sgd_momentum/best_model.pt",
+  "history_csv": "/home/rus1ru/Documents/Academics/PR_assignment_group/EN3150_A03/results/model_a/modelA_40ep_20261019_095058/sgd_momentum/training_history.csv",
+  "loss_curve": "/home/rus1ru/Documents/Academics/PR_assignment_group/EN3150_A03/results/model_a/modelA_40ep_20261019_095058/sgd_momentum/loss_curves.png"
+}
