@@ -1,0 +1,9 @@
+{
+  "epochs_completed": 60,
+  "planned_epochs": 60,
+  "complete": true,
+  "best_epoch": 59,
+  "best_val_loss": 0.10759308189153671,
+  "best_val_accuracy": 0.9782716035842896,
+  "mean_epoch_seconds": 23.893772614799992
+}
